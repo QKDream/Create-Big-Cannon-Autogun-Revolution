@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "G",
+    "C",
+    "S"
+  ],
+  "key": {
+    "S": { "tag": "c:ingots/steel" },
+    "C": { "item": "createbigcannons:autocannon_cartridge" },
+    "G": { "item": "minecraft:gunpowder" }
+  },
+  "result": {
+    "count": 1,
+    "id": "cbcaddon:shrapnel_autocannon_round"
+  }
+}

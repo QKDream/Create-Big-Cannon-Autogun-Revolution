@@ -1,0 +1,16 @@
+{
+  "entity_damage": 40.0,
+  "durability_mass": 10.0,
+  "renders_invulnerable": false,
+  "ignores_invulnerability": true,
+  "ignores_entity_armor": false,
+  "gravity": -0.005,
+  "drag": 0.001,
+  "quadratic_drag": false,
+  "knockback": 2.0,
+  "added_recoil": 2.5,
+  "can_squib": true,
+  "penetration": 300.0,
+  "toughness": 80.0,
+  "deflection": 0.10
+}

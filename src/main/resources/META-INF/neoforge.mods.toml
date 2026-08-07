@@ -1,0 +1,32 @@
+﻿modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+
+[[mods]]
+modId = "cbcaddon"
+version = "1.00beta"
+displayName = "Create Big Cannons: Autocannon Revolution"
+authors = "User"
+description = "Adds APFSDS, APHE, SAP, and Shrapnel autocannon rounds to Create Big Cannons."
+logoFile = "pack.png"
+
+[[dependencies.cbcaddon]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cbcaddon]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,1.22)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cbcaddon]]
+modId = "createbigcannons"
+type = "required"
+versionRange = "[5.11,6.0)"
+ordering = "NONE"
+side = "BOTH"

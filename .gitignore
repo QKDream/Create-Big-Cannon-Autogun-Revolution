@@ -1,0 +1,30 @@
+﻿# Build outputs
+build/
+*.jar
+!libs/*.jar
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+bin/
+out/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# JDK (bundled)
+jdk/
+
+# Minecraft runs
+run/
+logs/
+crash-reports/

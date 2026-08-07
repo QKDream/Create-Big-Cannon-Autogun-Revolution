@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "I",
+    "E",
+    "C"
+  ],
+  "key": {
+    "I": { "tag": "c:plates/iron" },
+    "C": { "item": "createbigcannons:autocannon_cartridge" },
+    "E": { "tag": "createbigcannons:high_explosive_materials" }
+  },
+  "result": {
+    "count": 2,
+    "id": "cbcaddon:sap_autocannon_round"
+  }
+}
