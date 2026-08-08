@@ -1,4 +1,4 @@
-﻿# Create Big Cannons: Autocannon Revolution
+# Create Big Cannons: Autocannon Revolution
 
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen)](https://www.minecraft.net)
 [![NeoForge](https://img.shields.io/badge/NeoForge-21.1.228-orange)](https://neoforged.net)
@@ -29,6 +29,23 @@
 3. 确保已安装上述所有依赖模组
 4. 启动游戏
 
+
+## 更新日志
+
+### [1.01] - 2026-08-08
+
+- 修复 `neoforge.mods.toml` UTF-8 BOM 导致模组加载崩溃
+- 更新包图标及版本号
+
+### [1.00] - 2026-08-08
+
+- 新增 APFSDS 尾翼稳定脱壳穿甲弹
+- 新增 APHE 穿甲高爆弹
+- 新增 SAP 半穿甲弹
+- 新增 Shrapnel 榴霰弹
+- 四种弹药的自定义纹理材质
+- 中英文语言支持（zh_cn / en_us）
+- 合成配方与弹药标签
 ## 构建
 
 ```bash
