@@ -1,13 +1,9 @@
 {
   "itemGroup.cbcaddon": "Create Big Cannons: Autocannon Revolution",
   "item.cbcaddon.apfsds_autocannon_round": "APFSDS Projectile",
-  "item.cbcaddon.apfsds_autocannon_cartridge": "Autocannon Cartridge [Projectile: APFSDS]",
   "item.cbcaddon.aphe_autocannon_round": "APHE Projectile",
-  "item.cbcaddon.aphe_autocannon_cartridge": "Autocannon Cartridge [Projectile: APHE]",
   "item.cbcaddon.sap_autocannon_round": "SAP Projectile",
-  "item.cbcaddon.sap_autocannon_cartridge": "Autocannon Cartridge [Projectile: SAP]",
   "item.cbcaddon.shrapnel_autocannon_round": "Shrapnel Projectile",
-  "item.cbcaddon.shrapnel_autocannon_cartridge": "Autocannon Cartridge [Projectile: Shrapnel]",
   "entity.cbcaddon.apfsds_autocannon": "APFSDS Autocannon Round",
   "entity.cbcaddon.aphe_autocannon": "APHE Autocannon Round",
   "entity.cbcaddon.sap_autocannon": "SAP Autocannon Round",
