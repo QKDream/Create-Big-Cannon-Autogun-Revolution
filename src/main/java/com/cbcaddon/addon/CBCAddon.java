@@ -9,7 +9,9 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonProjectileRenderer;
 
 import java.util.function.Supplier;
 
@@ -41,9 +43,21 @@ public class CBCAddon {
         ModItems.ITEMS.register(modEventBus);
         TABS.register(modEventBus);
         modEventBus.addListener(this::onCommonSetup);
+        modEventBus.addListener(this::registerRenderers);
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event) {
         ModEntities.registerProjectileHandlers();
+    }
+
+    private void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.APFSDS_AUTOCANNON.get(),
+                AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.APHE_AUTOCANNON.get(),
+                AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.SAP_AUTOCANNON.get(),
+                AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.SHRAPNEL_AUTOCANNON.get(),
+                AutocannonProjectileRenderer::new);
     }
 }

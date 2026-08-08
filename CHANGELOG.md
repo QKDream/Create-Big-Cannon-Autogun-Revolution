@@ -4,6 +4,7 @@
 
 ### Fixed
 - 修复 Cartridge 发射空包弹问题：覆写 getAutocannonProjectile() 直接创建弹射物
+- 修复弹射物实体缺少渲染器导致 NullPointerException 崩溃
 
 ### Changed
 - Cartridge 物品命名格式：机炮弹药 [弹射物：弹头名称]
