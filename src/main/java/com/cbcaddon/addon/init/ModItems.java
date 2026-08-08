@@ -3,6 +3,7 @@ package com.cbcaddon.addon.init;
 import com.cbcaddon.addon.CBCAddon;
 import com.cbcaddon.addon.item.APFSDSAutocannonRoundItem;
 import com.cbcaddon.addon.item.APHEAutocannonRoundItem;
+import com.cbcaddon.addon.item.HighVelocityAutocannonCartridgeItem;
 import com.cbcaddon.addon.item.SAPAutocannonRoundItem;
 import com.cbcaddon.addon.item.ShrapnelAutocannonRoundItem;
 import net.minecraft.core.registries.Registries;
@@ -30,4 +31,8 @@ public class ModItems {
     public static final Supplier<Item> SHRAPNEL_AUTOCANNON_ROUND =
             ITEMS.register("shrapnel_autocannon_round",
                     () -> new ShrapnelAutocannonRoundItem(new Item.Properties()));
+
+    public static final Supplier<Item> HIGH_VELOCITY_CARTRIDGE =
+            ITEMS.register("high_velocity_autocannon_cartridge",
+                    () -> new HighVelocityAutocannonCartridgeItem(new Item.Properties().stacksTo(1)));
 }

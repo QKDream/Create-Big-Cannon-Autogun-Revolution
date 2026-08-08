@@ -2,6 +2,7 @@ package com.cbcaddon.addon;
 
 import com.cbcaddon.addon.init.ModEntities;
 import com.cbcaddon.addon.init.ModItems;
+import com.cbcaddon.addon.init.ModRecipeSerializers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -31,12 +32,14 @@ public class CBCAddon {
                         output.accept(ModItems.APHE_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SAP_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
+                        output.accept(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
                     })
                     .build());
 
     public CBCAddon(IEventBus modEventBus) {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
+        ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         TABS.register(modEventBus);
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::registerRenderers);

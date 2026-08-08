@@ -1,9 +1,10 @@
 {
-  "itemGroup.cbcaddon": "机械动力火炮：机炮革命",
+  "itemGroup.cbcaddon": "机炮动力火炮：机炮弹药革新",
   "item.cbcaddon.apfsds_autocannon_round": "APFSDS 弹头",
   "item.cbcaddon.aphe_autocannon_round": "APHE 弹头",
   "item.cbcaddon.sap_autocannon_round": "SAP 弹头",
   "item.cbcaddon.shrapnel_autocannon_round": "榴霰弹 弹头",
+  "item.cbcaddon.high_velocity_autocannon_cartridge": "高速机炮弹药",
   "entity.cbcaddon.apfsds_autocannon": "APFSDS 弹头",
   "entity.cbcaddon.aphe_autocannon": "APHE 弹头",
   "entity.cbcaddon.sap_autocannon": "SAP 弹头",
