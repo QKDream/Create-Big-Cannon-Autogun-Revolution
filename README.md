@@ -1,77 +1,35 @@
 # Create Big Cannons: Autocannon Revolution
 
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen)](https://www.minecraft.net)
-[![NeoForge](https://img.shields.io/badge/NeoForge-21.1.228-orange)](https://neoforged.net)
-[![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
-
-为 [Create: Big Cannons](https://www.curseforge.com/minecraft/mc-mods/create-big-cannons) 添加四种新型自动炮弹药，大幅扩展火炮玩法。
+为 [Create Big Cannons](https://github.com/rbasamoyai/CreateBigCannons) 扩展的机炮弹药模组。
 
 ## 新增弹药
 
-| 弹药 | 类型 | 描述 |
-|------|------|------|
-| **APFSDS** | 尾翼稳定脱壳穿甲弹 | 高穿深、高初速，擅长击穿厚重装甲 |
-| **APHE** | 穿甲高爆弹 | 穿透后爆炸，对内部结构造成毁灭性伤害 |
-| **SAP** | 半穿甲弹 | 平衡穿深与装药，通用型弹药 |
-| **Shrapnel（榴霰弹）** | 榴霰弹 | 空爆释放弹丸，覆盖大范围软目标 |
+| 弹药 | 类型 | 穿深 | 爆炸 | 特色 |
+|------|------|------|------|------|
+| **APFSDS** | 动能穿甲 | 300 | 无 | 极高穿深，低阻力，几乎不跳弹 |
+| **APHE** | 穿甲高爆 | 14 | 6.0 | 穿透后内部爆炸 |
+| **SAP** | 半穿甲 | 10 | 8.4 | 高装药量，爆炸伤害高 |
+| **榴霰弹** | 霰弹 | 0 | 5.0 | 40枚破片，密集散布，单发破片伤害8.0 |
+
+## 高速机炮弹药
+
+- 初速为普通弹药的 **2倍**
+- 合成：illed_autocannon_cartridge + 2×火药 → 空高速弹壳
+- 装填：任意弹头 + 空高速弹壳 → 高速弹药
+- 升级：任意已装填弹壳 + 火药 → 高速弹药
+- 支持装引信
 
 ## 依赖
 
-- **Minecraft** 1.21.1
-- **NeoForge** 21.1.228+
-- **[Create](https://www.curseforge.com/minecraft/mc-mods/create)** 6.0+（CBC 依赖）
-- **[Create: Big Cannons](https://www.curseforge.com/minecraft/mc-mods/create-big-cannons)** 5.11+
+- Minecraft 1.21.1 / NeoForge 21.1
+- [Create 6.0](https://modrinth.com/mod/create)
+- [Create Big Cannons 5.11.7](https://modrinth.com/mod/create-big-cannons)
+- [Ritchie's Projectile Library 2.1](https://modrinth.com/mod/ritchiesprojectilelib)
 
 ## 安装
 
-1. 下载 [最新版本](https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution/releases) 的 .jar 文件
-2. 放入 Minecraft 的 mods 文件夹
-3. 确保已安装上述所有依赖模组
-4. 启动游戏
+将 JAR 文件放入 .minecraft/mods/ 文件夹。
 
 ## 更新日志
 
-### [1.03] - 2026-08-08
-
-- 修复 APHE/SAP 出膛即炸：移除强制 onClip 引爆，改由引信系统控制
-- 新增 munition_fuzing 配方：APHE/SAP/Shrapnel 弹药支持在工作台合成装引信
-- 修复 Cartridge 发射空包弹：覆写 getAutocannonProjectile() 直接创建弹射物
-- 修复弹射物实体缺少渲染器导致 NullPointerException 崩溃
-- Cartridge 物品显示格式：机炮弹药 [弹射物：弹头名称]
-
-### [1.02] - 2026-08-08
-
-- 弹头不再可直接装入弹药箱，需合成为完整机炮弹药
-- 新增 4 种 Cartridge 物品，可正常装填机炮
-
-### [1.01] - 2026-08-08
-
-- 修复 
-eoforge.mods.toml UTF-8 BOM 导致模组加载崩溃
-- 更新包图标及版本号
-
-### [1.00] - 2026-08-08
-
-- 新增 APFSDS 尾翼稳定脱壳穿甲弹
-- 新增 APHE 穿甲高爆弹
-- 新增 SAP 半穿甲弹
-- 新增 Shrapnel 榴霰弹
-- 四种弹药的自定义纹理材质
-- 中英文语言支持（zh_cn / en_us）
-- 合成配方与弹药标签
-
-## 构建
-
-`ash
-# 使用 Gradle
-./gradlew build
-
-# 或使用 Windows 批处理脚本
-build.bat
-`
-
-输出 JAR 位于 uild/libs/ 或桌面（使用 uild.bat 时）。
-
-## 许可
-
-MIT License - 详见 [LICENSE](LICENSE)
+详见 [CHANGELOG.md](CHANGELOG.md)
