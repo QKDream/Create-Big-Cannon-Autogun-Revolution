@@ -4,53 +4,66 @@
 [![NeoForge](https://img.shields.io/badge/NeoForge-21.1.228-orange)](https://neoforged.net)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 
-涓?[Create: Big Cannons](https://www.curseforge.com/minecraft/mc-mods/create-big-cannons) 娣诲姞鍥涚鏂板瀷鑷姩鐐脊鑽紝澶у箙鎵╁睍鐏偖鐜╂硶銆?
-## 鏂板寮硅嵂
+为 [Create: Big Cannons](https://www.curseforge.com/minecraft/mc-mods/create-big-cannons) 添加四种新型自动炮弹药，大幅扩展火炮玩法。
 
-| 寮硅嵂 | 绫诲瀷 | 鎻忚堪 |
+## 新增弹药
+
+| 弹药 | 类型 | 描述 |
 |------|------|------|
-| **APFSDS** | 灏剧考绋冲畾鑴卞３绌跨敳寮?| 楂樼┛娣便€侀珮鍒濋€燂紝鎿呴暱鍑荤┛鍘氶噸瑁呯敳 |
-| **APHE** | 绌跨敳楂樼垎寮?| 绌块€忓悗鐖嗙偢锛屽鍐呴儴缁撴瀯閫犳垚姣佺伃鎬т激瀹?|
-| **SAP** | 鍗婄┛鐢插脊 | 骞宠　绌挎繁涓庤鑽紝閫氱敤鍨嬪脊鑽?|
-| **Shrapnel锛堟Υ闇板脊锛?* | 姒撮湴寮?| 绌虹垎閲婃斁寮逛父锛岃鐩栧ぇ鑼冨洿杞洰鏍?|
+| **APFSDS** | 尾翼稳定脱壳穿甲弹 | 高穿深、高初速，擅长击穿厚重装甲 |
+| **APHE** | 穿甲高爆弹 | 穿透后爆炸，对内部结构造成毁灭性伤害 |
+| **SAP** | 半穿甲弹 | 平衡穿深与装药，通用型弹药 |
+| **Shrapnel（榴霰弹）** | 榴霰弹 | 空爆释放弹丸，覆盖大范围软目标 |
 
-## 渚濊禆
+## 依赖
 
-- **Minecraft** `1.21.1`
-- **NeoForge** `21.1.228+`
-- **[Create](https://www.curseforge.com/minecraft/mc-mods/create)** `6.0+`锛圕BC 渚濊禆锛?- **[Create: Big Cannons](https://www.curseforge.com/minecraft/mc-mods/create-big-cannons)** `5.11+`
+- **Minecraft** 1.21.1
+- **NeoForge** 21.1.228+
+- **[Create](https://www.curseforge.com/minecraft/mc-mods/create)** 6.0+（CBC 依赖）
+- **[Create: Big Cannons](https://www.curseforge.com/minecraft/mc-mods/create-big-cannons)** 5.11+
 
-## 瀹夎
+## 安装
 
-1. 涓嬭浇 [鏈€鏂扮増鏈琞(https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution/releases) 鐨?`.jar` 鏂囦欢
-2. 鏀惧叆 Minecraft 鐨?`mods` 鏂囦欢澶?3. 纭繚宸插畨瑁呬笂杩版墍鏈変緷璧栨ā缁?4. 鍚姩娓告垙
+1. 下载 [最新版本](https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution/releases) 的 .jar 文件
+2. 放入 Minecraft 的 mods 文件夹
+3. 确保已安装上述所有依赖模组
+4. 启动游戏
 
-
-## 鏇存柊鏃ュ織
-
+## 更新日志
 
 ### [1.02] - 2026-08-08
 
 - 弹头不再可直接装入弹药箱，需合成为完整机炮弹药
 - 新增 4 种 Cartridge 物品，可正常装填机炮
+
 ### [1.01] - 2026-08-08
 
-- 淇 `neoforge.mods.toml` UTF-8 BOM 瀵艰嚧妯＄粍鍔犺浇宕╂簝
-- 鏇存柊鍖呭浘鏍囧強鐗堟湰鍙?
+- 修复 
+eoforge.mods.toml UTF-8 BOM 导致模组加载崩溃
+- 更新包图标及版本号
+
 ### [1.00] - 2026-08-08
 
-- 鏂板 APFSDS 灏剧考绋冲畾鑴卞３绌跨敳寮?- 鏂板 APHE 绌跨敳楂樼垎寮?- 鏂板 SAP 鍗婄┛鐢插脊
-- 鏂板 Shrapnel 姒撮湴寮?- 鍥涚寮硅嵂鐨勮嚜瀹氫箟绾圭悊鏉愯川
-- 涓嫳鏂囪瑷€鏀寔锛坺h_cn / en_us锛?- 鍚堟垚閰嶆柟涓庡脊鑽爣绛?## 鏋勫缓
+- 新增 APFSDS 尾翼稳定脱壳穿甲弹
+- 新增 APHE 穿甲高爆弹
+- 新增 SAP 半穿甲弹
+- 新增 Shrapnel 榴霰弹
+- 四种弹药的自定义纹理材质
+- 中英文语言支持（zh_cn / en_us）
+- 合成配方与弹药标签
 
-```bash
-# 浣跨敤 Gradle
+## 构建
+
+`ash
+# 使用 Gradle
 ./gradlew build
 
-# 鎴栦娇鐢?Windows 鎵瑰鐞嗚剼鏈?build.bat
-```
+# 或使用 Windows 批处理脚本
+build.bat
+`
 
-杈撳嚭 JAR 浣嶄簬 `build/libs/` 鎴栨闈紙浣跨敤 `build.bat` 鏃讹級銆?
-## 璁稿彲
+输出 JAR 位于 uild/libs/ 或桌面（使用 uild.bat 时）。
 
-MIT License - 璇﹁ [LICENSE](LICENSE)
+## 许可
+
+MIT License - 详见 [LICENSE](LICENSE)
