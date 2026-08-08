@@ -1,10 +1,17 @@
 package com.cbcaddon.addon.item;
 
-import net.minecraft.world.item.Item;
-import rbasamoyai.createbigcannons.munitions.FuzedItemMunition;
+import com.cbcaddon.addon.init.ModEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
+import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonRoundItem;
 
-public class ShrapnelAutocannonRoundItem extends Item implements FuzedItemMunition {
+public class ShrapnelAutocannonRoundItem extends FlakAutocannonRoundItem {
     public ShrapnelAutocannonRoundItem(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public EntityType<?> getEntityType(ItemStack stack) {
+        return ModEntities.SHRAPNEL_AUTOCANNON.get();
     }
 }

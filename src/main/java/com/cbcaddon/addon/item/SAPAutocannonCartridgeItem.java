@@ -5,11 +5,10 @@ import com.cbcaddon.addon.init.ModEntities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import rbasamoyai.createbigcannons.munitions.FuzedItemMunition;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonCartridgeItem;
 
-public class SAPAutocannonCartridgeItem extends AutocannonCartridgeItem implements FuzedItemMunition {
+public class SAPAutocannonCartridgeItem extends AutocannonCartridgeItem {
     public SAPAutocannonCartridgeItem(Properties properties) {
         super(properties);
     }
