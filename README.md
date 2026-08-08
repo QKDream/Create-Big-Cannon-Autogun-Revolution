@@ -33,3 +33,7 @@
 ## 更新日志
 
 详见 [CHANGELOG.md](CHANGELOG.md)
+
+---
+
+![end](images/endpic.jpg)
