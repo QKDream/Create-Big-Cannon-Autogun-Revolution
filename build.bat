@@ -72,7 +72,7 @@ echo ========================================
 set "SRC_DIR=%~dp0src\main\java"
 set "OUT_DIR=%~dp0build\classes"
 set "RESOURCES=%~dp0src\main\resources"
-set "JAR_OUT=%USERPROFILE%\Desktop\cbc-addon.jar"
+set "JAR_OUT=%USERPROFILE%\Desktop\Create-Big-Cannon-Autogun-Revolution.jar"
 
 if exist "%OUT_DIR%" rmdir /s /q "%OUT_DIR%"
 mkdir "%OUT_DIR%"
@@ -112,7 +112,7 @@ if exist "%JAR_OUT%" (
     echo.
     echo ========================================
     echo  BUILD SUCCESS!
-    echo  Output: %USERPROFILE%\Desktop\cbc-addon.jar
+    echo  Output: %USERPROFILE%\Desktop\Create-Big-Cannon-Autogun-Revolution.jar
     echo ========================================
 ) else ( echo ERROR: JAR creation failed! )
 
