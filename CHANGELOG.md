@@ -1,37 +1,28 @@
-# Changelog
+# 更新日志
 
-## [1.03] - 2026-08-08
+## v1.04 — 2026-08-08
+- 新增高速机炮弹药（High-Velocity Autocannon Cartridge），初速2倍
+- 弹射物实体新增高初速模式，首tick速度翻倍
+- 高速弹药空壳合成：filled_autocannon_cartridge + 2×火药
+- 高速弹药直接装填：任意弹头 + 空高速弹壳
+- 高速弹药升级：任意已装填弹壳 + 火药
+- 高速弹药支持装引信（继承 AutocannonCartridgeItem）
+- 高速弹药模型适配 Autocannon Cartridge
 
-### Fixed
-- 修复 APHE/SAP 出膛即炸：移除强制 onClip 引爆，改由引信系统控制
-- 修复 Cartridge 发射空包弹：覆写 getAutocannonProjectile() 直接创建弹射物
-- 修复弹射物实体缺少渲染器导致 NullPointerException 崩溃
+## v1.03 — 2026-08-08
+- 修复 APFSDS 穿深丢失：重写所有 RoundItem 的 getAutocannonProjectile()
+- 根因：父类硬编码 CBC 实体类型，自定义实体从未生成
 
-### Changed
-- Cartridge 物品命名格式：机炮弹药 [弹射物：弹头名称]
+## v1.02 — 2026-08-07
+- 禁用弹头单独塞入弹药箱
+- 修复机炮弹药命名
 
-## [1.02] - 2026-08-08
+## v1.01 — 2026-08-07
+- 修复 APHE/SAP 出膛即引爆问题
+- 修复引信无法合成
+- 修复引信组装后数据不显示
 
-### Changed
-- 弹头（Round）不再可直接装入弹药箱，需先合成为完整弹药（Cartridge）
-- 新增 4 种 Cartridge 物品，继承 AutocannonCartridgeItem，可正常装填机炮
-
-### Added
-- APFSDS / APHE / SAP / Shrapnel 机炮弹药（Cartridge）物品注册
-- Cartridge 物品中英文名称
-
-## [1.01] - 2026-08-08
-
-### Fixed
-- 修复 
-eoforge.mods.toml 包含 UTF-8 BOM 导致模组加载失败的崩溃
-
-## [1.0.0] - 2026-08-08
-
-### Added
-- APFSDS / APHE / SAP / Shrapnel 四种自动炮弹药
-- 自定义纹理材质、中英文语言支持、合成配方
-
----
-
-格式基于 [Keep a Changelog](https://keepachangelog.com/)
+## v1.00beta — 2026-08-07
+- 初始版本
+- APFSDS / APHE / SAP / 榴霰弹 四种机炮弹头
+- 包图案（pack.png）
