@@ -33,7 +33,9 @@
 
 ### [1.03] - 2026-08-08
 
-- 修复 Cartridge 发射空包弹
+- 修复 APHE/SAP 出膛即炸：移除强制 onClip 引爆，改由引信系统控制
+- 修复 Cartridge 发射空包弹：覆写 getAutocannonProjectile() 直接创建弹射物
+- 修复弹射物实体缺少渲染器导致 NullPointerException 崩溃
 - Cartridge 物品显示格式：机炮弹药 [弹射物：弹头名称]
 
 ### [1.02] - 2026-08-08
