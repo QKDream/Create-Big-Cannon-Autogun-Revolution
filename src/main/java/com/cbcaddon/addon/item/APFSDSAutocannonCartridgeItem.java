@@ -3,15 +3,12 @@ package com.cbcaddon.addon.item;
 import com.cbcaddon.addon.entity.APFSDSAutocannonProjectile;
 import com.cbcaddon.addon.init.ModEntities;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
-import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonAmmoItem;
-import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonAmmoType;
-import rbasamoyai.createbigcannons.munitions.autocannon.config.AutocannonProjectilePropertiesComponent;
+import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonCartridgeItem;
 
-public class APFSDSAutocannonCartridgeItem extends Item implements AutocannonAmmoItem {
+public class APFSDSAutocannonCartridgeItem extends AutocannonCartridgeItem {
     public APFSDSAutocannonCartridgeItem(Properties properties) {
         super(properties);
     }
@@ -24,29 +21,5 @@ public class APFSDSAutocannonCartridgeItem extends Item implements AutocannonAmm
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         return new APFSDSAutocannonProjectile(ModEntities.APFSDS_AUTOCANNON.get(), level);
-    }
-
-    @Override
-    public AutocannonProjectilePropertiesComponent getAutocannonProperties(ItemStack stack) {
-        return AutocannonProjectilePropertiesComponent.DEFAULT;
-    }
-
-    @Override
-    public ItemStack getSpentItem(ItemStack stack) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public AutocannonAmmoType getType() {
-        return AutocannonAmmoType.AUTOCANNON;
-    }
-
-    @Override
-    public boolean isTracer(ItemStack stack) {
-        return false;
-    }
-
-    @Override
-    public void setTracer(ItemStack stack, boolean tracer) {
     }
 }
