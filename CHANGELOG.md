@@ -1,4 +1,8 @@
-﻿# Changelog
+# Changelog
+## [1.0.1] - 2026-08-08
+
+### Fixed
+- 修复 `neoforge.mods.toml` 包含 UTF-8 BOM 导致模组加载失败的崩溃（`ParsingException: Invalid bare key`）
 
 ## [1.0.0] - 2026-08-08
 
