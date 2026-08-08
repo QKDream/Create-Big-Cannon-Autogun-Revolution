@@ -23,12 +23,16 @@ public class CBCAddon {
     public static final Supplier<CreativeModeTab> MAIN_TAB = TABS.register("tab",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.cbcaddon"))
-                    .icon(() -> new ItemStack(ModItems.APFSDS_AUTOCANNON_ROUND.get()))
+                    .icon(() -> new ItemStack(ModItems.APFSDS_AUTOCANNON_CARTRIDGE.get()))
                     .displayItems((params, output) -> {
                         output.accept(ModItems.APFSDS_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.APHE_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SAP_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
+                        output.accept(ModItems.APFSDS_AUTOCANNON_CARTRIDGE.get());
+                        output.accept(ModItems.APHE_AUTOCANNON_CARTRIDGE.get());
+                        output.accept(ModItems.SAP_AUTOCANNON_CARTRIDGE.get());
+                        output.accept(ModItems.SHRAPNEL_AUTOCANNON_CARTRIDGE.get());
                     })
                     .build());
 

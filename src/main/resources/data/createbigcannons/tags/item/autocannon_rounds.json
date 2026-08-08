@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "cbcaddon:apfsds_autocannon_round",
-    "cbcaddon:aphe_autocannon_round",
-    "cbcaddon:sap_autocannon_round",
-    "cbcaddon:shrapnel_autocannon_round"
+    "cbcaddon:apfsds_autocannon_cartridge",
+    "cbcaddon:aphe_autocannon_cartridge",
+    "cbcaddon:sap_autocannon_cartridge",
+    "cbcaddon:shrapnel_autocannon_cartridge"
   ]
 }
