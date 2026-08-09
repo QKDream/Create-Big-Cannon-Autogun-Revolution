@@ -2,8 +2,10 @@ package com.cbcaddon.addon.item;
 
 import com.cbcaddon.addon.entity.ThermiteAutocannonProjectile;
 import com.cbcaddon.addon.init.ModEntities;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.index.CBCDataComponents;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
@@ -25,6 +27,10 @@ public class ThermiteAutocannonRoundItem extends FlakAutocannonRoundItem {
         if (stack.has(CBCDataComponents.FUZE)) {
             projectile.setFuze(stack.getOrDefault(CBCDataComponents.FUZE,
                     net.minecraft.world.item.component.ItemContainerContents.EMPTY).copyOne());
+        }
+        CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        if (customData.contains("soul_fire")) {
+            projectile.setSoulFire(true);
         }
         return projectile;
     }

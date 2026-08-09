@@ -10,6 +10,7 @@ import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProje
 
 public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
     private boolean highVelocity = false;
+    private boolean soulFire = false;
 
     public ThermiteAutocannonProjectile(EntityType<? extends ThermiteAutocannonProjectile> type, Level level) {
         super(type, level);
@@ -17,6 +18,10 @@ public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
 
     public void setHighVelocity(boolean hv) {
         this.highVelocity = hv;
+    }
+
+    public void setSoulFire(boolean sf) {
+        this.soulFire = sf;
     }
 
     @Override
@@ -47,7 +52,20 @@ public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
                         if (this.level().isEmptyBlock(pos.above())
                                 && !this.level().isEmptyBlock(pos)
                                 && this.random.nextFloat() < 0.3f) {
-                            this.level().setBlock(pos.above(), Blocks.FIRE.defaultBlockState(), 3);
+                            this.level().setBlock(pos.above(), this.soulFire ? Blocks.SOUL_FIRE.defaultBlockState() : Blocks.FIRE.defaultBlockState(), 3);
+                        }
+                    }
+                }
+            }
+            // Soul fire spread on detonation
+            if (this.soulFire) {
+                for (int x = -3; x <= 3; x++) {
+                    for (int y = -2; y <= 2; y++) {
+                        for (int z = -3; z <= 3; z++) {
+                            BlockPos pos = center.offset(x, y, z);
+                            if (this.level().isEmptyBlock(pos) && this.random.nextFloat() < 0.4f) {
+                                this.level().setBlock(pos, Blocks.SOUL_FIRE.defaultBlockState(), 3);
+                            }
                         }
                     }
                 }

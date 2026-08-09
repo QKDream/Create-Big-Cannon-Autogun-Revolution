@@ -1,10 +1,11 @@
 package com.cbcaddon.addon.item;
 
 import com.cbcaddon.addon.entity.SAPAutocannonProjectile;
-import com.cbcaddon.addon.init.ModDataComponents;
 import com.cbcaddon.addon.init.ModEntities;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.index.CBCDataComponents;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
@@ -27,7 +28,8 @@ public class SAPAutocannonRoundItem extends FlakAutocannonRoundItem {
             projectile.setFuze(stack.getOrDefault(CBCDataComponents.FUZE,
                     net.minecraft.world.item.component.ItemContainerContents.EMPTY).copyOne());
         }
-        if (stack.has(ModDataComponents.SOUL_FIRE.get())) {
+        CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        if (customData.contains("soul_fire")) {
             projectile.setSoulFire(true);
         }
         return projectile;

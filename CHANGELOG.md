@@ -1,5 +1,12 @@
 # 更新日志
 
+## v1.05 — 2026-08-09
+- 修复灵魂火装置无法正常工作
+- 修复 SoulFireApplicationRecipe：对已组装弹药施加灵魂火时，同时更新内部弹射物数据
+- 铝热剂弹头新增灵魂火支持（ThermiteAutocannonRoundItem + Projectile）
+- HighVelocityAutocannonCartridgeItem 新增防御性灵魂火检查（弹药箱级 CUSTOM_DATA 回退）
+- 铝热剂弹头引爆时支持灵魂火蔓延
+
 ## v1.04 — 2026-08-08
 - 新增高速机炮弹药（High-Velocity Autocannon Cartridge），初速2倍
 - 弹射物实体新增高初速模式，首tick速度翻倍
