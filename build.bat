@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 echo ========================================
-echo  CBC Autocannon Revolution - Build Script v9
+echo  CBC Autocannon Revolution - Build Script v10
 echo ========================================
 echo.
 
@@ -12,54 +12,45 @@ set "JAVAC=%JAVA_RUNTIME%\bin\javac.exe"
 set "JAR=%JAVA_RUNTIME%\bin\jar.exe"
 echo Java: %JAVA_RUNTIME%
 
-set "MC_DIR="
-if exist "D:\.minecraft" set "MC_DIR=D:\.minecraft"
+set "LIBS=D:\.minecraft\libraries"
 
-set "VERSION_DIR="
-for /d %%v in ("%MC_DIR%\versions\*") do ( if exist "%%v\mods" set "VERSION_DIR=%%v" )
-echo Version: %VERSION_DIR%
-
-set "LIBS=%MC_DIR%\libraries"
-
-REM ============ BUILD CLASSPATH ============
+REM ============ BUILD CLASSPATH (order matters!) ============
 set "CP="
 
-REM 1. NeoForge client (patches)
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\neoforged\neoforge\*client*.jar" 2^>nul ^| findstr /r 21\.1\. ^| sort /r') do ( set "CP=!CP!%%f;" & goto :cp1done )
+REM 1. NeoForge client (patched MC + NeoForge APIs) - MUST BE FIRST
+for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\neoforged\neoforge\21.1.228\*client*.jar" 2^>nul') do ( set "CP=!CP!%%f;" & goto :cp1done )
 :cp1done
 
-REM 2. Minecraft SRG (ALL vanilla classes)
+REM 2. Minecraft SRG (vanilla classes) - MUST BE SECOND
 for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\minecraft\client\1.21.1-20240808.144430\*srg*.jar" 2^>nul') do ( set "CP=!CP!%%f;" & goto :cp2done )
 :cp2done
 
-REM 3. NeoForge universal
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\neoforged\neoforge\*universal*.jar" 2^>nul ^| findstr /r 21\.1\. ^| sort /r') do ( set "CP=!CP!%%f;" & goto :cp3done )
+REM 3. Minecraft extra
+for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\minecraft\client\1.21.1-20240808.144430\*extra*.jar" 2^>nul') do ( set "CP=!CP!%%f;" & goto :cp3done )
 :cp3done
 
 REM 4. FML Loader
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\neoforged\fancymodloader\loader\*loader*.jar" 2^>nul ^| sort /r') do ( set "CP=!CP!%%f;" & goto :cp4done )
+for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\neoforged\fancymodloader\loader\4.0.42\*loader*.jar" 2^>nul') do ( set "CP=!CP!%%f;" & goto :cp4done )
 :cp4done
 
 REM 5. Bus
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\neoforged\bus\*bus*.jar" 2^>nul ^| sort /r') do ( set "CP=!CP!%%f;" & goto :cp5done )
-:cp5done
-
-REM 6. Logging
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\org\apache\logging\log4j\log4j-api\*2.8.1*api*.jar" 2^>nul') do ( set "CP=!CP!%%f;" & goto :cp6done )
-:cp6done
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\org\apache\logging\log4j\log4j-core\*2.8.1*core*.jar" 2^>nul') do ( set "CP=!CP!%%f;" & goto :cp7done )
-:cp7done
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\org\slf4j\slf4j-api\2.0.17\slf4j-api-2.0.17.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\com\mojang\logging\1.2.7\logging-1.2.7.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
-
-REM 7. DataFixerUpper (for Keyable, Codec etc.)
-for /f "delims=" %%f in ('dir /s /b "%LIBS%\com\mojang\datafixerupper\*datafixerupper*.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
-
-REM 7b. Brigadier (for Component/Message)
+for /f "delims=" %%f in ('dir /s /b "%LIBS%\net\neoforged\bus\8.0.5\bus-8.0.5.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
+REM 6. DataFixerUpper
+for /f "delims=" %%f in ('dir /s /b "%LIBS%\com\mojang\datafixerupper\6.0.6\datafixerupper-6.0.6.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
+REM 7. Brigadier
 for /f "delims=" %%f in ('dir /s /b "%LIBS%\com\mojang\brigadier\1.3.10\brigadier-1.3.10.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
+REM 8. Slf4j
+for /f "delims=" %%f in ('dir /s /b "%LIBS%\org\slf4j\slf4j-api\2.0.17\slf4j-api-2.0.17.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
 
-REM 8. ALL mod JARs
-echo Adding mods to classpath...
+REM 9. Our libs mod JARs
+for /f "delims=" %%f in ('dir /s /b "%~dp0libs\*.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
+
+REM 10. Version mods
+set "MC_DIR="
+if exist "D:\.minecraft" set "MC_DIR=D:\.minecraft"
+set "VERSION_DIR="
+for /d %%v in ("%MC_DIR%\versions\*") do ( if exist "%%v\mods" set "VERSION_DIR=%%v" )
+echo Version: %VERSION_DIR%
 for /f "delims=" %%f in ('dir /s /b "%VERSION_DIR%\mods\*.jar" 2^>nul') do ( set "CP=!CP!%%f;" )
 
 if "!CP:~-1!"==";" set "CP=!CP:~0,-1!"

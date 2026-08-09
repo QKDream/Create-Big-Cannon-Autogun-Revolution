@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
@@ -39,13 +38,16 @@ public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
                     for (int z = -2; z <= 2; z++) {
                         BlockPos pos = center.offset(x, y, z);
                         BlockState state = this.level().getBlockState(pos);
+                        // 1/3 chance to destroy non-indestructible blocks
                         if (!state.isAir() && state.getDestroySpeed(this.level(), pos) >= 0
                                 && this.random.nextInt(3) == 0) {
                             this.level().destroyBlock(pos, false);
                         }
+                        // Ignite - place fire above solid blocks
                         if (this.level().isEmptyBlock(pos.above())
-                                && state.isFlammable(this.level(), pos, null)) {
-                            this.level().setBlock(pos.above(), Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL);
+                                && !this.level().isEmptyBlock(pos)
+                                && this.random.nextFloat() < 0.3f) {
+                            this.level().setBlock(pos.above(), Blocks.FIRE.defaultBlockState(), 3);
                         }
                     }
                 }
