@@ -40,28 +40,16 @@ public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
         super.detonate(position);
         if (!this.level().isClientSide) {
             BlockPos center = BlockPos.containing(position);
-            // Nerf: only mine the impact point block
             BlockState state = this.level().getBlockState(center);
             if (!state.isAir() && state.getDestroySpeed(this.level(), center) >= 0) {
                 this.level().destroyBlock(center, false);
             }
-            // Ignite above the impact point
             if (this.level().isEmptyBlock(center.above())) {
-                this.level().setBlock(center.above(), this.soulFire ? Blocks.FIRE.defaultBlockState() : Blocks.FIRE.defaultBlockState(), 3);
+                this.level().setBlock(center.above(), Blocks.FIRE.defaultBlockState(), 3);
             }
-            // Soul fire device behavior: explosion + fire + %HP damage
             if (this.soulFire) {
                 this.level().explode(this, position.x(), position.y(), position.z(), 2.0f, Level.ExplosionInteraction.NONE);
-                for (int x = -3; x <= 3; x++) {
-                    for (int y = -2; y <= 2; y++) {
-                        for (int z = -3; z <= 3; z++) {
-                            BlockPos pos = center.offset(x, y, z);
-                            if (this.level().isEmptyBlock(pos) && this.random.nextFloat() < 0.4f) {
-                                this.level().setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
-                            }
-                        }
-                    }
-                }
+                FireSpawnHelper.spawnFireField(this.level(), center, this.random);
                 AABB area = new AABB(center).inflate(1.0);
                 for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
                     float damage = entity.getMaxHealth() * 0.15f;

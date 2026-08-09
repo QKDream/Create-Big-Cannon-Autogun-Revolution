@@ -2,11 +2,9 @@ package com.cbcaddon.addon.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
 
@@ -40,20 +38,8 @@ public class APHEAutocannonProjectile extends FlakAutocannonProjectile {
         super.detonate(position);
         if (this.soulFire && !this.level().isClientSide) {
             BlockPos center = BlockPos.containing(position);
-            // Small explosion
             this.level().explode(this, position.x(), position.y(), position.z(), 2.0f, Level.ExplosionInteraction.NONE);
-            // Regular fire spread
-            for (int x = -3; x <= 3; x++) {
-                for (int y = -2; y <= 2; y++) {
-                    for (int z = -3; z <= 3; z++) {
-                        BlockPos pos = center.offset(x, y, z);
-                        if (this.level().isEmptyBlock(pos) && this.random.nextFloat() < 0.4f) {
-                            this.level().setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
-                        }
-                    }
-                }
-            }
-            // % max HP damage to entities within 1 block
+            FireSpawnHelper.spawnFireField(this.level(), center, this.random);
             AABB area = new AABB(center).inflate(1.0);
             for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
                 float damage = entity.getMaxHealth() * 0.15f;
