@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import rbasamoyai.createbigcannons.index.CBCMunitionPropertiesHandlers;
+import rbasamoyai.createbigcannons.munitions.AbstractCannonProjectile;
 import rbasamoyai.createbigcannons.munitions.config.MunitionPropertiesHandler;
 
 import java.util.function.Supplier;
@@ -21,43 +22,63 @@ public class ModEntities {
 
     public static final Supplier<EntityType<APFSDSAutocannonProjectile>> APFSDS_AUTOCANNON =
             ENTITY_TYPES.register("apfsds_autocannon",
-                    () -> EntityType.Builder.<APFSDSAutocannonProjectile>of(APFSDSAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f)
-                            .clientTrackingRange(4)
-                            .updateInterval(1)
-                            .build("apfsds_autocannon"));
+                    () -> {
+                        EntityType.Builder<APFSDSAutocannonProjectile> builder = EntityType.Builder
+                                .<APFSDSAutocannonProjectile>of(APFSDSAutocannonProjectile::new, MobCategory.MISC)
+                                .sized(0.25f, 0.25f)
+                                .clientTrackingRange(4)
+                                .updateInterval(1);
+                        AbstractCannonProjectile.build(builder);
+                        return builder.build("apfsds_autocannon");
+                    });
 
     public static final Supplier<EntityType<APHEAutocannonProjectile>> APHE_AUTOCANNON =
             ENTITY_TYPES.register("aphe_autocannon",
-                    () -> EntityType.Builder.<APHEAutocannonProjectile>of(APHEAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f)
-                            .clientTrackingRange(4)
-                            .updateInterval(1)
-                            .build("aphe_autocannon"));
+                    () -> {
+                        EntityType.Builder<APHEAutocannonProjectile> builder = EntityType.Builder
+                                .<APHEAutocannonProjectile>of(APHEAutocannonProjectile::new, MobCategory.MISC)
+                                .sized(0.25f, 0.25f)
+                                .clientTrackingRange(4)
+                                .updateInterval(1);
+                        AbstractCannonProjectile.build(builder);
+                        return builder.build("aphe_autocannon");
+                    });
 
     public static final Supplier<EntityType<SAPAutocannonProjectile>> SAP_AUTOCANNON =
             ENTITY_TYPES.register("sap_autocannon",
-                    () -> EntityType.Builder.<SAPAutocannonProjectile>of(SAPAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f)
-                            .clientTrackingRange(4)
-                            .updateInterval(1)
-                            .build("sap_autocannon"));
+                    () -> {
+                        EntityType.Builder<SAPAutocannonProjectile> builder = EntityType.Builder
+                                .<SAPAutocannonProjectile>of(SAPAutocannonProjectile::new, MobCategory.MISC)
+                                .sized(0.25f, 0.25f)
+                                .clientTrackingRange(4)
+                                .updateInterval(1);
+                        AbstractCannonProjectile.build(builder);
+                        return builder.build("sap_autocannon");
+                    });
 
     public static final Supplier<EntityType<ShrapnelAutocannonProjectile>> SHRAPNEL_AUTOCANNON =
             ENTITY_TYPES.register("shrapnel_autocannon",
-                    () -> EntityType.Builder.<ShrapnelAutocannonProjectile>of(ShrapnelAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f)
-                            .clientTrackingRange(4)
-                            .updateInterval(1)
-                            .build("shrapnel_autocannon"));
+                    () -> {
+                        EntityType.Builder<ShrapnelAutocannonProjectile> builder = EntityType.Builder
+                                .<ShrapnelAutocannonProjectile>of(ShrapnelAutocannonProjectile::new, MobCategory.MISC)
+                                .sized(0.25f, 0.25f)
+                                .clientTrackingRange(4)
+                                .updateInterval(1);
+                        AbstractCannonProjectile.build(builder);
+                        return builder.build("shrapnel_autocannon");
+                    });
 
     public static final Supplier<EntityType<ThermiteAutocannonProjectile>> THERMITE_AUTOCANNON =
             ENTITY_TYPES.register("thermite_autocannon",
-                    () -> EntityType.Builder.<ThermiteAutocannonProjectile>of(ThermiteAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f)
-                            .clientTrackingRange(4)
-                            .updateInterval(1)
-                            .build("thermite_autocannon"));
+                    () -> {
+                        EntityType.Builder<ThermiteAutocannonProjectile> builder = EntityType.Builder
+                                .<ThermiteAutocannonProjectile>of(ThermiteAutocannonProjectile::new, MobCategory.MISC)
+                                .sized(0.25f, 0.25f)
+                                .clientTrackingRange(4)
+                                .updateInterval(1);
+                        AbstractCannonProjectile.build(builder);
+                        return builder.build("thermite_autocannon");
+                    });
 
     public static void registerProjectileHandlers() {
         MunitionPropertiesHandler.registerProjectileHandler(
