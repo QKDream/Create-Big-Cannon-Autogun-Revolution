@@ -1,5 +1,6 @@
 package com.cbcaddon.addon;
 
+import com.cbcaddon.addon.init.ModDataComponents;
 import com.cbcaddon.addon.init.ModEntities;
 import com.cbcaddon.addon.init.ModItems;
 import com.cbcaddon.addon.init.ModRecipeSerializers;
@@ -32,6 +33,8 @@ public class CBCAddon {
                         output.accept(ModItems.APHE_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SAP_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
+                        output.accept(ModItems.THERMITE_AUTOCANNON_ROUND.get());
+                        output.accept(ModItems.SOUL_FIRE_DEVICE.get());
                         output.accept(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
                     })
                     .build());
@@ -39,6 +42,7 @@ public class CBCAddon {
     public CBCAddon(IEventBus modEventBus) {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
+        ModDataComponents.DATA_COMPONENTS.register(modEventBus);
         ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         TABS.register(modEventBus);
         modEventBus.addListener(this::onCommonSetup);
@@ -57,6 +61,8 @@ public class CBCAddon {
         event.registerEntityRenderer(ModEntities.SAP_AUTOCANNON.get(),
                 AutocannonProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.SHRAPNEL_AUTOCANNON.get(),
+                AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.THERMITE_AUTOCANNON.get(),
                 AutocannonProjectileRenderer::new);
     }
 }

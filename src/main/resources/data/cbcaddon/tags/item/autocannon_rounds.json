@@ -1,8 +1,1 @@
-{
-  "values": [
-    "cbcaddon:apfsds_autocannon_round",
-    "cbcaddon:aphe_autocannon_round",
-    "cbcaddon:sap_autocannon_round",
-    "cbcaddon:shrapnel_autocannon_round"
-  ]
-}
+{"values":["cbcaddon:apfsds_autocannon_round","cbcaddon:aphe_autocannon_round","cbcaddon:sap_autocannon_round","cbcaddon:shrapnel_autocannon_round","cbcaddon:thermite_autocannon_round"]}

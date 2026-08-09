@@ -4,6 +4,7 @@ import com.cbcaddon.addon.entity.APFSDSAutocannonProjectile;
 import com.cbcaddon.addon.entity.APHEAutocannonProjectile;
 import com.cbcaddon.addon.entity.SAPAutocannonProjectile;
 import com.cbcaddon.addon.entity.ShrapnelAutocannonProjectile;
+import com.cbcaddon.addon.entity.ThermiteAutocannonProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
@@ -25,6 +26,8 @@ public class HighVelocityAutocannonCartridgeItem extends AutocannonCartridgeItem
             sap.setHighVelocity(true);
         } else if (projectile instanceof ShrapnelAutocannonProjectile shrapnel) {
             shrapnel.setHighVelocity(true);
+        } else if (projectile instanceof ThermiteAutocannonProjectile thermite) {
+            thermite.setHighVelocity(true);
         }
         return projectile;
     }

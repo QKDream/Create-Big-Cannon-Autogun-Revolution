@@ -6,6 +6,8 @@ import com.cbcaddon.addon.item.APHEAutocannonRoundItem;
 import com.cbcaddon.addon.item.HighVelocityAutocannonCartridgeItem;
 import com.cbcaddon.addon.item.SAPAutocannonRoundItem;
 import com.cbcaddon.addon.item.ShrapnelAutocannonRoundItem;
+import com.cbcaddon.addon.item.SoulFireDeviceItem;
+import com.cbcaddon.addon.item.ThermiteAutocannonRoundItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -31,6 +33,14 @@ public class ModItems {
     public static final Supplier<Item> SHRAPNEL_AUTOCANNON_ROUND =
             ITEMS.register("shrapnel_autocannon_round",
                     () -> new ShrapnelAutocannonRoundItem(new Item.Properties()));
+
+    public static final Supplier<Item> THERMITE_AUTOCANNON_ROUND =
+            ITEMS.register("thermite_autocannon_round",
+                    () -> new ThermiteAutocannonRoundItem(new Item.Properties()));
+
+    public static final Supplier<Item> SOUL_FIRE_DEVICE =
+            ITEMS.register("soul_fire_device",
+                    () -> new SoulFireDeviceItem(new Item.Properties().stacksTo(16)));
 
     public static final Supplier<Item> HIGH_VELOCITY_CARTRIDGE =
             ITEMS.register("high_velocity_autocannon_cartridge",

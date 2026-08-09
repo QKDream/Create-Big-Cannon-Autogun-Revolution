@@ -5,6 +5,7 @@ import com.cbcaddon.addon.entity.APFSDSAutocannonProjectile;
 import com.cbcaddon.addon.entity.APHEAutocannonProjectile;
 import com.cbcaddon.addon.entity.SAPAutocannonProjectile;
 import com.cbcaddon.addon.entity.ShrapnelAutocannonProjectile;
+import com.cbcaddon.addon.entity.ThermiteAutocannonProjectile;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -50,6 +51,14 @@ public class ModEntities {
                             .updateInterval(1)
                             .build("shrapnel_autocannon"));
 
+    public static final Supplier<EntityType<ThermiteAutocannonProjectile>> THERMITE_AUTOCANNON =
+            ENTITY_TYPES.register("thermite_autocannon",
+                    () -> EntityType.Builder.<ThermiteAutocannonProjectile>of(ThermiteAutocannonProjectile::new, MobCategory.MISC)
+                            .sized(0.25f, 0.25f)
+                            .clientTrackingRange(4)
+                            .updateInterval(1)
+                            .build("thermite_autocannon"));
+
     public static void registerProjectileHandlers() {
         MunitionPropertiesHandler.registerProjectileHandler(
                 APFSDS_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.INERT_AUTOCANNON_PROJECTILE);
@@ -59,5 +68,7 @@ public class ModEntities {
                 SAP_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
         MunitionPropertiesHandler.registerProjectileHandler(
                 SHRAPNEL_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
+        MunitionPropertiesHandler.registerProjectileHandler(
+                THERMITE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
     }
 }

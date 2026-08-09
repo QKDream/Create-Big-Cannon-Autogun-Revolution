@@ -1,0 +1,22 @@
+{
+  "entity_damage": 12.0,
+  "durability_mass": 1.5,
+  "renders_invulnerable": false,
+  "ignores_invulnerability": true,
+  "ignores_entity_armor": false,
+  "base_fuze": true,
+  "gravity": -0.025,
+  "drag": 0.01,
+  "quadratic_drag": false,
+  "knockback": 0.4,
+  "added_recoil": 0.8,
+  "can_squib": true,
+  "lifetime": 800,
+  "shrapnel_spread": 0.35,
+  "shrapnel_count": 5,
+  "entity_damaging_explosive_power": 8.0,
+  "block_damaging_explosive_power": 5.0,
+  "penetration": 4.0,
+  "toughness": 3.0,
+  "deflection": 0.50
+}

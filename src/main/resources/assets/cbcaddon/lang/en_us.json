@@ -4,9 +4,12 @@
   "item.cbcaddon.aphe_autocannon_round": "APHE Projectile",
   "item.cbcaddon.sap_autocannon_round": "SAP Projectile",
   "item.cbcaddon.shrapnel_autocannon_round": "Shrapnel Projectile",
+  "item.cbcaddon.thermite_autocannon_round": "Thermite Projectile",
+  "item.cbcaddon.soul_fire_device": "Soul Fire Device",
   "item.cbcaddon.high_velocity_autocannon_cartridge": "High-Velocity Autocannon Cartridge",
   "entity.cbcaddon.apfsds_autocannon": "APFSDS Autocannon Round",
   "entity.cbcaddon.aphe_autocannon": "APHE Autocannon Round",
   "entity.cbcaddon.sap_autocannon": "SAP Autocannon Round",
-  "entity.cbcaddon.shrapnel_autocannon": "Shrapnel Autocannon Round"
+  "entity.cbcaddon.shrapnel_autocannon": "Shrapnel Autocannon Round",
+  "entity.cbcaddon.thermite_autocannon": "Thermite Autocannon Round"
 }

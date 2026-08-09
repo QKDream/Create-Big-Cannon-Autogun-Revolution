@@ -1,7 +1,6 @@
 package com.cbcaddon.addon.item;
 
-import com.cbcaddon.addon.entity.SAPAutocannonProjectile;
-import com.cbcaddon.addon.init.ModDataComponents;
+import com.cbcaddon.addon.entity.ThermiteAutocannonProjectile;
 import com.cbcaddon.addon.init.ModEntities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -10,25 +9,22 @@ import rbasamoyai.createbigcannons.index.CBCDataComponents;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonRoundItem;
 
-public class SAPAutocannonRoundItem extends FlakAutocannonRoundItem {
-    public SAPAutocannonRoundItem(Properties properties) {
+public class ThermiteAutocannonRoundItem extends FlakAutocannonRoundItem {
+    public ThermiteAutocannonRoundItem(Properties properties) {
         super(properties);
     }
 
     @Override
     public EntityType<?> getEntityType(ItemStack stack) {
-        return ModEntities.SAP_AUTOCANNON.get();
+        return ModEntities.THERMITE_AUTOCANNON.get();
     }
 
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
-        SAPAutocannonProjectile projectile = ModEntities.SAP_AUTOCANNON.get().create(level);
+        ThermiteAutocannonProjectile projectile = ModEntities.THERMITE_AUTOCANNON.get().create(level);
         if (stack.has(CBCDataComponents.FUZE)) {
             projectile.setFuze(stack.getOrDefault(CBCDataComponents.FUZE,
                     net.minecraft.world.item.component.ItemContainerContents.EMPTY).copyOne());
-        }
-        if (stack.has(ModDataComponents.SOUL_FIRE.get())) {
-            projectile.setSoulFire(true);
         }
         return projectile;
     }

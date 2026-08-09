@@ -1,6 +1,7 @@
 package com.cbcaddon.addon.item;
 
 import com.cbcaddon.addon.entity.ShrapnelAutocannonProjectile;
+import com.cbcaddon.addon.init.ModDataComponents;
 import com.cbcaddon.addon.init.ModEntities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +24,11 @@ public class ShrapnelAutocannonRoundItem extends FlakAutocannonRoundItem {
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         ShrapnelAutocannonProjectile projectile = ModEntities.SHRAPNEL_AUTOCANNON.get().create(level);
         if (stack.has(CBCDataComponents.FUZE)) {
-            projectile.setFuze(stack.getOrDefault(CBCDataComponents.FUZE, net.minecraft.world.item.component.ItemContainerContents.EMPTY).copyOne());
+            projectile.setFuze(stack.getOrDefault(CBCDataComponents.FUZE,
+                    net.minecraft.world.item.component.ItemContainerContents.EMPTY).copyOne());
+        }
+        if (stack.has(ModDataComponents.SOUL_FIRE.get())) {
+            projectile.setSoulFire(true);
         }
         return projectile;
     }

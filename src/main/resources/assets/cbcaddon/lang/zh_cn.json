@@ -4,9 +4,12 @@
   "item.cbcaddon.aphe_autocannon_round": "APHE 弹头",
   "item.cbcaddon.sap_autocannon_round": "SAP 弹头",
   "item.cbcaddon.shrapnel_autocannon_round": "榴霰弹 弹头",
+  "item.cbcaddon.thermite_autocannon_round": "铝热剂弹头",
+  "item.cbcaddon.soul_fire_device": "灵魂火装置",
   "item.cbcaddon.high_velocity_autocannon_cartridge": "高速机炮弹药",
   "entity.cbcaddon.apfsds_autocannon": "APFSDS 弹头",
   "entity.cbcaddon.aphe_autocannon": "APHE 弹头",
   "entity.cbcaddon.sap_autocannon": "SAP 弹头",
-  "entity.cbcaddon.shrapnel_autocannon": "榴霰弹 弹头"
+  "entity.cbcaddon.shrapnel_autocannon": "榴霰弹 弹头",
+  "entity.cbcaddon.thermite_autocannon": "铝热剂弹头"
 }
