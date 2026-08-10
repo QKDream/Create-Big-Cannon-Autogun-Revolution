@@ -1,18 +1,22 @@
 package com.cbcaddon.addon.entity;
 
+import com.cbcaddon.addon.block.FuzeControllerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
 
 public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
-    private boolean highVelocity = false;
-    private boolean soulFire = false;
-    private boolean thermite = true;
+    private boolean highVelocity;
+    private boolean soulFire;
+    private String controllerMode;
+    private float controllerDist = 3.0f;
+    private int controllerTimer;
 
     public ThermiteAutocannonProjectile(EntityType<? extends ThermiteAutocannonProjectile> type, Level level) { super(type, level); }
 
@@ -24,6 +28,32 @@ public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
         if (this.highVelocity && this.tickCount == 1) {
             this.setDeltaMovement(this.getDeltaMovement().scale(2.0));
             this.highVelocity = false;
+        }
+        if (this.tickCount == 1 && !this.level().isClientSide) {
+            BlockPos c = this.blockPosition();
+            for (BlockPos p : BlockPos.betweenClosed(c.offset(-3, -3, -3), c.offset(3, 3, 3))) {
+                BlockEntity be = this.level().getBlockEntity(p);
+                if (be instanceof FuzeControllerBlockEntity ctrl) {
+                    this.controllerMode = ctrl.getFuzeMode();
+                    this.controllerDist = ctrl.getProximityDistance();
+                    this.controllerTimer = ctrl.getFuzeTimer();
+                    break;
+                }
+            }
+        }
+        if (this.controllerMode != null && !this.level().isClientSide && this.tickCount > 1) {
+            if ("proximity".equals(this.controllerMode)) {
+                if (SmartFuzeHelper.checkProximityDetonation(this, this.controllerDist)) {
+                    this.detonate(this.position());
+                    return;
+                }
+            } else if ("timed".equals(this.controllerMode)) {
+                this.controllerTimer--;
+                if (this.controllerTimer <= 0) {
+                    this.detonate(this.position());
+                    return;
+                }
+            }
         }
         super.tick();
     }
