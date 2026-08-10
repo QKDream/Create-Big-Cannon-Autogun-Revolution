@@ -31,6 +31,6 @@ public class APFSDSAutocannonRoundItem extends APAutocannonRoundItem {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
         tooltip.add(Component.translatable("tooltip.cbcaddon.apfsds_round"));
-        tooltip.add(Component.translatable("tooltip.cbcaddon.penetration", 300));
+        tooltip.add(Component.translatable("tooltip.cbcaddon.penetration", 60));
     }
 }

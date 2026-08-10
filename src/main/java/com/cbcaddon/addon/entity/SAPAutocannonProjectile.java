@@ -31,9 +31,9 @@ public class SAPAutocannonProjectile extends FlakAutocannonProjectile {
         if (this.soulFire && !this.level().isClientSide) {
             BlockPos center = BlockPos.containing(position);
             FireSpawnHelper.spawnFireField(this.level(), center);
-            AABB area = new AABB(center).inflate(1.0);
+            AABB area = new AABB(center).inflate(1.5);
             for (LivingEntity e : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
-                e.hurt(this.damageSources().explosion(this, this.getOwner()), e.getMaxHealth() * 0.15f);
+                e.hurt(this.damageSources().explosion(this, this.getOwner()), e.getMaxHealth() * 0.25f);
             }
         }
     }
