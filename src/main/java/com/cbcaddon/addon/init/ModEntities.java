@@ -26,8 +26,9 @@ public class ModEntities {
                         EntityType.Builder<APFSDSAutocannonProjectile> builder = EntityType.Builder
                                 .<APFSDSAutocannonProjectile>of(APFSDSAutocannonProjectile::new, MobCategory.MISC)
                                 .sized(0.25f, 0.25f)
-                                .clientTrackingRange(4)
-                                .updateInterval(1);
+                                .clientTrackingRange(8)
+                                .updateInterval(1)
+                                .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("apfsds_autocannon");
                     });
@@ -38,8 +39,9 @@ public class ModEntities {
                         EntityType.Builder<APHEAutocannonProjectile> builder = EntityType.Builder
                                 .<APHEAutocannonProjectile>of(APHEAutocannonProjectile::new, MobCategory.MISC)
                                 .sized(0.25f, 0.25f)
-                                .clientTrackingRange(4)
-                                .updateInterval(1);
+                                .clientTrackingRange(8)
+                                .updateInterval(1)
+                                .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("aphe_autocannon");
                     });
@@ -50,8 +52,9 @@ public class ModEntities {
                         EntityType.Builder<SAPAutocannonProjectile> builder = EntityType.Builder
                                 .<SAPAutocannonProjectile>of(SAPAutocannonProjectile::new, MobCategory.MISC)
                                 .sized(0.25f, 0.25f)
-                                .clientTrackingRange(4)
-                                .updateInterval(1);
+                                .clientTrackingRange(8)
+                                .updateInterval(1)
+                                .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("sap_autocannon");
                     });
@@ -62,8 +65,9 @@ public class ModEntities {
                         EntityType.Builder<ShrapnelAutocannonProjectile> builder = EntityType.Builder
                                 .<ShrapnelAutocannonProjectile>of(ShrapnelAutocannonProjectile::new, MobCategory.MISC)
                                 .sized(0.25f, 0.25f)
-                                .clientTrackingRange(4)
-                                .updateInterval(1);
+                                .clientTrackingRange(8)
+                                .updateInterval(1)
+                                .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("shrapnel_autocannon");
                     });
@@ -74,8 +78,9 @@ public class ModEntities {
                         EntityType.Builder<ThermiteAutocannonProjectile> builder = EntityType.Builder
                                 .<ThermiteAutocannonProjectile>of(ThermiteAutocannonProjectile::new, MobCategory.MISC)
                                 .sized(0.25f, 0.25f)
-                                .clientTrackingRange(4)
-                                .updateInterval(1);
+                                .clientTrackingRange(8)
+                                .updateInterval(1)
+                                .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("thermite_autocannon");
                     });
