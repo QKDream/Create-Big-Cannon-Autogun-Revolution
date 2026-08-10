@@ -11,5 +11,15 @@
   "entity.cbcaddon.aphe_autocannon": "APHE Autocannon Round",
   "entity.cbcaddon.sap_autocannon": "SAP Autocannon Round",
   "entity.cbcaddon.shrapnel_autocannon": "Shrapnel Autocannon Round",
-  "entity.cbcaddon.thermite_autocannon": "Thermite Autocannon Round"
+  "entity.cbcaddon.thermite_autocannon": "Thermite Autocannon Round",
+  "tooltip.cbcaddon.apfsds_round": "§6Kinetic Penetrator §7- APFSDS",
+  "tooltip.cbcaddon.aphe_round": "§6Armor-Piercing High-Explosive §7- APHE",
+  "tooltip.cbcaddon.sap_round": "§6Semi-Armor-Piercing §7- SAP",
+  "tooltip.cbcaddon.shrapnel_round": "§6Shrapnel",
+  "tooltip.cbcaddon.shrapnel_info": "§740 fragments, wide spread",
+  "tooltip.cbcaddon.thermite_round": "§6Thermite §7- Block mining + ignition",
+  "tooltip.cbcaddon.soul_fire_device": "§cCraft with ammo to add fire explosion + 15% HP damage",
+  "tooltip.cbcaddon.high_velocity": "§b2x Muzzle Velocity",
+  "tooltip.cbcaddon.penetration": "§7Penetration: §f%s",
+  "tooltip.cbcaddon.soul_fire_applied": "§cSoul Fire Device installed"
 }

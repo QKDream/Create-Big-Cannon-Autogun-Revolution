@@ -6,11 +6,15 @@ import com.cbcaddon.addon.entity.SAPAutocannonProjectile;
 import com.cbcaddon.addon.entity.ShrapnelAutocannonProjectile;
 import com.cbcaddon.addon.entity.ThermiteAutocannonProjectile;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonCartridgeItem;
+
+import java.util.List;
 
 public class HighVelocityAutocannonCartridgeItem extends AutocannonCartridgeItem {
     public HighVelocityAutocannonCartridgeItem(Properties properties) {
@@ -32,7 +36,6 @@ public class HighVelocityAutocannonCartridgeItem extends AutocannonCartridgeItem
             thermite.setHighVelocity(true);
         }
 
-        // Defensive: also check cartridge's own CUSTOM_DATA for soul_fire
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         if (customData.contains("soul_fire")) {
             if (projectile instanceof APHEAutocannonProjectile aphe) {
@@ -47,5 +50,11 @@ public class HighVelocityAutocannonCartridgeItem extends AutocannonCartridgeItem
         }
 
         return projectile;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltip, flag);
+        tooltip.add(Component.translatable("tooltip.cbcaddon.high_velocity"));
     }
 }

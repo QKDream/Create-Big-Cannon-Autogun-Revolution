@@ -11,5 +11,15 @@
   "entity.cbcaddon.aphe_autocannon": "APHE 弹头",
   "entity.cbcaddon.sap_autocannon": "SAP 弹头",
   "entity.cbcaddon.shrapnel_autocannon": "榴霰弹 弹头",
-  "entity.cbcaddon.thermite_autocannon": "铝热剂弹头"
+  "entity.cbcaddon.thermite_autocannon": "铝热剂弹头",
+  "tooltip.cbcaddon.apfsds_round": "§6动能穿甲弹 §7- APFSDS",
+  "tooltip.cbcaddon.aphe_round": "§6穿甲高爆弹 §7- APHE",
+  "tooltip.cbcaddon.sap_round": "§6半穿甲弹 §7- SAP",
+  "tooltip.cbcaddon.shrapnel_round": "§6榴霰弹",
+  "tooltip.cbcaddon.shrapnel_info": "§740枚破片，密集散布",
+  "tooltip.cbcaddon.thermite_round": "§6燃烧弹 §7- 撞击点挖掘 + 引燃",
+  "tooltip.cbcaddon.soul_fire_device": "§c与弹药合成，附加火焰爆炸 + 15%生命伤害",
+  "tooltip.cbcaddon.high_velocity": "§b初速 2倍",
+  "tooltip.cbcaddon.penetration": "§7穿深: §f%s",
+  "tooltip.cbcaddon.soul_fire_applied": "§c灵魂火装置已安装"
 }
