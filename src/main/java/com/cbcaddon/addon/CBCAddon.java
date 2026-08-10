@@ -34,6 +34,7 @@ public class CBCAddon {
                         output.accept(ModItems.SAP_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.THERMITE_AUTOCANNON_ROUND.get());
+                        output.accept(ModItems.MULTIPURPOSE_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SOUL_FIRE_DEVICE.get());
                         output.accept(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
                     })
@@ -49,20 +50,14 @@ public class CBCAddon {
         modEventBus.addListener(this::registerRenderers);
     }
 
-    private void onCommonSetup(FMLCommonSetupEvent event) {
-        ModEntities.registerProjectileHandlers();
-    }
+    private void onCommonSetup(FMLCommonSetupEvent event) { ModEntities.registerProjectileHandlers(); }
 
     private void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntities.APFSDS_AUTOCANNON.get(),
-                AutocannonProjectileRenderer::new);
-        event.registerEntityRenderer(ModEntities.APHE_AUTOCANNON.get(),
-                AutocannonProjectileRenderer::new);
-        event.registerEntityRenderer(ModEntities.SAP_AUTOCANNON.get(),
-                AutocannonProjectileRenderer::new);
-        event.registerEntityRenderer(ModEntities.SHRAPNEL_AUTOCANNON.get(),
-                AutocannonProjectileRenderer::new);
-        event.registerEntityRenderer(ModEntities.THERMITE_AUTOCANNON.get(),
-                AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.APFSDS_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.APHE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.SAP_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.SHRAPNEL_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.THERMITE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.MULTIPURPOSE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
     }
 }

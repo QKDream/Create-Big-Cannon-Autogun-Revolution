@@ -3,6 +3,7 @@ package com.cbcaddon.addon.init;
 import com.cbcaddon.addon.CBCAddon;
 import com.cbcaddon.addon.entity.APFSDSAutocannonProjectile;
 import com.cbcaddon.addon.entity.APHEAutocannonProjectile;
+import com.cbcaddon.addon.entity.MultiPurposeAutocannonProjectile;
 import com.cbcaddon.addon.entity.SAPAutocannonProjectile;
 import com.cbcaddon.addon.entity.ShrapnelAutocannonProjectile;
 import com.cbcaddon.addon.entity.ThermiteAutocannonProjectile;
@@ -25,9 +26,7 @@ public class ModEntities {
                     () -> {
                         EntityType.Builder<APFSDSAutocannonProjectile> builder = EntityType.Builder
                                 .<APFSDSAutocannonProjectile>of(APFSDSAutocannonProjectile::new, MobCategory.MISC)
-                                .sized(0.25f, 0.25f)
-                                .clientTrackingRange(8)
-                                .updateInterval(1)
+                                .sized(0.25f, 0.25f).clientTrackingRange(8).updateInterval(1)
                                 .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("apfsds_autocannon");
@@ -38,9 +37,7 @@ public class ModEntities {
                     () -> {
                         EntityType.Builder<APHEAutocannonProjectile> builder = EntityType.Builder
                                 .<APHEAutocannonProjectile>of(APHEAutocannonProjectile::new, MobCategory.MISC)
-                                .sized(0.25f, 0.25f)
-                                .clientTrackingRange(8)
-                                .updateInterval(1)
+                                .sized(0.25f, 0.25f).clientTrackingRange(8).updateInterval(1)
                                 .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("aphe_autocannon");
@@ -51,9 +48,7 @@ public class ModEntities {
                     () -> {
                         EntityType.Builder<SAPAutocannonProjectile> builder = EntityType.Builder
                                 .<SAPAutocannonProjectile>of(SAPAutocannonProjectile::new, MobCategory.MISC)
-                                .sized(0.25f, 0.25f)
-                                .clientTrackingRange(8)
-                                .updateInterval(1)
+                                .sized(0.25f, 0.25f).clientTrackingRange(8).updateInterval(1)
                                 .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("sap_autocannon");
@@ -64,9 +59,7 @@ public class ModEntities {
                     () -> {
                         EntityType.Builder<ShrapnelAutocannonProjectile> builder = EntityType.Builder
                                 .<ShrapnelAutocannonProjectile>of(ShrapnelAutocannonProjectile::new, MobCategory.MISC)
-                                .sized(0.25f, 0.25f)
-                                .clientTrackingRange(8)
-                                .updateInterval(1)
+                                .sized(0.25f, 0.25f).clientTrackingRange(8).updateInterval(1)
                                 .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("shrapnel_autocannon");
@@ -77,24 +70,29 @@ public class ModEntities {
                     () -> {
                         EntityType.Builder<ThermiteAutocannonProjectile> builder = EntityType.Builder
                                 .<ThermiteAutocannonProjectile>of(ThermiteAutocannonProjectile::new, MobCategory.MISC)
-                                .sized(0.25f, 0.25f)
-                                .clientTrackingRange(8)
-                                .updateInterval(1)
+                                .sized(0.25f, 0.25f).clientTrackingRange(8).updateInterval(1)
                                 .setShouldReceiveVelocityUpdates(true);
                         AbstractCannonProjectile.build(builder);
                         return builder.build("thermite_autocannon");
                     });
 
+    public static final Supplier<EntityType<MultiPurposeAutocannonProjectile>> MULTIPURPOSE_AUTOCANNON =
+            ENTITY_TYPES.register("multipurpose_autocannon",
+                    () -> {
+                        EntityType.Builder<MultiPurposeAutocannonProjectile> builder = EntityType.Builder
+                                .<MultiPurposeAutocannonProjectile>of(MultiPurposeAutocannonProjectile::new, MobCategory.MISC)
+                                .sized(0.25f, 0.25f).clientTrackingRange(8).updateInterval(1)
+                                .setShouldReceiveVelocityUpdates(true);
+                        AbstractCannonProjectile.build(builder);
+                        return builder.build("multipurpose_autocannon");
+                    });
+
     public static void registerProjectileHandlers() {
-        MunitionPropertiesHandler.registerProjectileHandler(
-                APFSDS_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.INERT_AUTOCANNON_PROJECTILE);
-        MunitionPropertiesHandler.registerProjectileHandler(
-                APHE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
-        MunitionPropertiesHandler.registerProjectileHandler(
-                SAP_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
-        MunitionPropertiesHandler.registerProjectileHandler(
-                SHRAPNEL_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
-        MunitionPropertiesHandler.registerProjectileHandler(
-                THERMITE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
+        MunitionPropertiesHandler.registerProjectileHandler(APFSDS_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.INERT_AUTOCANNON_PROJECTILE);
+        MunitionPropertiesHandler.registerProjectileHandler(APHE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
+        MunitionPropertiesHandler.registerProjectileHandler(SAP_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
+        MunitionPropertiesHandler.registerProjectileHandler(SHRAPNEL_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
+        MunitionPropertiesHandler.registerProjectileHandler(THERMITE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
+        MunitionPropertiesHandler.registerProjectileHandler(MULTIPURPOSE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
     }
 }
