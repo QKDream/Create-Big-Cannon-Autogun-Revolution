@@ -38,7 +38,7 @@ public class ShrapnelAutocannonProjectile extends FlakAutocannonProjectile {
         super.detonate(position);
         if (this.soulFire && !this.level().isClientSide) {
             BlockPos center = BlockPos.containing(position);
-            FireSpawnHelper.spawnFireField(this.level(), center, this.random);
+            FireSpawnHelper.spawnFireField(this.level(), center);
             AABB area = new AABB(center).inflate(1.0);
             for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
                 float damage = entity.getMaxHealth() * 0.15f;

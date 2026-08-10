@@ -38,8 +38,7 @@ public class APHEAutocannonProjectile extends FlakAutocannonProjectile {
         super.detonate(position);
         if (this.soulFire && !this.level().isClientSide) {
             BlockPos center = BlockPos.containing(position);
-            // Fire spawn AFTER flak explosion (super.detonate already provides the explosion)
-            FireSpawnHelper.spawnFireField(this.level(), center, this.random);
+            FireSpawnHelper.spawnFireField(this.level(), center);
             AABB area = new AABB(center).inflate(1.0);
             for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
                 float damage = entity.getMaxHealth() * 0.15f;
