@@ -1,7 +1,6 @@
 package com.cbcaddon.addon.gui;
 
 import com.cbcaddon.addon.block.FuzeControllerBlockEntity;
-import com.cbcaddon.addon.init.ModBlockEntities;
 import com.cbcaddon.addon.init.ModMenuTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -16,16 +15,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class FuzeControllerMenu extends AbstractContainerMenu {
     public static final int DATA_MODE = 0;
-    public static final int DATA_DISTANCE_INT = 1;
+    public static final int DATA_TIMER = 1;
+    public static final int DATA_DISTANCE_INT = 2;
 
-    private final FuzeControllerBlockEntity blockEntity;
+    public final FuzeControllerBlockEntity blockEntity;
     public final ContainerData data;
 
     // Server constructor
     public FuzeControllerMenu(int containerId, Inventory playerInventory, FuzeControllerBlockEntity be) {
         super(ModMenuTypes.FUZE_CONTROLLER.get(), containerId);
         this.blockEntity = be;
-        this.data = new SimpleContainerData(2);
+        this.data = new SimpleContainerData(3);
         syncFromBlockEntity();
         this.addDataSlots(this.data);
     }
@@ -36,49 +36,42 @@ public class FuzeControllerMenu extends AbstractContainerMenu {
         BlockPos pos = buf.readBlockPos();
         Level level = playerInventory.player.level();
         BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof FuzeControllerBlockEntity controller) {
-            this.blockEntity = controller;
-        } else {
-            this.blockEntity = null;
-        }
-        this.data = new SimpleContainerData(2);
+        this.blockEntity = (be instanceof FuzeControllerBlockEntity controller) ? controller : null;
+        this.data = new SimpleContainerData(3);
         this.addDataSlots(this.data);
     }
 
-    public FuzeControllerBlockEntity getBlockEntity() { return blockEntity; }
-
     private void syncFromBlockEntity() {
         if (blockEntity != null) {
-            String mode = blockEntity.getFuzeMode();
-            this.data.set(DATA_MODE, switch (mode) {
+            this.data.set(DATA_MODE, switch (blockEntity.getFuzeMode()) {
                 case "timed" -> 1;
                 case "proximity" -> 2;
                 default -> 0;
             });
+            this.data.set(DATA_TIMER, blockEntity.getFuzeTimer());
             this.data.set(DATA_DISTANCE_INT, (int)(blockEntity.getProximityDistance() * 10));
         }
     }
 
     public int getModeIndex() { return data.get(DATA_MODE); }
+    public int getTimer() { return data.get(DATA_TIMER); }
     public float getProximityDistance() { return data.get(DATA_DISTANCE_INT) / 10.0f; }
 
-    public void setModeIndex(int idx) {
-        data.set(DATA_MODE, idx);
-        if (blockEntity != null) {
-            String mode = switch (idx) {
-                case 1 -> "timed";
-                case 2 -> "proximity";
-                default -> "contact";
-            };
-            blockEntity.setFuzeMode(mode);
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (blockEntity != null && !player.level().isClientSide) {
+            if (id >= 0 && id <= 2) {
+                String mode = switch (id) {
+                    case 1 -> "timed";
+                    case 2 -> "proximity";
+                    default -> "contact";
+                };
+                blockEntity.setFuzeMode(mode);
+                syncFromBlockEntity();
+                return true;
+            }
         }
-    }
-
-    public void setProximityDistance(float dist) {
-        data.set(DATA_DISTANCE_INT, (int)(dist * 10));
-        if (blockEntity != null) {
-            blockEntity.setProximityDistance(dist);
-        }
+        return super.clickMenuButton(player, id);
     }
 
     @Override

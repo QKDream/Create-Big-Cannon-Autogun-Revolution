@@ -1,6 +1,7 @@
 package com.cbcaddon.addon.item;
 
 import com.cbcaddon.addon.entity.APHEAutocannonProjectile;
+import com.cbcaddon.addon.entity.SmartFuzeHelper;
 import com.cbcaddon.addon.init.ModEntities;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -17,37 +18,26 @@ import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonRound
 import java.util.List;
 
 public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
-    public APHEAutocannonRoundItem(Properties properties) {
-        super(properties);
-    }
+    public APHEAutocannonRoundItem(Properties properties) { super(properties); }
 
     @Override
-    public EntityType<?> getEntityType(ItemStack stack) {
-        return ModEntities.APHE_AUTOCANNON.get();
-    }
+    public EntityType<?> getEntityType(ItemStack stack) { return ModEntities.APHE_AUTOCANNON.get(); }
 
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         APHEAutocannonProjectile projectile = ModEntities.APHE_AUTOCANNON.get().create(level);
         if (stack.has(CBCDataComponents.FUZE)) {
-            ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE,
-                    ItemContainerContents.EMPTY).copyOne();
+            ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
             projectile.setFuze(fuzeStack);
-            applySmartFuzeData(projectile, fuzeStack);
+            if (fuzeStack.getItem() instanceof SmartFuzeItem) {
+                projectile.setSmartFuzeMode(SmartFuzeHelper.resolveMode(fuzeStack, level));
+                projectile.setSmartFuzeDist(SmartFuzeHelper.resolveProximityDistance(fuzeStack, level));
+                projectile.setSmartFuzeTimer(SmartFuzeHelper.resolveTimer(fuzeStack, level));
+            }
         }
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        if (customData.contains("soul_fire")) {
-            projectile.setSoulFire(true);
-        }
+        if (customData.contains("soul_fire")) projectile.setSoulFire(true);
         return projectile;
-    }
-
-    private void applySmartFuzeData(APHEAutocannonProjectile projectile, ItemStack fuzeStack) {
-        if (fuzeStack.getItem() instanceof SmartFuzeItem) {
-            projectile.setSmartFuzeMode(SmartFuzeItem.getMode(fuzeStack));
-            projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
-            projectile.setSmartFuzeTimer(60);
-        }
     }
 
     @Override
@@ -56,17 +46,16 @@ public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
         tooltip.add(Component.translatable("tooltip.cbcaddon.aphe_round"));
         tooltip.add(Component.translatable("tooltip.cbcaddon.penetration", 14));
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        if (customData.contains("soul_fire")) {
-            tooltip.add(Component.translatable("tooltip.cbcaddon.soul_fire_applied"));
-        }
+        if (customData.contains("soul_fire")) tooltip.add(Component.translatable("tooltip.cbcaddon.soul_fire_applied"));
         if (stack.has(CBCDataComponents.FUZE)) {
             ItemStack fuze = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
             if (fuze.getItem() instanceof SmartFuzeItem) {
                 SmartFuzeItem.Mode mode = SmartFuzeItem.getMode(fuze);
                 tooltip.add(Component.translatable(mode.translationKey));
-                if (mode == SmartFuzeItem.Mode.PROXIMITY) {
+                if (mode == SmartFuzeItem.Mode.PROXIMITY)
                     tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.distance", SmartFuzeItem.getProximityDistance(fuze)));
-                }
+                if (mode == SmartFuzeItem.Mode.TIMED)
+                    tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.timer_info", 60));
             }
         }
     }

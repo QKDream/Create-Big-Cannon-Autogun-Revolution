@@ -33,11 +33,14 @@
   "tooltip.cbcaddon.smart_fuze.timed": "§7Mode: §eTimed",
   "tooltip.cbcaddon.smart_fuze.proximity": "§7Mode: §bProximity",
   "tooltip.cbcaddon.smart_fuze.distance": "§7Trigger Distance: §b%s",
+  "tooltip.cbcaddon.smart_fuze.timer_info": "§7Detonation Time: §e%s ticks",
   "message.cbcaddon.fuze_bound": "§aSmart Fuze bound to controller at %s",
   "gui.cbcaddon.fuze_controller.mode": "Fuze Mode:",
   "gui.cbcaddon.fuze_controller.distance_label": "Proximity Distance:",
+  "gui.cbcaddon.fuze_controller.timer_label": "Timer (ticks):",
   "gui.cbcaddon.fuze_controller.contact": "Contact",
   "gui.cbcaddon.fuze_controller.timed": "Timed",
   "gui.cbcaddon.fuze_controller.proximity": "Proximity",
-  "gui.cbcaddon.fuze_controller.distance": "Distance"
+  "gui.cbcaddon.fuze_controller.distance": "Distance",
+  "gui.cbcaddon.fuze_controller.timer": "Timer"
 }

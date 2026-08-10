@@ -33,11 +33,14 @@
   "tooltip.cbcaddon.smart_fuze.timed": "§7模式: §e定时",
   "tooltip.cbcaddon.smart_fuze.proximity": "§7模式: §b近炸",
   "tooltip.cbcaddon.smart_fuze.distance": "§7触发距离: §b%s",
+  "tooltip.cbcaddon.smart_fuze.timer_info": "§7引爆时间: §e%s ticks",
   "message.cbcaddon.fuze_bound": "§a智能引信已绑定至控制器 %s",
   "gui.cbcaddon.fuze_controller.mode": "引信模式:",
   "gui.cbcaddon.fuze_controller.distance_label": "近炸距离:",
+  "gui.cbcaddon.fuze_controller.timer_label": "定时(ticks):",
   "gui.cbcaddon.fuze_controller.contact": "碰炸",
   "gui.cbcaddon.fuze_controller.timed": "定时",
   "gui.cbcaddon.fuze_controller.proximity": "近炸",
-  "gui.cbcaddon.fuze_controller.distance": "距离"
+  "gui.cbcaddon.fuze_controller.distance": "距离",
+  "gui.cbcaddon.fuze_controller.timer": "时间"
 }
