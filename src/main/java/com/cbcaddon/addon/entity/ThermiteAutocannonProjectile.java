@@ -45,10 +45,9 @@ public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
                 this.level().destroyBlock(center, false);
             }
             if (this.level().isEmptyBlock(center.above())) {
-                this.level().setBlock(center.above(), Blocks.FIRE.defaultBlockState(), 3);
+                this.level().setBlock(center.above(), Blocks.FIRE.defaultBlockState(), 2);
             }
             if (this.soulFire) {
-                this.level().explode(this, position.x(), position.y(), position.z(), 2.0f, Level.ExplosionInteraction.NONE);
                 FireSpawnHelper.spawnFireField(this.level(), center, this.random);
                 AABB area = new AABB(center).inflate(1.0);
                 for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
