@@ -7,10 +7,11 @@ import net.minecraft.world.level.block.Blocks;
 
 /**
  * Global fire spawn cooldown to prevent lag from overlapping detonations.
+ * Uses flag 2 (client sync only, no block updates) to avoid fire spread cascades.
  */
 public class FireSpawnHelper {
     private static long lastFireSpawnTick = -100;
-    private static final int FIRE_SPAWN_COOLDOWN = 10; // ticks between fire spawns
+    private static final int FIRE_SPAWN_COOLDOWN = 20; // ticks between fire spawns (1 second)
 
     public static boolean canSpawnFire(Level level) {
         long currentTick = level.getGameTime();
@@ -27,8 +28,9 @@ public class FireSpawnHelper {
             for (int y = -2; y <= 2; y++) {
                 for (int z = -3; z <= 3; z++) {
                     BlockPos pos = center.offset(x, y, z);
+                    // Only place on truly empty blocks, never overwrite existing fire
                     if (level.isEmptyBlock(pos) && random.nextFloat() < 0.4f) {
-                        level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
+                        level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 2);
                     }
                 }
             }
