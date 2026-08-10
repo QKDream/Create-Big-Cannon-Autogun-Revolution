@@ -18,45 +18,80 @@
   h1 { font-size: 28px; margin-bottom: 8px; color: #58a6ff; }
   p { color: #8b949e; margin-bottom: 32px; font-size: 14px; }
   #btn {
-    background: #238636; color: #fff; border: none; padding: 16px 48px; border-radius: 12px;
+    background: #da3633; color: #fff; border: none; padding: 16px 48px; border-radius: 12px;
     font-size: 20px; cursor: pointer; transition: all 0.2s; font-family: inherit;
   }
-  #btn:hover { background: #2ea043; transform: scale(1.05); }
-  #btn.paused { background: #da3633; }
-  #btn.paused:hover { background: #f85149; }
+  #btn:hover { background: #f85149; transform: scale(1.05); }
+  #btn.playing { background: #238636; }
+  #btn.playing:hover { background: #2ea043; }
   .link { margin-top: 32px; font-size: 13px; color: #8b949e; }
   .link a { color: #58a6ff; }
+  #overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 10;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  #overlay span { font-size: 24px; color: #fff; }
 </style>
 </head>
 <body>
+
+<div id="overlay" onclick="startAudio()">
+  <span>🎵 点击任意位置开始播放</span>
+</div>
+
 <div class="card">
   <h1>🔫 Create Big Cannons<br>Autocannon Revolution</h1>
-  <p>机炮弹药革新 — 背景音乐：BMPT 机炮音效循环</p>
-  <button id="btn" class="paused" onclick="toggle()">▶ 播放音乐</button>
+  <p>机炮弹药革新 — 背景音乐循环</p>
+  <button id="btn" class="playing" onclick="toggle()">⏸ 停止音乐</button>
   <div class="link">
     ← <a href="https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution">返回 GitHub 仓库</a>
   </div>
 </div>
-<audio id="bgm" loop>
+
+<audio id="bgm" loop autoplay>
   <source src="fire_autocannon.ogg" type="audio/ogg">
 </audio>
+
 <script>
 const bgm = document.getElementById('bgm');
 const btn = document.getElementById('btn');
-let playing = false;
+const overlay = document.getElementById('overlay');
+let playing = true;
 bgm.volume = 0.6;
+
+function startAudio() {
+  overlay.style.display = 'none';
+  bgm.play().then(() => {
+    playing = true;
+    btn.textContent = '⏸ 停止音乐';
+    btn.className = 'playing';
+  }).catch(() => {});
+}
+
 function toggle() {
   if (playing) {
     bgm.pause();
     btn.textContent = '▶ 播放音乐';
-    btn.className = 'paused';
+    btn.className = '';
   } else {
     bgm.play();
     btn.textContent = '⏸ 停止音乐';
-    btn.className = '';
+    btn.className = 'playing';
   }
   playing = !playing;
 }
+
+// Try autoplay
+bgm.play().then(() => {
+  overlay.style.display = 'none';
+  playing = true;
+}).catch(() => {
+  // Blocked by browser, show overlay
+  overlay.style.display = 'flex';
+  playing = false;
+  btn.textContent = '▶ 播放音乐';
+  btn.className = '';
+});
 </script>
 </body>
 </html>
