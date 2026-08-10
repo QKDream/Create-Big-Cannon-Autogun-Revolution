@@ -10,9 +10,12 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import rbasamoyai.createbigcannons.index.CBCDataComponents;
+import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonRoundItem;
 
 public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float distance) implements CustomPacketPayload {
     public static final Type<FuzeUpdatePacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(CBCAddon.MOD_ID, "fuze_update"));
@@ -27,8 +30,7 @@ public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float dis
         }
     };
 
-    @Override
-    public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
 
     public static void handle(FuzeUpdatePacket packet, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
@@ -37,8 +39,9 @@ public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float dis
             String mode = switch (packet.modeIndex) { case 1 -> "timed"; case 2 -> "proximity"; default -> "contact"; };
             int timer = Math.max(10, Math.min(600, packet.timer));
             float dist = Math.max(0.5f, Math.min(32f, packet.distance));
+            SmartFuzeItem.Mode sm = SmartFuzeItem.Mode.fromId(mode);
 
-            // Update the controller block entity
+            // Update controller BE
             if (level.isLoaded(packet.pos)) {
                 BlockEntity be = level.getBlockEntity(packet.pos);
                 if (be instanceof FuzeControllerBlockEntity controller) {
@@ -48,27 +51,39 @@ public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float dis
                 }
             }
 
-            // KEY FIX: Scan player inventory and update all bound smart fuzes
-            SmartFuzeItem.Mode sm = SmartFuzeItem.Mode.fromId(mode);
+            // Scan ALL inventory slots (including hotbar, main, armor, offhand)
             for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-                ItemStack stack = player.getInventory().getItem(i);
-                if (stack.getItem() instanceof SmartFuzeItem) {
-                    BlockPos bound = SmartFuzeItem.getControllerPos(stack);
-                    if (bound != null && bound.equals(packet.pos)) {
-                        SmartFuzeItem.setMode(stack, sm);
-                        SmartFuzeItem.setProximityDistance(stack, dist);
-                    }
-                }
+                updateFuzeIfBound(player.getInventory().getItem(i), packet.pos, sm, dist);
             }
-            // Also check offhand
-            ItemStack offhand = player.getOffhandItem();
-            if (offhand.getItem() instanceof SmartFuzeItem) {
-                BlockPos bound = SmartFuzeItem.getControllerPos(offhand);
-                if (bound != null && bound.equals(packet.pos)) {
-                    SmartFuzeItem.setMode(offhand, sm);
-                    SmartFuzeItem.setProximityDistance(offhand, dist);
-                }
-            }
+            updateFuzeIfBound(player.getOffhandItem(), packet.pos, sm, dist);
         });
+    }
+
+    private static void updateFuzeIfBound(ItemStack stack, BlockPos controllerPos, SmartFuzeItem.Mode mode, float dist) {
+        if (stack.isEmpty()) return;
+
+        // Direct smart fuze item
+        if (stack.getItem() instanceof SmartFuzeItem) {
+            BlockPos bound = SmartFuzeItem.getControllerPos(stack);
+            if (bound != null && bound.equals(controllerPos)) {
+                SmartFuzeItem.setMode(stack, mode);
+                SmartFuzeItem.setProximityDistance(stack, dist);
+            }
+            return;
+        }
+
+        // Ammo round containing a smart fuze in its FUZE slot
+        if (stack.getItem() instanceof AutocannonRoundItem && stack.has(CBCDataComponents.FUZE)) {
+            ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
+            if (!fuzeStack.isEmpty() && fuzeStack.getItem() instanceof SmartFuzeItem) {
+                BlockPos bound = SmartFuzeItem.getControllerPos(fuzeStack);
+                if (bound != null && bound.equals(controllerPos)) {
+                    SmartFuzeItem.setMode(fuzeStack, mode);
+                    SmartFuzeItem.setProximityDistance(fuzeStack, dist);
+                    // Write back to the round's FUZE component
+                    stack.set(CBCDataComponents.FUZE, ItemContainerContents.fromItems(java.util.List.of(fuzeStack)));
+                }
+            }
+        }
     }
 }

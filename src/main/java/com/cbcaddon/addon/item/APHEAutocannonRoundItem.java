@@ -1,7 +1,6 @@
 package com.cbcaddon.addon.item;
 
 import com.cbcaddon.addon.entity.APHEAutocannonProjectile;
-import com.cbcaddon.addon.entity.SmartFuzeHelper;
 import com.cbcaddon.addon.init.ModEntities;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -19,18 +18,23 @@ import java.util.List;
 
 public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
     public APHEAutocannonRoundItem(Properties properties) { super(properties); }
-    @Override
-    public EntityType<?> getEntityType(ItemStack stack) { return ModEntities.APHE_AUTOCANNON.get(); }
+    @Override public EntityType<?> getEntityType(ItemStack stack) { return ModEntities.APHE_AUTOCANNON.get(); }
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         APHEAutocannonProjectile projectile = ModEntities.APHE_AUTOCANNON.get().create(level);
         if (stack.has(CBCDataComponents.FUZE)) {
             ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
-            projectile.setFuze(fuzeStack);
             if (fuzeStack.getItem() instanceof SmartFuzeItem) {
-                projectile.setSmartFuzeMode(SmartFuzeItem.getMode(fuzeStack));
-                projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
-                projectile.setSmartFuzeTimer(60);
+                // Don't pass to CBC - causes detonation failure
+                SmartFuzeItem.Mode mode = SmartFuzeItem.getMode(fuzeStack);
+                if (mode != SmartFuzeItem.Mode.CONTACT) {
+                    projectile.setSmartFuzeMode(mode);
+                    projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
+                    projectile.setSmartFuzeTimer(60);
+                }
+                // CONTACT: leave smartFuzeMode=null, CBC handles impact normally
+            } else {
+                projectile.setFuze(fuzeStack);
             }
         }
         CustomData d = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);

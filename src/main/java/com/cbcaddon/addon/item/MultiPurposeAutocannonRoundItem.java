@@ -1,7 +1,6 @@
 package com.cbcaddon.addon.item;
 
 import com.cbcaddon.addon.entity.MultiPurposeAutocannonProjectile;
-import com.cbcaddon.addon.entity.SmartFuzeHelper;
 import com.cbcaddon.addon.init.ModEntities;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -19,18 +18,21 @@ import java.util.List;
 
 public class MultiPurposeAutocannonRoundItem extends FlakAutocannonRoundItem {
     public MultiPurposeAutocannonRoundItem(Properties properties) { super(properties); }
-    @Override
-    public EntityType<?> getEntityType(ItemStack stack) { return ModEntities.MULTIPURPOSE_AUTOCANNON.get(); }
+    @Override public EntityType<?> getEntityType(ItemStack stack) { return ModEntities.MULTIPURPOSE_AUTOCANNON.get(); }
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         MultiPurposeAutocannonProjectile projectile = ModEntities.MULTIPURPOSE_AUTOCANNON.get().create(level);
         if (stack.has(CBCDataComponents.FUZE)) {
             ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
-            projectile.setFuze(fuzeStack);
             if (fuzeStack.getItem() instanceof SmartFuzeItem) {
-                projectile.setSmartFuzeMode(SmartFuzeItem.getMode(fuzeStack));
-                projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
-                projectile.setSmartFuzeTimer(60);
+                SmartFuzeItem.Mode mode = SmartFuzeItem.getMode(fuzeStack);
+                if (mode != SmartFuzeItem.Mode.CONTACT) {
+                    projectile.setSmartFuzeMode(mode);
+                    projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
+                    projectile.setSmartFuzeTimer(60);
+                }
+            } else {
+                projectile.setFuze(fuzeStack);
             }
         }
         CustomData d = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
