@@ -37,7 +37,7 @@ public class SmartFuzeItem extends FuzeItem {
 
     public static FuzeSettings readActiveSettings(ItemStack fuzeStack, Level level) {
         BlockPos controllerPos = getControllerPos(fuzeStack);
-        if (controllerPos != null && level.isLoaded(controllerPos)) {
+        if (controllerPos != null && level != null && level.isLoaded(controllerPos)) {
             BlockEntity be = level.getBlockEntity(controllerPos);
             if (be instanceof FuzeControllerBlockEntity controller) {
                 return new FuzeSettings(
