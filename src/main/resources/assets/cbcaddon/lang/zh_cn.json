@@ -8,7 +8,6 @@
   "item.cbcaddon.multipurpose_autocannon_round": "多用途榴弹",
   "item.cbcaddon.soul_fire_device": "灵魂火装置",
   "item.cbcaddon.high_velocity_autocannon_cartridge": "高速机炮弹药",
-  "block.cbcaddon.fuze_controller": "引信控制器",
   "entity.cbcaddon.apfsds_autocannon": "APFSDS 弹头",
   "entity.cbcaddon.aphe_autocannon": "APHE 弹头",
   "entity.cbcaddon.sap_autocannon": "SAP 弹头",
@@ -25,14 +24,5 @@
   "tooltip.cbcaddon.soul_fire_device": "§c与弹药合成，附加火焰爆炸 + 15%生命伤害",
   "tooltip.cbcaddon.high_velocity": "§b初速2倍",
   "tooltip.cbcaddon.penetration": "§7穿深: §f%s",
-  "tooltip.cbcaddon.soul_fire_applied": "§c灵魂火装置已安装",
-  "message.cbcaddon.round_programmed": "§a弹药已编程为: %s",
-  "gui.cbcaddon.fuze_controller.mode": "引信模式:",
-  "gui.cbcaddon.fuze_controller.distance_label": "近炸距离:",
-  "gui.cbcaddon.fuze_controller.timer_label": "定时(ticks):",
-  "gui.cbcaddon.fuze_controller.contact": "碰炸",
-  "gui.cbcaddon.fuze_controller.timed": "定时",
-  "gui.cbcaddon.fuze_controller.proximity": "近炸",
-  "gui.cbcaddon.fuze_controller.distance": "距离",
-  "gui.cbcaddon.fuze_controller.timer": "时间"
+  "tooltip.cbcaddon.soul_fire_applied": "§c灵魂火装置已安装"
 }
