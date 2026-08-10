@@ -1,10 +1,14 @@
 package com.cbcaddon.addon.block;
 
+import com.cbcaddon.addon.item.SmartFuzeItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -16,23 +20,32 @@ import net.minecraft.world.phys.BlockHitResult;
 public class FuzeControllerBlock extends BaseEntityBlock {
     public static final MapCodec<FuzeControllerBlock> CODEC = simpleCodec(FuzeControllerBlock::new);
 
-    public FuzeControllerBlock(BlockBehaviour.Properties properties) {
-        super(properties);
-    }
+    public FuzeControllerBlock(BlockBehaviour.Properties properties) { super(properties); }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
+    protected MapCodec<? extends BaseEntityBlock> codec() { return CODEC; }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
-    }
+    public RenderShape getRenderShape(BlockState state) { return RenderShape.MODEL; }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new FuzeControllerBlockEntity(pos, state);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+                                               Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (stack.getItem() instanceof SmartFuzeItem) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
+        if (!level.isClientSide && player instanceof ServerPlayer sp) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof FuzeControllerBlockEntity controller) {
+                sp.openMenu(controller, pos);
+            }
+        }
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
