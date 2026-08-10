@@ -10,16 +10,17 @@
   .card {
     background:#161b22; border:1px solid #30363d; border-radius:16px;
     padding:48px; text-align:center; max-width:500px; box-shadow:0 8px 32px rgba(0,0,0,0.5);
+    position:relative; z-index:1;
   }
   h1 { font-size:28px; margin-bottom:8px; color:#58a6ff; }
   p { color:#8b949e; margin-bottom:32px; font-size:14px; }
   #btn {
-    background:#da3633; color:#fff; border:none; padding:16px 48px; border-radius:12px;
+    background:#238636; color:#fff; border:none; padding:16px 48px; border-radius:12px;
     font-size:20px; cursor:pointer; font-family:inherit;
   }
-  #btn:hover { background:#f85149; }
-  #btn.playing { background:#238636; }
-  #btn.playing:hover { background:#2ea043; }
+  #btn:hover { background:#2ea043; }
+  #btn.paused { background:#da3633; }
+  #btn.paused:hover { background:#f85149; }
   .link { margin-top:32px; font-size:13px; color:#8b949e; }
   .link a { color:#58a6ff; }
 </style>
@@ -28,39 +29,37 @@
 <div class="card">
   <h1>🔫 Create Big Cannons<br>Autocannon Revolution</h1>
   <p>机炮弹药革新</p>
-  <button id="btn" class="playing" onclick="toggle()">⏸ 停止音乐</button>
+  <button id="btn" onclick="toggle()">▶ 点击播放</button>
   <div class="link"><a href="https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution">← 返回仓库</a></div>
 </div>
 
-<audio id="bgm" loop autoplay>
-  <source src="bgm.mp4" type="audio/mp4">
-</audio>
+<video id="bgm" loop autoplay playsinline style="display:none">
+  <source src="bgm.mp4" type="video/mp4">
+</video>
 
 <script>
 const bgm = document.getElementById('bgm');
 const btn = document.getElementById('btn');
-let playing = true;
 bgm.volume = 0.6;
+let playing = false;
 
+// Edge/Chrome 必须静音才能自动播放，所以先 muted 自动播，用户点一下就出声音
+bgm.muted = true;
 bgm.play().then(() => {
-  playing = true;
-  btn.textContent = '⏸ 停止音乐';
-  btn.className = 'playing';
-}).catch(() => {
-  playing = false;
-  btn.textContent = '▶ 点击播放';
-  btn.className = '';
-});
+  btn.textContent = '🔊 点击开启声音';
+  btn.className = 'paused';
+}).catch(() => {});
 
 function toggle() {
   if (playing) {
-    bgm.pause();
-    btn.textContent = '▶ 点击播放';
-    btn.className = '';
+    bgm.muted = true;
+    btn.textContent = '🔊 点击开启声音';
+    btn.className = 'paused';
   } else {
+    bgm.muted = false;
     bgm.play();
-    btn.textContent = '⏸ 停止音乐';
-    btn.className = 'playing';
+    btn.textContent = '⏸ 静音';
+    btn.className = '';
   }
   playing = !playing;
 }
