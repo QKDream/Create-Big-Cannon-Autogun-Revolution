@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Big Cannons: Autocannon Revolution</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 16px;
+    padding: 48px; text-align: center; max-width: 500px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  h1 { font-size: 28px; margin-bottom: 8px; color: #58a6ff; }
+  p { color: #8b949e; margin-bottom: 32px; font-size: 14px; }
+  #btn {
+    background: #238636; color: #fff; border: none; padding: 16px 48px; border-radius: 12px;
+    font-size: 20px; cursor: pointer; transition: all 0.2s; font-family: inherit;
+  }
+  #btn:hover { background: #2ea043; transform: scale(1.05); }
+  #btn.paused { background: #da3633; }
+  #btn.paused:hover { background: #f85149; }
+  .link { margin-top: 32px; font-size: 13px; color: #8b949e; }
+  .link a { color: #58a6ff; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🔫 Create Big Cannons<br>Autocannon Revolution</h1>
+  <p>机炮弹药革新 — 背景音乐：BMPT 机炮音效循环</p>
+  <button id="btn" class="paused" onclick="toggle()">▶ 播放音乐</button>
+  <div class="link">
+    ← <a href="https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution">返回 GitHub 仓库</a>
+  </div>
+</div>
+<audio id="bgm" loop>
+  <source src="fire_autocannon.ogg" type="audio/ogg">
+</audio>
+<script>
+const bgm = document.getElementById('bgm');
+const btn = document.getElementById('btn');
+let playing = false;
+bgm.volume = 0.6;
+function toggle() {
+  if (playing) {
+    bgm.pause();
+    btn.textContent = '▶ 播放音乐';
+    btn.className = 'paused';
+  } else {
+    bgm.play();
+    btn.textContent = '⏸ 停止音乐';
+    btn.className = '';
+  }
+  playing = !playing;
+}
+</script>
+</body>
+</html>

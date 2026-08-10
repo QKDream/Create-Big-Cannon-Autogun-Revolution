@@ -2,7 +2,7 @@
 
 为 [Create Big Cannons](https://github.com/rbasamoyai/CreateBigCannons) 扩展的机炮弹药模组。
 
-> 🎵 **[▶ 点击播放背景音乐](https://music.163.com/song?id=480768386&uct2=U2FsdGVkX18cPEIFf0kFf1a/rY7zx/Cubp6QOKFRF/Y=)**（在新标签页打开即可自动播放）
+> 🎵 **[▶ 打开带音乐的介绍页面](https://qkdream.github.io/Create-Big-Cannon-Autogun-Revolution/index.html)**（自动循环播放 + 停止按钮）
 
 ## 新增弹药
 
