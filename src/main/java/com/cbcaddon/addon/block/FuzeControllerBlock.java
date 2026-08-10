@@ -38,12 +38,12 @@ public class FuzeControllerBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                                Player player, InteractionHand hand, BlockHitResult hitResult) {
-        // Smart fuze binding - handle directly here
         if (stack.getItem() instanceof SmartFuzeItem) {
             if (!level.isClientSide) {
                 SmartFuzeItem.setControllerPos(stack, pos);
                 SmartFuzeItem.setMode(stack, SmartFuzeItem.Mode.CONTACT);
                 SmartFuzeItem.setProximityDistance(stack, 3.0f);
+                SmartFuzeItem.setFuzeTimer(stack, 60);
                 player.displayClientMessage(
                     Component.translatable("message.cbcaddon.fuze_bound", pos.toShortString()), true);
             }

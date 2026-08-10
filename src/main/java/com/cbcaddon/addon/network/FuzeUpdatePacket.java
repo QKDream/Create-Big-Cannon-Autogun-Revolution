@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
@@ -40,6 +41,7 @@ public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float dis
             float dist = Math.max(0.5f, Math.min(32f, packet.distance));
             SmartFuzeItem.Mode sm = SmartFuzeItem.Mode.fromId(mode);
 
+            // Update the controller BE - this is the source of truth
             if (level.isLoaded(packet.pos)) {
                 BlockEntity be = level.getBlockEntity(packet.pos);
                 if (be instanceof FuzeControllerBlockEntity c) {
@@ -49,34 +51,33 @@ public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float dis
                 }
             }
 
-            // Update player inventory - copy/modify/setItem for proper sync
+            // Also update all bound fuze items in player inventory for tooltip display consistency
             for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack original = player.getInventory().getItem(i);
                 if (original.isEmpty()) continue;
                 ItemStack copy = original.copy();
-                if (applyUpdate(copy, packet.pos, sm, dist)) {
+                if (applyUpdate(copy, packet.pos, sm, dist, timer)) {
                     player.getInventory().setItem(i, copy);
                 }
             }
             ItemStack offCopy = player.getOffhandItem().copy();
-            if (!offCopy.isEmpty() && applyUpdate(offCopy, packet.pos, sm, dist)) {
-                player.setItemInHand(player.getUsedItemHand(), offCopy);
+            if (!offCopy.isEmpty() && applyUpdate(offCopy, packet.pos, sm, dist, timer)) {
+                player.setItemInHand(InteractionHand.OFF_HAND, offCopy);
             }
         });
     }
 
-    private static boolean applyUpdate(ItemStack stack, BlockPos controllerPos, SmartFuzeItem.Mode mode, float dist) {
-        // Direct smart fuze
+    private static boolean applyUpdate(ItemStack stack, BlockPos controllerPos, SmartFuzeItem.Mode mode, float dist, int timer) {
         if (stack.getItem() instanceof SmartFuzeItem) {
             BlockPos bound = SmartFuzeItem.getControllerPos(stack);
             if (bound != null && bound.equals(controllerPos)) {
                 SmartFuzeItem.setMode(stack, mode);
                 SmartFuzeItem.setProximityDistance(stack, dist);
+                SmartFuzeItem.setFuzeTimer(stack, timer);
                 return true;
             }
             return false;
         }
-        // Round/cartridge with fuze slot
         if ((stack.getItem() instanceof AutocannonRoundItem || stack.getItem() instanceof AutocannonCartridgeItem)
                 && stack.has(CBCDataComponents.FUZE)) {
             ItemContainerContents contents = stack.get(CBCDataComponents.FUZE);
@@ -87,6 +88,7 @@ public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float dis
             if (bound == null || !bound.equals(controllerPos)) return false;
             SmartFuzeItem.setMode(fuze, mode);
             SmartFuzeItem.setProximityDistance(fuze, dist);
+            SmartFuzeItem.setFuzeTimer(fuze, timer);
             stack.set(CBCDataComponents.FUZE, ItemContainerContents.fromItems(java.util.List.of(fuze)));
             return true;
         }

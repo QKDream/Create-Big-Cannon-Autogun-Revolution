@@ -25,14 +25,12 @@ public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
         if (stack.has(CBCDataComponents.FUZE)) {
             ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
             if (fuzeStack.getItem() instanceof SmartFuzeItem) {
-                // Don't pass to CBC - causes detonation failure
-                SmartFuzeItem.Mode mode = SmartFuzeItem.getMode(fuzeStack);
-                if (mode != SmartFuzeItem.Mode.CONTACT) {
-                    projectile.setSmartFuzeMode(mode);
-                    projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
-                    projectile.setSmartFuzeTimer(60);
+                SmartFuzeItem.FuzeSettings settings = SmartFuzeItem.readActiveSettings(fuzeStack, level);
+                if (settings.mode() != SmartFuzeItem.Mode.CONTACT) {
+                    projectile.setSmartFuzeMode(settings.mode());
+                    projectile.setSmartFuzeDist(settings.proximityDistance());
+                    projectile.setSmartFuzeTimer(settings.fuzeTimer());
                 }
-                // CONTACT: leave smartFuzeMode=null, CBC handles impact normally
             } else {
                 projectile.setFuze(fuzeStack);
             }
@@ -51,12 +49,12 @@ public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
         if (stack.has(CBCDataComponents.FUZE)) {
             ItemStack fuze = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
             if (fuze.getItem() instanceof SmartFuzeItem) {
-                SmartFuzeItem.Mode mode = SmartFuzeItem.getMode(fuze);
-                tooltip.add(Component.translatable(mode.translationKey));
-                if (mode == SmartFuzeItem.Mode.PROXIMITY)
-                    tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.distance", SmartFuzeItem.getProximityDistance(fuze)));
-                if (mode == SmartFuzeItem.Mode.TIMED)
-                    tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.timer_info", 60));
+                SmartFuzeItem.FuzeSettings settings = SmartFuzeItem.readActiveSettings(fuze, null);
+                tooltip.add(Component.translatable(settings.mode().translationKey));
+                if (settings.mode() == SmartFuzeItem.Mode.PROXIMITY)
+                    tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.distance", String.format("%.1f", settings.proximityDistance())));
+                if (settings.mode() == SmartFuzeItem.Mode.TIMED)
+                    tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.timer_info", settings.fuzeTimer()));
             }
         }
     }

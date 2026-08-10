@@ -33,6 +33,23 @@ public class SmartFuzeItem extends FuzeItem {
         }
     }
 
+    public record FuzeSettings(Mode mode, float proximityDistance, int fuzeTimer) {}
+
+    public static FuzeSettings readActiveSettings(ItemStack fuzeStack, Level level) {
+        BlockPos controllerPos = getControllerPos(fuzeStack);
+        if (controllerPos != null && level.isLoaded(controllerPos)) {
+            BlockEntity be = level.getBlockEntity(controllerPos);
+            if (be instanceof FuzeControllerBlockEntity controller) {
+                return new FuzeSettings(
+                    Mode.fromId(controller.getFuzeMode()),
+                    controller.getProximityDistance(),
+                    controller.getFuzeTimer()
+                );
+            }
+        }
+        return new FuzeSettings(getMode(fuzeStack), getProximityDistance(fuzeStack), getFuzeTimer(fuzeStack));
+    }
+
     public SmartFuzeItem(Properties properties) {
         super(properties);
     }
@@ -48,6 +65,7 @@ public class SmartFuzeItem extends FuzeItem {
                 setControllerPos(stack, pos);
                 setMode(stack, Mode.CONTACT);
                 setProximityDistance(stack, 3.0f);
+                setFuzeTimer(stack, 60);
                 context.getPlayer().displayClientMessage(
                     Component.translatable("message.cbcaddon.fuze_bound", pos.toShortString()), true);
             }
@@ -103,6 +121,19 @@ public class SmartFuzeItem extends FuzeItem {
             d -> d.update(tag -> tag.putFloat("proximityDistance", dist)));
     }
 
+    public static int getFuzeTimer(ItemStack stack) {
+        CustomData data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        if (data.contains("fuzeTimer")) {
+            return data.copyTag().getInt("fuzeTimer");
+        }
+        return 60;
+    }
+
+    public static void setFuzeTimer(ItemStack stack, int timer) {
+        stack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY,
+            d -> d.update(tag -> tag.putInt("fuzeTimer", Math.max(10, Math.min(600, timer)))));
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
@@ -116,6 +147,9 @@ public class SmartFuzeItem extends FuzeItem {
         tooltip.add(Component.translatable(mode.translationKey));
         if (mode == Mode.PROXIMITY) {
             tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.distance", getProximityDistance(stack)));
+        }
+        if (mode == Mode.TIMED) {
+            tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.timer_info", getFuzeTimer(stack)));
         }
     }
 }
