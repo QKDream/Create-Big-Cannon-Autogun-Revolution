@@ -24,21 +24,17 @@ public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         APHEAutocannonProjectile projectile = ModEntities.APHE_AUTOCANNON.get().create(level);
-        boolean hasSmartFuze = false;
         if (stack.has(CBCDataComponents.FUZE)) {
             ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
+            projectile.setFuze(fuzeStack);
             if (fuzeStack.getItem() instanceof SmartFuzeItem) {
-                projectile.setSmartFuzeMode(SmartFuzeHelper.resolveMode(fuzeStack, level));
-                projectile.setSmartFuzeDist(SmartFuzeHelper.resolveProximityDistance(fuzeStack, level));
-                projectile.setSmartFuzeTimer(SmartFuzeHelper.resolveTimer(fuzeStack, level));
-                hasSmartFuze = true;
-            }
-            if (!hasSmartFuze) {
-                projectile.setFuze(fuzeStack);
+                projectile.setSmartFuzeMode(SmartFuzeItem.getMode(fuzeStack));
+                projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
+                projectile.setSmartFuzeTimer(60);
             }
         }
-        CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        if (customData.contains("soul_fire")) projectile.setSoulFire(true);
+        CustomData d = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        if (d.contains("soul_fire")) projectile.setSoulFire(true);
         return projectile;
     }
     @Override

@@ -24,16 +24,14 @@ public class SAPAutocannonRoundItem extends FlakAutocannonRoundItem {
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         SAPAutocannonProjectile projectile = ModEntities.SAP_AUTOCANNON.get().create(level);
-        boolean hasSmartFuze = false;
         if (stack.has(CBCDataComponents.FUZE)) {
             ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
+            projectile.setFuze(fuzeStack);
             if (fuzeStack.getItem() instanceof SmartFuzeItem) {
-                projectile.setSmartFuzeMode(SmartFuzeHelper.resolveMode(fuzeStack, level));
-                projectile.setSmartFuzeDist(SmartFuzeHelper.resolveProximityDistance(fuzeStack, level));
-                projectile.setSmartFuzeTimer(SmartFuzeHelper.resolveTimer(fuzeStack, level));
-                hasSmartFuze = true;
+                projectile.setSmartFuzeMode(SmartFuzeItem.getMode(fuzeStack));
+                projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
+                projectile.setSmartFuzeTimer(60);
             }
-            if (!hasSmartFuze) projectile.setFuze(fuzeStack);
         }
         CustomData d = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         if (d.contains("soul_fire")) projectile.setSoulFire(true);
