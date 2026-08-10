@@ -25,5 +25,5 @@ public class ModItems {
     public static final Supplier<Item> THERMITE_AUTOCANNON_ROUND = ITEMS.register("thermite_autocannon_round", () -> new ThermiteAutocannonRoundItem(new Item.Properties()));
     public static final Supplier<Item> MULTIPURPOSE_AUTOCANNON_ROUND = ITEMS.register("multipurpose_autocannon_round", () -> new MultiPurposeAutocannonRoundItem(new Item.Properties()));
     public static final Supplier<Item> SOUL_FIRE_DEVICE = ITEMS.register("soul_fire_device", () -> new SoulFireDeviceItem(new Item.Properties().stacksTo(16)));
-    public static final Supplier<Item> HIGH_VELOCITY_CARTRIDGE = ITEMS.register("high_velocity_autocannon_cartridge", () -> new HighVelocityAutocannonCartridgeItem(new Item.Properties().stacksTo(1)));
+    public static final Supplier<Item> HIGH_VELOCITY_CARTRIDGE = ITEMS.register("high_velocity_autocannon_cartridge", () -> new HighVelocityAutocannonCartridgeItem(new Item.Properties()));
 }
