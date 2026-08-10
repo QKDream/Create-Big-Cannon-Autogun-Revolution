@@ -4,10 +4,10 @@ license = "MIT"
 
 [[mods]]
 modId = "cbcaddon"
-version = "1.05-hotfix"
+version = "1.06"
 displayName = "Create Big Cannons: Autocannon Revolution"
 authors = "QKDream"
-description = "Adds APFSDS, APHE, SAP, Shrapnel, and Thermite autocannon rounds, High-Velocity Cartridge, and Soul Fire Device. Soul Fire Device now causes fire explosion + percentage HP damage."
+description = "Adds APFSDS, APHE, SAP, Shrapnel, Thermite, and Multi-Purpose autocannon rounds, High-Velocity Cartridge, Soul Fire Device, Smart Fuze, and Fuze Controller."
 logoFile = "pack.png"
 
 [[dependencies.cbcaddon]]

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.index.CBCDataComponents;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
@@ -16,26 +17,25 @@ import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonRound
 import java.util.List;
 
 public class ThermiteAutocannonRoundItem extends FlakAutocannonRoundItem {
-    public ThermiteAutocannonRoundItem(Properties properties) {
-        super(properties);
-    }
+    public ThermiteAutocannonRoundItem(Properties properties) { super(properties); }
 
     @Override
-    public EntityType<?> getEntityType(ItemStack stack) {
-        return ModEntities.THERMITE_AUTOCANNON.get();
-    }
+    public EntityType<?> getEntityType(ItemStack stack) { return ModEntities.THERMITE_AUTOCANNON.get(); }
 
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         ThermiteAutocannonProjectile projectile = ModEntities.THERMITE_AUTOCANNON.get().create(level);
         if (stack.has(CBCDataComponents.FUZE)) {
-            projectile.setFuze(stack.getOrDefault(CBCDataComponents.FUZE,
-                    net.minecraft.world.item.component.ItemContainerContents.EMPTY).copyOne());
+            ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
+            projectile.setFuze(fuzeStack);
+            if (fuzeStack.getItem() instanceof SmartFuzeItem) {
+                projectile.setSmartFuzeMode(SmartFuzeItem.getMode(fuzeStack));
+                projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
+                projectile.setSmartFuzeTimer(60);
+            }
         }
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        if (customData.contains("soul_fire")) {
-            projectile.setSoulFire(true);
-        }
+        if (customData.contains("soul_fire")) projectile.setSoulFire(true);
         return projectile;
     }
 
@@ -44,8 +44,15 @@ public class ThermiteAutocannonRoundItem extends FlakAutocannonRoundItem {
         super.appendHoverText(stack, context, tooltip, flag);
         tooltip.add(Component.translatable("tooltip.cbcaddon.thermite_round"));
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        if (customData.contains("soul_fire")) {
-            tooltip.add(Component.translatable("tooltip.cbcaddon.soul_fire_applied"));
+        if (customData.contains("soul_fire")) tooltip.add(Component.translatable("tooltip.cbcaddon.soul_fire_applied"));
+        if (stack.has(CBCDataComponents.FUZE)) {
+            ItemStack fuze = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
+            if (fuze.getItem() instanceof SmartFuzeItem) {
+                SmartFuzeItem.Mode mode = SmartFuzeItem.getMode(fuze);
+                tooltip.add(Component.translatable(mode.translationKey));
+                if (mode == SmartFuzeItem.Mode.PROXIMITY)
+                    tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.distance", SmartFuzeItem.getProximityDistance(fuze)));
+            }
         }
     }
 }

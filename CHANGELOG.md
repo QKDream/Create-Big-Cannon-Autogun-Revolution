@@ -1,4 +1,10 @@
-# 更新日志
+# Update Log / 更新日志
+
+## v1.07 — 2026-08-10
+- 新增智能引信（Smart Fuze）：右键绑定到引信控制器，支持碰炸/定时/近炸三种模式，可堆叠
+- 新增引信控制器（Fuze Controller）：可视化GUI控制智能引信，无需拆下引信即可切换模式
+- 近炸模式支持可调触发距离，兼容SABLE结构
+- 智能引信适用于APHE、SAP、Shrapnel、Thermite、MultiPurpose弹头
 
 ## v1.06 — 2026-08-10
 - 新增多用途榴弹（Multi-Purpose HEAT）：穿深8.0，小型破片爆炸，可装引信+灵魂火+高速弹药

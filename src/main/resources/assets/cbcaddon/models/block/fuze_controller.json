@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "cbcaddon:block/fuze_controller",
+    "north": "cbcaddon:block/fuze_controller",
+    "south": "cbcaddon:block/fuze_controller",
+    "east": "cbcaddon:block/fuze_controller",
+    "west": "cbcaddon:block/fuze_controller",
+    "up": "cbcaddon:block/fuze_controller",
+    "down": "cbcaddon:block/fuze_controller"
+  }
+}

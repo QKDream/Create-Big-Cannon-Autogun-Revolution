@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.index.CBCDataComponents;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
@@ -29,14 +30,24 @@ public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
         APHEAutocannonProjectile projectile = ModEntities.APHE_AUTOCANNON.get().create(level);
         if (stack.has(CBCDataComponents.FUZE)) {
-            projectile.setFuze(stack.getOrDefault(CBCDataComponents.FUZE,
-                    net.minecraft.world.item.component.ItemContainerContents.EMPTY).copyOne());
+            ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE,
+                    ItemContainerContents.EMPTY).copyOne();
+            projectile.setFuze(fuzeStack);
+            applySmartFuzeData(projectile, fuzeStack);
         }
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         if (customData.contains("soul_fire")) {
             projectile.setSoulFire(true);
         }
         return projectile;
+    }
+
+    private void applySmartFuzeData(APHEAutocannonProjectile projectile, ItemStack fuzeStack) {
+        if (fuzeStack.getItem() instanceof SmartFuzeItem) {
+            projectile.setSmartFuzeMode(SmartFuzeItem.getMode(fuzeStack));
+            projectile.setSmartFuzeDist(SmartFuzeItem.getProximityDistance(fuzeStack));
+            projectile.setSmartFuzeTimer(60);
+        }
     }
 
     @Override
@@ -47,6 +58,16 @@ public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         if (customData.contains("soul_fire")) {
             tooltip.add(Component.translatable("tooltip.cbcaddon.soul_fire_applied"));
+        }
+        if (stack.has(CBCDataComponents.FUZE)) {
+            ItemStack fuze = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
+            if (fuze.getItem() instanceof SmartFuzeItem) {
+                SmartFuzeItem.Mode mode = SmartFuzeItem.getMode(fuze);
+                tooltip.add(Component.translatable(mode.translationKey));
+                if (mode == SmartFuzeItem.Mode.PROXIMITY) {
+                    tooltip.add(Component.translatable("tooltip.cbcaddon.smart_fuze.distance", SmartFuzeItem.getProximityDistance(fuze)));
+                }
+            }
         }
     }
 }
