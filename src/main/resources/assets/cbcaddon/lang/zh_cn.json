@@ -1,5 +1,5 @@
 {
-  "itemGroup.cbcaddon": "机械动力火炮：机炮弹药革新",
+  "itemGroup.cbcaddon": "机械动力火炮：机炮弹药革命",
   "item.cbcaddon.apfsds_autocannon_round": "APFSDS 弹头",
   "item.cbcaddon.aphe_autocannon_round": "APHE 弹头",
   "item.cbcaddon.sap_autocannon_round": "SAP 弹头",
@@ -23,9 +23,11 @@
   "tooltip.cbcaddon.thermite_round": "§6燃烧弹 §7- 撞击点挖掘 + 引燃",
   "tooltip.cbcaddon.multipurpose_round": "§6多用途榴弹 §7- 小型破甲/爆炸",
   "tooltip.cbcaddon.soul_fire_device": "§c与弹药合成，附加火焰爆炸 + 15%生命伤害",
-  "tooltip.cbcaddon.high_velocity": "§b初速 2倍",
+  "tooltip.cbcaddon.high_velocity": "§b初速2倍",
   "tooltip.cbcaddon.penetration": "§7穿深: §f%s",
   "tooltip.cbcaddon.soul_fire_applied": "§c灵魂火装置已安装",
+  "message.cbcaddon.controller_bound_mount": "§a引信控制器已绑定到炮座: %s",
+  "message.cbcaddon.controller_no_mount": "§c未在周围5格内找到炮座，Shift+右键重试",
   "gui.cbcaddon.fuze_controller.mode": "引信模式:",
   "gui.cbcaddon.fuze_controller.distance_label": "近炸距离:",
   "gui.cbcaddon.fuze_controller.timer_label": "定时(ticks):",
@@ -34,6 +36,4 @@
   "gui.cbcaddon.fuze_controller.proximity": "近炸",
   "gui.cbcaddon.fuze_controller.distance": "距离",
   "gui.cbcaddon.fuze_controller.timer": "时间"
-  "message.cbcaddon.controller_bound_mount": "u00a7au5f15u4fe1u63a7u5236u5668u5df2u7ed1u5b9au5230u70aeu5ea7: %s",
-  "message.cbcaddon.controller_no_mount": "u00a7cu672au5728u5468u56f45u683cu5185u627eu5230u70aeu5ea7uff0cShift+u53f3u952eu91cdu8bd5"
 }

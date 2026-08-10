@@ -1,6 +1,7 @@
 package com.cbcaddon.addon.gui;
 
 import com.cbcaddon.addon.CBCAddon;
+import com.cbcaddon.addon.block.FuzeControllerBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -47,11 +48,11 @@ public class FuzeControllerScreen extends AbstractContainerScreen<FuzeController
 
         this.timerField = new EditBox(this.font, x + 10, y + 68, 60, 20,
             Component.translatable("gui.cbcaddon.fuze_controller.timer"));
-        this.timerField.setFilter(val -> val.isEmpty() || val.matches("\\\\d{0,3}"));
+        this.timerField.setFilter(val -> val.isEmpty() || val.matches("\\d{0,3}"));
 
         this.distanceField = new EditBox(this.font, x + 10, y + 98, 60, 20,
             Component.translatable("gui.cbcaddon.fuze_controller.distance"));
-        this.distanceField.setFilter(val -> val.isEmpty() || val.matches("\\\\d{0,2}(\\\\.\\\\d{0,1})?"));
+        this.distanceField.setFilter(val -> val.isEmpty() || val.matches("\\d{0,2}(\\.\\d{0,1})?"));
 
         this.addRenderableWidget(contactBtn);
         this.addRenderableWidget(timedBtn);
@@ -63,28 +64,38 @@ public class FuzeControllerScreen extends AbstractContainerScreen<FuzeController
     }
 
     private void applyMode(String mode) {
-        if (this.menu.blockEntity == null) return;
-        this.menu.blockEntity.setFuzeMode(mode);
+        FuzeControllerBlockEntity be = this.menu.blockEntity;
+        if (be == null) return;
+        
+        be.setFuzeMode(mode);
+        
         int timer = 60;
         float dist = 3.0f;
         try {
-            if (!this.timerField.getValue().isEmpty()) {
-                timer = Math.max(10, Math.min(600, Integer.parseInt(this.timerField.getValue())));
+            String timerVal = this.timerField.getValue();
+            if (timerVal != null && !timerVal.isEmpty()) {
+                timer = Integer.parseInt(timerVal);
+                timer = Math.max(10, Math.min(600, timer));
             }
         } catch (NumberFormatException ignored) {}
         try {
-            if (!this.distanceField.getValue().isEmpty()) {
-                dist = Math.max(0.5f, Math.min(32f, Float.parseFloat(this.distanceField.getValue())));
+            String distVal = this.distanceField.getValue();
+            if (distVal != null && !distVal.isEmpty()) {
+                dist = Float.parseFloat(distVal);
+                dist = Math.max(0.5f, Math.min(32f, dist));
             }
         } catch (NumberFormatException ignored) {}
-        this.menu.blockEntity.setFuzeTimer(timer);
-        this.menu.blockEntity.setProximityDistance(dist);
+        
+        be.setFuzeTimer(timer);
+        be.setProximityDistance(dist);
         refreshFromBE();
     }
 
     private void refreshFromBE() {
-        if (this.menu.blockEntity == null) return;
-        String mode = this.menu.getMode();
+        FuzeControllerBlockEntity be = this.menu.blockEntity;
+        if (be == null) return;
+        
+        String mode = be.getFuzeMode();
         int modeIdx = switch (mode) { case "timed" -> 1; case "proximity" -> 2; default -> 0; };
         if (modeIdx != lastMode) {
             lastMode = modeIdx;
@@ -92,12 +103,12 @@ public class FuzeControllerScreen extends AbstractContainerScreen<FuzeController
             timedBtn.active = modeIdx != 1;
             proximityBtn.active = modeIdx != 2;
         }
-        int timer = this.menu.getTimer();
+        int timer = be.getFuzeTimer();
         if (timer != lastTimer && !this.timerField.isFocused()) {
             lastTimer = timer;
             this.timerField.setValue(String.valueOf(timer));
         }
-        float dist = this.menu.getDistance();
+        float dist = be.getProximityDistance();
         if (Math.abs(dist - lastDist) > 0.05f && !this.distanceField.isFocused()) {
             lastDist = dist;
             this.distanceField.setValue(String.valueOf(dist));
