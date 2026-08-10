@@ -2,6 +2,8 @@
 
 为 [Create Big Cannons](https://github.com/rbasamoyai/CreateBigCannons) 扩展的机炮弹药模组。
 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="https://music.163.com/outchain/player?type=2&id=480768386&auto=1&height=66"></iframe>
+
 ## 新增弹药
 
 | 弹药 | 类型 | 穿深 | 爆炸 | 特色 |
@@ -10,14 +12,16 @@
 | **APHE** | 穿甲高爆 | 14 | 6.0 | 穿透后内部爆炸 |
 | **SAP** | 半穿甲 | 10 | 8.4 | 高装药量，爆炸伤害高 |
 | **榴霰弹** | 霰弹 | 0 | 5.0 | 40枚破片，密集散布，单发破片伤害8.0 |
+| **铝热剂弹头** | 燃烧穿甲 | 0 | 4.0 | 撞击点方块挖掘 + 引燃，可装灵魂火装置 |
+| **灵魂火装置** | 附魔装置 | — | 2.0 | 为弹药附加火焰爆炸 + 15%最大生命伤害 |
 
 ## 高速机炮弹药
 
 - 初速为普通弹药的 **2倍**
-- 合成：illed_autocannon_cartridge + 2×火药 → 空高速弹壳
+- 合成：filled_autocannon_cartridge + 2×火药 → 空高速弹壳
 - 装填：任意弹头 + 空高速弹壳 → 高速弹药
 - 升级：任意已装填弹壳 + 火药 → 高速弹药
-- 支持装引信
+- 支持装引信 + 灵魂火装置
 
 ## 依赖
 
