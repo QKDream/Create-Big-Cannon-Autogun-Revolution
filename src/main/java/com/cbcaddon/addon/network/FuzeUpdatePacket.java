@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import rbasamoyai.createbigcannons.index.CBCDataComponents;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonRoundItem;
+import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonCartridgeItem;
 
 public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float distance) implements CustomPacketPayload {
     public static final Type<FuzeUpdatePacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(CBCAddon.MOD_ID, "fuze_update"));
@@ -51,18 +52,18 @@ public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float dis
                 }
             }
 
-            // Scan ALL inventory slots (including hotbar, main, armor, offhand)
+            // Scan ALL player inventory slots
             for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-                updateFuzeIfBound(player.getInventory().getItem(i), packet.pos, sm, dist);
+                updateStack(player.getInventory().getItem(i), packet.pos, sm, dist);
             }
-            updateFuzeIfBound(player.getOffhandItem(), packet.pos, sm, dist);
+            updateStack(player.getOffhandItem(), packet.pos, sm, dist);
         });
     }
 
-    private static void updateFuzeIfBound(ItemStack stack, BlockPos controllerPos, SmartFuzeItem.Mode mode, float dist) {
+    private static void updateStack(ItemStack stack, BlockPos controllerPos, SmartFuzeItem.Mode mode, float dist) {
         if (stack.isEmpty()) return;
 
-        // Direct smart fuze item
+        // Case 1: Direct smart fuze item
         if (stack.getItem() instanceof SmartFuzeItem) {
             BlockPos bound = SmartFuzeItem.getControllerPos(stack);
             if (bound != null && bound.equals(controllerPos)) {
@@ -72,18 +73,22 @@ public record FuzeUpdatePacket(BlockPos pos, int modeIndex, int timer, float dis
             return;
         }
 
-        // Ammo round containing a smart fuze in its FUZE slot
-        if (stack.getItem() instanceof AutocannonRoundItem && stack.has(CBCDataComponents.FUZE)) {
-            ItemStack fuzeStack = stack.getOrDefault(CBCDataComponents.FUZE, ItemContainerContents.EMPTY).copyOne();
-            if (!fuzeStack.isEmpty() && fuzeStack.getItem() instanceof SmartFuzeItem) {
-                BlockPos bound = SmartFuzeItem.getControllerPos(fuzeStack);
-                if (bound != null && bound.equals(controllerPos)) {
-                    SmartFuzeItem.setMode(fuzeStack, mode);
-                    SmartFuzeItem.setProximityDistance(fuzeStack, dist);
-                    // Write back to the round's FUZE component
-                    stack.set(CBCDataComponents.FUZE, ItemContainerContents.fromItems(java.util.List.of(fuzeStack)));
-                }
-            }
+        // Case 2: Round or cartridge containing a smart fuze
+        if ((stack.getItem() instanceof AutocannonRoundItem || stack.getItem() instanceof AutocannonCartridgeItem)
+                && stack.has(CBCDataComponents.FUZE)) {
+            ItemContainerContents contents = stack.get(CBCDataComponents.FUZE);
+            if (contents == null) return;
+            ItemStack fuzeStack = contents.copyOne();
+            if (fuzeStack.isEmpty() || !(fuzeStack.getItem() instanceof SmartFuzeItem)) return;
+            BlockPos bound = SmartFuzeItem.getControllerPos(fuzeStack);
+            if (bound == null || !bound.equals(controllerPos)) return;
+
+            // Update the fuze and write back using update()
+            SmartFuzeItem.setMode(fuzeStack, mode);
+            SmartFuzeItem.setProximityDistance(fuzeStack, dist);
+            final ItemStack updatedFuze = fuzeStack;
+            stack.update(CBCDataComponents.FUZE, ItemContainerContents.EMPTY,
+                old -> ItemContainerContents.fromItems(java.util.List.of(updatedFuze)));
         }
     }
 }
