@@ -15,13 +15,11 @@ public class FuzeControllerMenu extends AbstractContainerMenu {
 
     public final FuzeControllerBlockEntity blockEntity;
 
-    // Server constructor
     public FuzeControllerMenu(int containerId, Inventory playerInventory, FuzeControllerBlockEntity be) {
         super(ModMenuTypes.FUZE_CONTROLLER.get(), containerId);
         this.blockEntity = be;
     }
 
-    // Client constructor
     public FuzeControllerMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf buf) {
         super(ModMenuTypes.FUZE_CONTROLLER.get(), containerId);
         BlockPos pos = buf.readBlockPos();

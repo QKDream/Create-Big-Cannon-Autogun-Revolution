@@ -1,6 +1,5 @@
 package com.cbcaddon.addon.entity;
 
-import com.cbcaddon.addon.item.SmartFuzeItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.world.entity.EntityType;
@@ -12,9 +11,6 @@ import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProje
 public class APHEAutocannonProjectile extends FlakAutocannonProjectile {
     private boolean highVelocity = false;
     private boolean soulFire = false;
-    private SmartFuzeItem.Mode smartFuzeMode = null;
-    private float smartFuzeDist = 3.0f;
-    private int smartFuzeTimer = 0;
 
     public APHEAutocannonProjectile(EntityType<? extends APHEAutocannonProjectile> type, Level level) {
         super(type, level);
@@ -22,9 +18,6 @@ public class APHEAutocannonProjectile extends FlakAutocannonProjectile {
 
     public void setHighVelocity(boolean hv) { this.highVelocity = hv; }
     public void setSoulFire(boolean sf) { this.soulFire = sf; }
-    public void setSmartFuzeMode(SmartFuzeItem.Mode mode) { this.smartFuzeMode = mode; }
-    public void setSmartFuzeDist(float dist) { this.smartFuzeDist = dist; }
-    public void setSmartFuzeTimer(int timer) { this.smartFuzeTimer = timer; }
 
     @Override
     public void tick() {
@@ -32,23 +25,6 @@ public class APHEAutocannonProjectile extends FlakAutocannonProjectile {
             this.setDeltaMovement(this.getDeltaMovement().scale(2.0));
             this.highVelocity = false;
         }
-
-        // Smart fuze logic - check before super.tick()
-        if (smartFuzeMode != null && !this.level().isClientSide) {
-            if (smartFuzeMode == SmartFuzeItem.Mode.PROXIMITY) {
-                if (SmartFuzeHelper.checkProximityDetonation(this, smartFuzeDist)) {
-                    this.detonate(this.position());
-                    return;
-                }
-            } else if (smartFuzeMode == SmartFuzeItem.Mode.TIMED) {
-                smartFuzeTimer--;
-                if (smartFuzeTimer <= 0) {
-                    this.detonate(this.position());
-                    return;
-                }
-            }
-        }
-
         super.tick();
     }
 

@@ -8,7 +8,6 @@
   "item.cbcaddon.multipurpose_autocannon_round": "多用途榴弹",
   "item.cbcaddon.soul_fire_device": "灵魂火装置",
   "item.cbcaddon.high_velocity_autocannon_cartridge": "高速机炮弹药",
-  "item.cbcaddon.smart_fuze": "智能引信",
   "block.cbcaddon.fuze_controller": "引信控制器",
   "entity.cbcaddon.apfsds_autocannon": "APFSDS 弹头",
   "entity.cbcaddon.aphe_autocannon": "APHE 弹头",
@@ -27,14 +26,6 @@
   "tooltip.cbcaddon.high_velocity": "§b初速 2倍",
   "tooltip.cbcaddon.penetration": "§7穿深: §f%s",
   "tooltip.cbcaddon.soul_fire_applied": "§c灵魂火装置已安装",
-  "tooltip.cbcaddon.smart_fuze.unbound": "§7未绑定 - 右键引信控制器以绑定",
-  "tooltip.cbcaddon.smart_fuze.bound": "§a已绑定至: %s",
-  "tooltip.cbcaddon.smart_fuze.contact": "§7模式: §f碰炸",
-  "tooltip.cbcaddon.smart_fuze.timed": "§7模式: §e定时",
-  "tooltip.cbcaddon.smart_fuze.proximity": "§7模式: §b近炸",
-  "tooltip.cbcaddon.smart_fuze.distance": "§7触发距离: §b%s",
-  "tooltip.cbcaddon.smart_fuze.timer_info": "§7引爆时间: §e%s ticks",
-  "message.cbcaddon.fuze_bound": "§a智能引信已绑定至控制器 %s",
   "gui.cbcaddon.fuze_controller.mode": "引信模式:",
   "gui.cbcaddon.fuze_controller.distance_label": "近炸距离:",
   "gui.cbcaddon.fuze_controller.timer_label": "定时(ticks):",
@@ -43,4 +34,6 @@
   "gui.cbcaddon.fuze_controller.proximity": "近炸",
   "gui.cbcaddon.fuze_controller.distance": "距离",
   "gui.cbcaddon.fuze_controller.timer": "时间"
+  "message.cbcaddon.controller_bound_mount": "u00a7au5f15u4fe1u63a7u5236u5668u5df2u7ed1u5b9au5230u70aeu5ea7: %s",
+  "message.cbcaddon.controller_no_mount": "u00a7cu672au5728u5468u56f45u683cu5185u627eu5230u70aeu5ea7uff0cShift+u53f3u952eu91cdu8bd5"
 }

@@ -8,7 +8,6 @@ import com.cbcaddon.addon.init.ModEntities;
 import com.cbcaddon.addon.init.ModItems;
 import com.cbcaddon.addon.init.ModMenuTypes;
 import com.cbcaddon.addon.init.ModRecipeSerializers;
-import com.cbcaddon.addon.network.FuzeUpdatePacket;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -18,8 +17,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonProjectileRenderer;
 
@@ -45,7 +42,6 @@ public class CBCAddon {
                         output.accept(ModItems.MULTIPURPOSE_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SOUL_FIRE_DEVICE.get());
                         output.accept(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
-                        output.accept(ModItems.SMART_FUZE.get());
                         output.accept(ModItems.FUZE_CONTROLLER.get());
                     })
                     .build());
@@ -62,7 +58,6 @@ public class CBCAddon {
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::registerRenderers);
         modEventBus.addListener(this::registerScreens);
-        modEventBus.addListener(this::registerPayloads);
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event) { ModEntities.registerProjectileHandlers(); }
@@ -78,10 +73,5 @@ public class CBCAddon {
 
     private void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenuTypes.FUZE_CONTROLLER.get(), FuzeControllerScreen::new);
-    }
-
-    private void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar("1");
-        registrar.playToServer(FuzeUpdatePacket.TYPE, FuzeUpdatePacket.STREAM_CODEC, FuzeUpdatePacket::handle);
     }
 }

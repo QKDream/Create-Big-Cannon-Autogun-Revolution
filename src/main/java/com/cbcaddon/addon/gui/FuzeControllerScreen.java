@@ -1,7 +1,6 @@
 package com.cbcaddon.addon.gui;
 
 import com.cbcaddon.addon.CBCAddon;
-import com.cbcaddon.addon.network.FuzeUpdatePacket;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -9,7 +8,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 public class FuzeControllerScreen extends AbstractContainerScreen<FuzeControllerMenu> {
     private static final ResourceLocation BG = ResourceLocation.fromNamespaceAndPath(CBCAddon.MOD_ID, "textures/gui/fuze_controller.png");
@@ -36,24 +34,24 @@ public class FuzeControllerScreen extends AbstractContainerScreen<FuzeController
         int y = this.topPos;
 
         this.contactBtn = Button.builder(Component.translatable("gui.cbcaddon.fuze_controller.contact"), btn -> {
-            sendUpdate(0);
+            applyMode("contact");
         }).bounds(x + 8, y + 30, 50, 20).build();
 
         this.timedBtn = Button.builder(Component.translatable("gui.cbcaddon.fuze_controller.timed"), btn -> {
-            sendUpdate(1);
+            applyMode("timed");
         }).bounds(x + 62, y + 30, 50, 20).build();
 
         this.proximityBtn = Button.builder(Component.translatable("gui.cbcaddon.fuze_controller.proximity"), btn -> {
-            sendUpdate(2);
+            applyMode("proximity");
         }).bounds(x + 116, y + 30, 50, 20).build();
 
         this.timerField = new EditBox(this.font, x + 10, y + 68, 60, 20,
             Component.translatable("gui.cbcaddon.fuze_controller.timer"));
-        this.timerField.setFilter(val -> val.isEmpty() || val.matches("\\d{0,3}"));
+        this.timerField.setFilter(val -> val.isEmpty() || val.matches("\\\\d{0,3}"));
 
         this.distanceField = new EditBox(this.font, x + 10, y + 98, 60, 20,
             Component.translatable("gui.cbcaddon.fuze_controller.distance"));
-        this.distanceField.setFilter(val -> val.isEmpty() || val.matches("\\d{0,2}(\\.\\d{0,1})?"));
+        this.distanceField.setFilter(val -> val.isEmpty() || val.matches("\\\\d{0,2}(\\\\.\\\\d{0,1})?"));
 
         this.addRenderableWidget(contactBtn);
         this.addRenderableWidget(timedBtn);
@@ -64,8 +62,9 @@ public class FuzeControllerScreen extends AbstractContainerScreen<FuzeController
         refreshFromBE();
     }
 
-    private void sendUpdate(int mode) {
+    private void applyMode(String mode) {
         if (this.menu.blockEntity == null) return;
+        this.menu.blockEntity.setFuzeMode(mode);
         int timer = 60;
         float dist = 3.0f;
         try {
@@ -78,9 +77,9 @@ public class FuzeControllerScreen extends AbstractContainerScreen<FuzeController
                 dist = Math.max(0.5f, Math.min(32f, Float.parseFloat(this.distanceField.getValue())));
             }
         } catch (NumberFormatException ignored) {}
-
-        PacketDistributor.sendToServer(new FuzeUpdatePacket(
-            this.menu.blockEntity.getBlockPos(), mode, timer, dist));
+        this.menu.blockEntity.setFuzeTimer(timer);
+        this.menu.blockEntity.setProximityDistance(dist);
+        refreshFromBE();
     }
 
     private void refreshFromBE() {
@@ -128,13 +127,6 @@ public class FuzeControllerScreen extends AbstractContainerScreen<FuzeController
     public void containerTick() {
         super.containerTick();
         refreshFromBE();
-    }
-
-    @Override
-    public void onClose() {
-        int modeIdx = lastMode;
-        sendUpdate(modeIdx);
-        super.onClose();
     }
 
     @Override

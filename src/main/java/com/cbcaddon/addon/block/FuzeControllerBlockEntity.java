@@ -21,6 +21,7 @@ public class FuzeControllerBlockEntity extends BlockEntity implements MenuProvid
     private String fuzeMode = "contact";
     private float proximityDistance = 3.0f;
     private int fuzeTimer = 60;
+    private BlockPos boundMountPos = null;
 
     public FuzeControllerBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.FUZE_CONTROLLER.get(), pos, blockState);
@@ -47,12 +48,25 @@ public class FuzeControllerBlockEntity extends BlockEntity implements MenuProvid
         if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
 
+    public BlockPos getBoundMountPos() { return boundMountPos; }
+    public void setBoundMountPos(BlockPos pos) {
+        this.boundMountPos = pos;
+        setChanged();
+        if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+    }
+    public boolean hasBoundMount() { return boundMountPos != null; }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putString("FuzeMode", fuzeMode);
         tag.putFloat("ProximityDistance", proximityDistance);
         tag.putInt("FuzeTimer", fuzeTimer);
+        if (boundMountPos != null) {
+            tag.putInt("MountX", boundMountPos.getX());
+            tag.putInt("MountY", boundMountPos.getY());
+            tag.putInt("MountZ", boundMountPos.getZ());
+        }
     }
 
     @Override
@@ -61,6 +75,9 @@ public class FuzeControllerBlockEntity extends BlockEntity implements MenuProvid
         if (tag.contains("FuzeMode")) fuzeMode = tag.getString("FuzeMode");
         if (tag.contains("ProximityDistance")) proximityDistance = tag.getFloat("ProximityDistance");
         if (tag.contains("FuzeTimer")) fuzeTimer = tag.getInt("FuzeTimer");
+        if (tag.contains("MountX")) {
+            boundMountPos = new BlockPos(tag.getInt("MountX"), tag.getInt("MountY"), tag.getInt("MountZ"));
+        }
     }
 
     @Override
