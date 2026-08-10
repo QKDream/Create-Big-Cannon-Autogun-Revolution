@@ -6,62 +6,113 @@
 <title>Create Big Cannons: Autocannon Revolution</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:#0d1117; display:flex; align-items:center; justify-content:center; min-height:100vh; }
-  .card {
-    background:#161b22; border:1px solid #30363d; border-radius:16px;
-    padding:48px; text-align:center; max-width:500px; box-shadow:0 8px 32px rgba(0,0,0,0.5);
-    position:relative; z-index:1;
+  body { background:#0d1117; color:#c9d1d9; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+  .container { max-width:900px; margin:0 auto; padding:40px 20px 100px; }
+  h1 { font-size:32px; margin-bottom:16px; color:#58a6ff; border-bottom:1px solid #30363d; padding-bottom:16px; }
+  h2 { font-size:22px; margin:32px 0 16px; color:#58a6ff; border-bottom:1px solid #21262d; padding-bottom:8px; }
+  p { margin-bottom:12px; line-height:1.6; }
+  a { color:#58a6ff; text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  blockquote { border-left:3px solid #30363d; padding:8px 16px; margin:16px 0; color:#8b949e; }
+  table { border-collapse:collapse; width:100%; margin:16px 0; }
+  th, td { border:1px solid #30363d; padding:10px 14px; text-align:left; }
+  th { background:#161b22; font-weight:600; }
+  td { background:#0d1117; }
+  ul { margin:12px 0 12px 24px; }
+  li { margin:6px 0; line-height:1.6; }
+  hr { border:none; border-top:1px solid #30363d; margin:32px 0; }
+  img { max-width:100%; border-radius:8px; }
+  code { background:#161b22; padding:2px 6px; border-radius:4px; font-size:13px; }
+  #bar {
+    position:fixed; bottom:0; left:0; right:0; z-index:999;
+    background:rgba(22,27,34,0.97); border-top:1px solid #30363d;
+    padding:12px 24px; display:flex; align-items:center; justify-content:center; gap:14px;
+    backdrop-filter:blur(10px);
   }
-  h1 { font-size:28px; margin-bottom:8px; color:#58a6ff; }
-  p { color:#8b949e; margin-bottom:32px; font-size:14px; }
-  #btn {
-    background:#238636; color:#fff; border:none; padding:16px 48px; border-radius:12px;
-    font-size:20px; cursor:pointer; font-family:inherit;
+  #bar span { color:#8b949e; font-size:14px; }
+  #bar button {
+    background:#238636; color:#fff; border:none; padding:10px 24px; border-radius:8px;
+    font-size:15px; cursor:pointer; font-family:inherit;
   }
-  #btn:hover { background:#2ea043; }
-  #btn.paused { background:#da3633; }
-  #btn.paused:hover { background:#f85149; }
-  .link { margin-top:32px; font-size:13px; color:#8b949e; }
-  .link a { color:#58a6ff; }
+  #bar button:hover { background:#2ea043; }
+  #bar button.off { background:#da3633; }
+  #bar button.off:hover { background:#f85149; }
 </style>
 </head>
 <body>
-<div class="card">
-  <h1>🔫 Create Big Cannons<br>Autocannon Revolution</h1>
-  <p>机炮弹药革新</p>
-  <button id="btn" onclick="toggle()">▶ 点击播放</button>
-  <div class="link"><a href="https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution">← 返回仓库</a></div>
-</div>
 
-<video id="bgm" loop autoplay playsinline style="display:none">
+<video id="bgm" loop autoplay muted playsinline style="display:none">
   <source src="bgm.mp4" type="video/mp4">
 </video>
+
+<div class="container">
+
+<h1>🔫 Create Big Cannons: Autocannon Revolution</h1>
+<p>为 <a href="https://github.com/rbasamoyai/CreateBigCannons">Create Big Cannons</a> 扩展的机炮弹药模组。</p>
+
+<h2>新增弹药</h2>
+<table>
+<tr><th>弹药</th><th>类型</th><th>穿深</th><th>爆炸</th><th>特色</th></tr>
+<tr><td><strong>APFSDS</strong></td><td>动能穿甲</td><td>300</td><td>无</td><td>极高穿深，低阻力，几乎不跳弹</td></tr>
+<tr><td><strong>APHE</strong></td><td>穿甲高爆</td><td>14</td><td>6.0</td><td>穿透后内部爆炸</td></tr>
+<tr><td><strong>SAP</strong></td><td>半穿甲</td><td>10</td><td>8.4</td><td>高装药量，爆炸伤害高</td></tr>
+<tr><td><strong>榴霰弹</strong></td><td>霰弹</td><td>0</td><td>5.0</td><td>40枚破片，密集散布</td></tr>
+<tr><td><strong>铝热剂弹头</strong></td><td>燃烧穿甲</td><td>0</td><td>4.0</td><td>撞击点挖掘 + 引燃，可装灵魂火装置</td></tr>
+<tr><td><strong>灵魂火装置</strong></td><td>附魔装置</td><td>—</td><td>2.0</td><td>火焰爆炸 + 15%最大生命伤害</td></tr>
+</table>
+
+<h2>高速机炮弹药</h2>
+<ul>
+<li>初速为普通弹药的 <strong>2倍</strong></li>
+<li>合成：filled_autocannon_cartridge + 2×火药 → 空高速弹壳</li>
+<li>装填：任意弹头 + 空高速弹壳 → 高速弹药</li>
+<li>升级：任意已装填弹壳 + 火药 → 高速弹药</li>
+<li>支持装引信 + 灵魂火装置</li>
+</ul>
+
+<h2>依赖</h2>
+<ul>
+<li>Minecraft 1.21.1 / NeoForge 21.1</li>
+<li><a href="https://modrinth.com/mod/create">Create 6.0</a></li>
+<li><a href="https://modrinth.com/mod/create-big-cannons">Create Big Cannons 5.11.7</a></li>
+<li><a href="https://modrinth.com/mod/ritchiesprojectilelib">Ritchie's Projectile Library 2.1</a></li>
+</ul>
+
+<h2>安装</h2>
+<p>将 JAR 文件放入 .minecraft/mods/ 文件夹。</p>
+
+<h2>更新日志</h2>
+<p>详见 <a href="https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution/blob/main/CHANGELOG.md">CHANGELOG.md</a></p>
+
+<hr>
+<p style="text-align:center">
+  <img src="images/endpic.jpg" alt="end" style="max-width:100%">
+</p>
+
+</div>
+
+<div id="bar">
+  <span>🎵 BMPT 机炮音效循环中</span>
+  <button id="btn" class="off" onclick="toggle()">🔊 点击开启声音</button>
+</div>
 
 <script>
 const bgm = document.getElementById('bgm');
 const btn = document.getElementById('btn');
 bgm.volume = 0.6;
-let playing = false;
-
-// Edge/Chrome 必须静音才能自动播放，所以先 muted 自动播，用户点一下就出声音
-bgm.muted = true;
-bgm.play().then(() => {
-  btn.textContent = '🔊 点击开启声音';
-  btn.className = 'paused';
-}).catch(() => {});
+let soundOn = false;
 
 function toggle() {
-  if (playing) {
+  if (soundOn) {
     bgm.muted = true;
     btn.textContent = '🔊 点击开启声音';
-    btn.className = 'paused';
+    btn.className = 'off';
   } else {
     bgm.muted = false;
-    bgm.play();
-    btn.textContent = '⏸ 静音';
+    btn.textContent = '🔇 静音';
     btn.className = '';
   }
-  playing = !playing;
+  soundOn = !soundOn;
 }
 </script>
 </body>
