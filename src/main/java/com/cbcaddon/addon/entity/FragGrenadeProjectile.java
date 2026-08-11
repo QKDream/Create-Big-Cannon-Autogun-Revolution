@@ -18,7 +18,7 @@ public class FragGrenadeProjectile extends FlakAutocannonProjectile {
     @Override
     public void tick() {
         if (!this.isInGround()) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.08, 0));
+            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.12, 0));
         }
         super.tick();
     }

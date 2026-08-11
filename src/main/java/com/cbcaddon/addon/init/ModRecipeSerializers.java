@@ -3,6 +3,7 @@ package com.cbcaddon.addon.init;
 import com.cbcaddon.addon.CBCAddon;
 import com.cbcaddon.addon.recipe.HighVelocityCartridgeAssemblyRecipe;
 import com.cbcaddon.addon.recipe.HighVelocityCartridgeUpgradeRecipe;
+import com.cbcaddon.addon.recipe.SmokePotionRecipe;
 import com.cbcaddon.addon.recipe.SoulFireApplicationRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -26,4 +27,8 @@ public class ModRecipeSerializers {
     public static final Supplier<RecipeSerializer<SoulFireApplicationRecipe>> SOUL_FIRE_APPLICATION =
             RECIPE_SERIALIZERS.register("soul_fire_application",
                     () -> new SimpleCraftingRecipeSerializer<>(SoulFireApplicationRecipe::new));
+
+    public static final Supplier<RecipeSerializer<SmokePotionRecipe>> SMOKE_POTION_APPLICATION =
+            RECIPE_SERIALIZERS.register("smoke_potion_application",
+                    () -> new SimpleCraftingRecipeSerializer<>(SmokePotionRecipe::new));
 }
