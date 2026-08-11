@@ -1,1 +1,1 @@
-﻿{"type":"createbigcannons:melting","ingredients":[{"item":"cbcaddon:frag_grenade_autocannon_round"}],"results":[{"item":"createbigcannons:molten_cast_iron","amount":324}],"processingTime":200}
+﻿{"type":"minecraft:crafting_shapeless","category":"misc","ingredients":[{"item":"minecraft:gunpowder"},{"item":"minecraft:iron_ingot"},{"item":"minecraft:flint"},{"item":"createbigcannons:autocannon_cartridge_sheet"}],"result":{"count":1,"id":"cbcaddon:frag_grenade_autocannon_round"}}

@@ -2,6 +2,7 @@ package com.cbcaddon.addon.recipe;
 
 import com.cbcaddon.addon.init.ModItems;
 import com.cbcaddon.addon.init.ModRecipeSerializers;
+import com.cbcaddon.addon.item.FragGrenadeRoundItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -26,6 +27,8 @@ public class HighVelocityCartridgeAssemblyRecipe extends CustomRecipe {
             ItemStack stack = input.getItem(i);
             if (stack.isEmpty()) continue;
             if (stack.getItem() instanceof AutocannonRoundItem) {
+                // FragGrenade cannot be used in high-velocity cartridge
+                if (stack.getItem() == ModItems.FRAG_GRENADE_ROUND.get()) return false;
                 if (roundIdx != -1) return false;
                 roundIdx = i;
             } else if (stack.getItem() == ModItems.HIGH_VELOCITY_CARTRIDGE.get() && !AutocannonCartridgeItem.hasProjectile(stack)) {

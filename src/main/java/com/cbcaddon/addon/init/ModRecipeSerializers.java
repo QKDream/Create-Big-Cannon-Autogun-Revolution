@@ -28,7 +28,7 @@ public class ModRecipeSerializers {
             RECIPE_SERIALIZERS.register("soul_fire_application",
                     () -> new SimpleCraftingRecipeSerializer<>(SoulFireApplicationRecipe::new));
 
-    public static final Supplier<RecipeSerializer<SmokePotionRecipe>> SMOKE_POTION_APPLICATION =
-            RECIPE_SERIALIZERS.register("smoke_potion_application",
+    public static final Supplier<RecipeSerializer<SmokePotionRecipe>> SMOKE_POTION =
+            RECIPE_SERIALIZERS.register("smoke_potion",
                     () -> new SimpleCraftingRecipeSerializer<>(SmokePotionRecipe::new));
 }

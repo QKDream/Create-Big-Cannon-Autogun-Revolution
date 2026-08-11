@@ -2,7 +2,8 @@ package com.cbcaddon.addon.recipe;
 
 import com.cbcaddon.addon.init.ModItems;
 import com.cbcaddon.addon.init.ModRecipeSerializers;
-import com.cbcaddon.addon.item.HighVelocityAutocannonCartridgeItem;
+import com.cbcaddon.addon.item.FragGrenadeRoundItem;
+import com.cbcaddon.addon.item.SmokeAutocannonRoundItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
@@ -39,8 +40,11 @@ public class SoulFireApplicationRecipe extends CustomRecipe {
             ItemStack stack = input.getItem(i);
             if (stack.isEmpty()) continue;
             boolean isRound = stack.getItem() instanceof AutocannonRoundItem;
-            boolean isCartridge = stack.getItem() instanceof AutocannonCartridgeItem
-                    && !(stack.getItem() instanceof HighVelocityAutocannonCartridgeItem);
+            boolean isCartridge = stack.getItem() instanceof AutocannonCartridgeItem;
+            // Exclude Smoke and Frag rounds from soul fire
+            if (stack.getItem() == ModItems.SMOKE_AUTOCANNON_ROUND.get() || stack.getItem() == ModItems.FRAG_GRENADE_ROUND.get()) {
+                return false;
+            }
             if ((isRound || isCartridge) && !hasSoulFire(stack)) {
                 if (hasTarget) return false;
                 hasTarget = true;
@@ -59,9 +63,8 @@ public class SoulFireApplicationRecipe extends CustomRecipe {
         ItemStack target = ItemStack.EMPTY;
         for (int i = 0; i < input.size(); i++) {
             ItemStack stack = input.getItem(i);
-            if (!stack.isEmpty() && ((stack.getItem() instanceof AutocannonRoundItem)
-                    || (stack.getItem() instanceof AutocannonCartridgeItem
-                        && !(stack.getItem() instanceof HighVelocityAutocannonCartridgeItem)))) {
+            if (!stack.isEmpty() && (stack.getItem() instanceof AutocannonRoundItem
+                    || stack.getItem() instanceof AutocannonCartridgeItem)) {
                 target = stack;
                 break;
             }

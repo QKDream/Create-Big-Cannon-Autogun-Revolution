@@ -1,1 +1,23 @@
-﻿{"entity_damage":2.0,"durability_mass":2.0,"renders_invulnerable":false,"ignores_invulnerability":false,"ignores_entity_armor":false,"gravity":-0.005,"drag":0.002,"quadratic_drag":false,"knockback":0.5,"added_recoil":1.0,"can_squib":true,"penetration":0.0,"toughness":0.0,"deflection":1.0}
+﻿{
+  "entity_damage": 0.5,
+  "durability_mass": 0.5,
+  "renders_invulnerable": false,
+  "ignores_invulnerability": false,
+  "ignores_entity_armor": true,
+  "base_fuze": false,
+  "gravity": -0.02,
+  "drag": 0.01,
+  "quadratic_drag": false,
+  "knockback": 0.1,
+  "added_recoil": 0.5,
+  "can_squib": true,
+  "shrapnel_spread": 0.0,
+  "shrapnel_count": 0,
+  "shrapnel_damage": 0.0,
+  "shrapnel_velocity": 0.0,
+  "entity_damaging_explosive_power": 2.0,
+  "block_damaging_explosive_power": 1.0,
+  "penetration": 0.0,
+  "toughness": 0.0,
+  "deflection": 0.50
+}
