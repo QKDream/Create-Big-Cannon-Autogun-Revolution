@@ -16,6 +16,10 @@ public class FragGrenadeProjectile extends FlakAutocannonProjectile {
 
     @Override
     public void tick() {
+        // Drastically reduce initial velocity on first tick
+        if (this.tickCount == 1) {
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.25));
+        }
         if (!this.isInGround()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, -0.35, 0));
         }
