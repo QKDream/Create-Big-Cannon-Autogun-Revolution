@@ -7,11 +7,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class FragSubProjectile extends Projectile {
     private int life = 0;
 
-    public FragSubProjectile(EntityType<? extends FragSubProjectile> type, Level level) { super(type, level); }
+    public FragSubProjectile(EntityType<? extends FragSubProjectile> type, Level level) {
+        super(type, level);
+        this.setNoGravity(false);
+    }
 
     public void setOwner(Entity owner) { super.setOwner(owner); }
 
@@ -20,8 +24,21 @@ public class FragSubProjectile extends Projectile {
 
     @Override
     public void tick() {
+        // Manual movement before super.tick
+        Vec3 movement = this.getDeltaMovement();
+        double nx = this.getX() + movement.x;
+        double ny = this.getY() + movement.y;
+        double nz = this.getZ() + movement.z;
+        this.setPos(nx, ny, nz);
+
+        // Apply gravity
+        if (!this.isNoGravity()) {
+            this.setDeltaMovement(movement.add(0.0, -0.05, 0.0));
+        }
+
         super.tick();
         life++;
+
         if (!this.level().isClientSide) {
             if (life >= 5) {
                 this.subDetonate(this.position());

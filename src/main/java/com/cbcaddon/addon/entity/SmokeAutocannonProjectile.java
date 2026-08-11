@@ -29,8 +29,7 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
         if (this.level().isClientSide) return;
 
         if (hasPotion && !potionStack.isEmpty()) {
-            // Potion mode: Fluid Shell style (smaller scale AreaEffectCloud)
-            super.detonate(position);
+            // Potion mode: Fluid Shell style - AreaEffectCloud only, no flak explosion
             BlockPos center = BlockPos.containing(position);
             AreaEffectCloud cloud = new AreaEffectCloud(this.level(), center.getX() + 0.5, center.getY() + 0.5, center.getZ() + 0.5);
             cloud.setRadius(2.0f);
@@ -40,7 +39,7 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
             contents.getAllEffects().forEach(e -> cloud.addEffect(new MobEffectInstance(e)));
             this.level().addFreshEntity(cloud);
         } else {
-            // Smoke mode: use CBC's SmokeExplosion directly (smaller scale)
+            // Smoke mode: CBC native SmokeExplosion (smaller scale)
             SmokeExplosion explosion = new SmokeExplosion(
                 this.level(), this,
                 position.x(), position.y(), position.z(),
