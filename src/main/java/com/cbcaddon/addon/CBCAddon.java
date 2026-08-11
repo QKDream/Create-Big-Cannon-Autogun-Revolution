@@ -15,6 +15,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonCartridgeItem;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonProjectileRenderer;
 
 import java.util.function.Supplier;
@@ -31,16 +32,35 @@ public class CBCAddon {
                     .title(Component.translatable("itemGroup.cbcaddon"))
                     .icon(() -> new ItemStack(ModItems.APFSDS_AUTOCANNON_ROUND.get()))
                     .displayItems((params, output) -> {
+                        // Rounds
                         output.accept(ModItems.APFSDS_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.APHE_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SAP_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.THERMITE_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.MULTIPURPOSE_AUTOCANNON_ROUND.get());
+                        output.accept(ModItems.SMOKE_AUTOCANNON_ROUND.get());
+                        output.accept(ModItems.FRAG_GRENADE_AUTOCANNON_ROUND.get());
+                        // Tools
                         output.accept(ModItems.SOUL_FIRE_DEVICE.get());
                         output.accept(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
+                        // Assembled HV cartridge forms
+                        addAssembledCartridge(output, ModItems.APFSDS_AUTOCANNON_ROUND.get());
+                        addAssembledCartridge(output, ModItems.APHE_AUTOCANNON_ROUND.get());
+                        addAssembledCartridge(output, ModItems.SAP_AUTOCANNON_ROUND.get());
+                        addAssembledCartridge(output, ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
+                        addAssembledCartridge(output, ModItems.THERMITE_AUTOCANNON_ROUND.get());
+                        addAssembledCartridge(output, ModItems.MULTIPURPOSE_AUTOCANNON_ROUND.get());
+                        addAssembledCartridge(output, ModItems.SMOKE_AUTOCANNON_ROUND.get());
                     })
                     .build());
+
+    private static void addAssembledCartridge(CreativeModeTab.Output output, net.minecraft.world.item.Item round) {
+        ItemStack cartridge = new ItemStack(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
+        ItemStack projectile = new ItemStack(round);
+        AutocannonCartridgeItem.writeProjectile(projectile, cartridge);
+        output.accept(cartridge);
+    }
 
     public CBCAddon(IEventBus modEventBus) {
         ModEntities.ENTITY_TYPES.register(modEventBus);
@@ -63,5 +83,7 @@ public class CBCAddon {
         event.registerEntityRenderer(ModEntities.SHRAPNEL_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.THERMITE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.MULTIPURPOSE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.SMOKE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.FRAG_GRENADE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
     }
 }

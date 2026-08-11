@@ -2,6 +2,7 @@ package com.cbcaddon.addon.recipe;
 
 import com.cbcaddon.addon.init.ModItems;
 import com.cbcaddon.addon.init.ModRecipeSerializers;
+import com.cbcaddon.addon.item.HighVelocityAutocannonCartridgeItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +39,8 @@ public class SoulFireApplicationRecipe extends CustomRecipe {
             ItemStack stack = input.getItem(i);
             if (stack.isEmpty()) continue;
             boolean isRound = stack.getItem() instanceof AutocannonRoundItem;
-            boolean isCartridge = stack.getItem() instanceof AutocannonCartridgeItem;
+            boolean isCartridge = stack.getItem() instanceof AutocannonCartridgeItem
+                    && !(stack.getItem() instanceof HighVelocityAutocannonCartridgeItem);
             if ((isRound || isCartridge) && !hasSoulFire(stack)) {
                 if (hasTarget) return false;
                 hasTarget = true;
@@ -57,8 +59,9 @@ public class SoulFireApplicationRecipe extends CustomRecipe {
         ItemStack target = ItemStack.EMPTY;
         for (int i = 0; i < input.size(); i++) {
             ItemStack stack = input.getItem(i);
-            if (!stack.isEmpty() && (stack.getItem() instanceof AutocannonRoundItem
-                    || stack.getItem() instanceof AutocannonCartridgeItem)) {
+            if (!stack.isEmpty() && ((stack.getItem() instanceof AutocannonRoundItem)
+                    || (stack.getItem() instanceof AutocannonCartridgeItem
+                        && !(stack.getItem() instanceof HighVelocityAutocannonCartridgeItem)))) {
                 target = stack;
                 break;
             }
@@ -67,7 +70,6 @@ public class SoulFireApplicationRecipe extends CustomRecipe {
         ItemStack result = target.copyWithCount(1);
         setSoulFire(result);
 
-        // If target is a cartridge, also set soul_fire on the stored projectile
         if (result.getItem() instanceof AutocannonCartridgeItem && AutocannonCartridgeItem.hasProjectile(result)) {
             ItemStack projectile = AutocannonCartridgeItem.getProjectileStack(result);
             if (!projectile.isEmpty()) {
