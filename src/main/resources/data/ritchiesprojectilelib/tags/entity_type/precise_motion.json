@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "cbcaddon:apfsds_autocannon",
+    "cbcaddon:aphe_autocannon",
+    "cbcaddon:sap_autocannon",
+    "cbcaddon:shrapnel_autocannon",
+    "cbcaddon:thermite_autocannon",
+    "cbcaddon:multipurpose_autocannon",
+    "cbcaddon:frag_grenade",
+    "cbcaddon:frag_sub",
+    "cbcaddon:smoke_autocannon"
+  ]
+}
