@@ -10,26 +10,36 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.munitions.autocannon.AbstractAutocannonProjectile;
-import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonRoundItem;
+import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonRoundItem;
+import rbasamoyai.createbigcannons.munitions.autocannon.config.AutocannonProjectilePropertiesComponent;
+import rbasamoyai.createbigcannons.index.CBCMunitionPropertiesHandlers;
 
 import java.util.List;
 
-public class SmokeAutocannonRoundItem extends FlakAutocannonRoundItem {
+public class SmokeAutocannonRoundItem extends AutocannonRoundItem {
     public SmokeAutocannonRoundItem(Properties properties) { super(properties); }
+
     @Override public EntityType<?> getEntityType(ItemStack stack) { return ModEntities.SMOKE_AUTOCANNON.get(); }
+
     @Override
     public AbstractAutocannonProjectile getAutocannonProjectile(ItemStack stack, Level level) {
-        AbstractAutocannonProjectile projectile = super.getAutocannonProjectile(stack, level);
-        if (projectile instanceof SmokeAutocannonProjectile p) {
+        SmokeAutocannonProjectile projectile = (SmokeAutocannonProjectile) ModEntities.SMOKE_AUTOCANNON.get().create(level);
+        if (projectile != null) {
             PotionContents pc = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
             if (pc.hasEffects()) {
                 ItemStack potionHolder = new ItemStack(net.minecraft.world.item.Items.LINGERING_POTION);
                 potionHolder.set(DataComponents.POTION_CONTENTS, pc);
-                p.setPotion(potionHolder);
+                projectile.setPotion(potionHolder);
             }
         }
         return projectile;
     }
+
+    @Override
+    public AutocannonProjectilePropertiesComponent getAutocannonProperties(ItemStack stack) {
+        return AutocannonProjectilePropertiesComponent.DEFAULT;
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);

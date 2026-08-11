@@ -9,7 +9,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.component.DataComponents;
+import rbasamoyai.createbigcannons.munitions.ProjectileContext;
+import rbasamoyai.createbigcannons.munitions.AbstractCannonProjectile;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
 import rbasamoyai.createbigcannons.munitions.big_cannon.smoke_shell.SmokeExplosion;
 
@@ -25,11 +29,22 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
     }
 
     @Override
+    protected boolean onImpact(HitResult result, AbstractCannonProjectile.ImpactResult impactResult, ProjectileContext context) {
+        this.detonate(this.position());
+        return true;
+    }
+
+    @Override
+    protected boolean onClip(ProjectileContext context, Vec3 motion, Vec3 hitPos) {
+        this.detonate(hitPos);
+        return true;
+    }
+
+    @Override
     protected void detonate(Position position) {
         if (this.level().isClientSide) return;
 
         if (hasPotion && !potionStack.isEmpty()) {
-            // Potion mode: Fluid Shell style - AreaEffectCloud only, no flak explosion
             BlockPos center = BlockPos.containing(position);
             AreaEffectCloud cloud = new AreaEffectCloud(this.level(), center.getX() + 0.5, center.getY() + 0.5, center.getZ() + 0.5);
             cloud.setRadius(2.0f);
@@ -39,7 +54,6 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
             contents.getAllEffects().forEach(e -> cloud.addEffect(new MobEffectInstance(e)));
             this.level().addFreshEntity(cloud);
         } else {
-            // Smoke mode: CBC native SmokeExplosion (smaller scale)
             SmokeExplosion explosion = new SmokeExplosion(
                 this.level(), this,
                 position.x(), position.y(), position.z(),
