@@ -1,9 +1,10 @@
 package com.cbcaddon.addon.entity;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
@@ -11,9 +12,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
+import rbasamoyai.createbigcannons.munitions.big_cannon.smoke_shell.SmokeEmitterEntity;
 
 public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
+    private static final ResourceLocation SMOKE_EMITTER_ID =
+            ResourceLocation.fromNamespaceAndPath("createbigcannons", "smoke_emitter");
+
     private boolean hasPotion;
     private PotionContents potionContents;
     private boolean highVelocity;
@@ -33,7 +39,7 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
 
     @Override
     public void tick() {
-        if (this.highVelocity && this.tickCount == 1) {
+        if (this.highVelocity && this.tickCount == 0 && !this.level().isClientSide) {
             this.setDeltaMovement(this.getDeltaMovement().scale(2.0));
             this.highVelocity = false;
         }
@@ -41,49 +47,60 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
     }
 
     @Override
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
+        if (this.highVelocity) {
+            Vec3 origVel = this.getDeltaMovement();
+            this.setDeltaMovement(origVel.scale(2.0));
+            super.writeSpawnData(buffer);
+            this.setDeltaMovement(origVel);
+        } else {
+            super.writeSpawnData(buffer);
+        }
+    }
+
+    @Override
     protected void detonate(Position position) {
-        super.detonate(position);
-
         if (!this.level().isClientSide) {
-            ServerLevel serverLevel = (ServerLevel) this.level();
-            Entity owner = this.getOwner();
-
             if (this.hasPotion && this.potionContents != PotionContents.EMPTY) {
+                Entity owner = this.getOwner();
                 AreaEffectCloud cloud = new AreaEffectCloud(this.level(), position.x(), position.y(), position.z());
                 if (owner instanceof LivingEntity livingOwner) {
                     cloud.setOwner(livingOwner);
                 }
-                cloud.setRadius(2.5f);
-                cloud.setRadiusOnUse(-0.5f);
-                cloud.setWaitTime(10);
-                cloud.setDuration(160);
-                cloud.setRadiusPerTick(-0.01f);
+                cloud.setRadius(3.5f);
+                cloud.setRadiusOnUse(-0.3f);
+                cloud.setWaitTime(0);
+                cloud.setDuration(200);
+                cloud.setRadiusPerTick(-0.005f);
+                cloud.setParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE);
                 for (MobEffectInstance effect : this.potionContents.getAllEffects()) {
                     cloud.addEffect(new MobEffectInstance(effect));
                 }
                 this.level().addFreshEntity(cloud);
+
+                EntityType<?> smokeType = BuiltInRegistries.ENTITY_TYPE.get(SMOKE_EMITTER_ID);
+                if (smokeType != null) {
+                    Entity e = smokeType.create(this.level());
+                    if (e instanceof SmokeEmitterEntity smoke) {
+                        smoke.setPos(new Vec3(position.x(), position.y(), position.z()));
+                        smoke.setDuration(120);
+                        smoke.setSize(4.0f);
+                        this.level().addFreshEntity(smoke);
+                    }
+                }
             } else {
-                BlockPos center = BlockPos.containing(position);
-                for (int i = 0; i < 30; i++) {
-                    double dx = (this.random.nextDouble() - 0.5) * 3.0;
-                    double dy = this.random.nextDouble() * 2.5;
-                    double dz = (this.random.nextDouble() - 0.5) * 3.0;
-                    serverLevel.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE,
-                            position.x() + dx, position.y() + dy, position.z() + dz,
-                            1, 0.1, 0.1, 0.1, 0.02);
+                EntityType<?> smokeType = BuiltInRegistries.ENTITY_TYPE.get(SMOKE_EMITTER_ID);
+                if (smokeType != null) {
+                    Entity e = smokeType.create(this.level());
+                    if (e instanceof SmokeEmitterEntity smoke) {
+                        smoke.setPos(new Vec3(position.x(), position.y(), position.z()));
+                        smoke.setDuration(160);
+                        smoke.setSize(4.0f);
+                        this.level().addFreshEntity(smoke);
+                    }
                 }
-                AreaEffectCloud smokeCloud = new AreaEffectCloud(this.level(), position.x(), position.y(), position.z());
-                if (owner instanceof LivingEntity livingOwner) {
-                    smokeCloud.setOwner(livingOwner);
-                }
-                smokeCloud.setRadius(2.5f);
-                smokeCloud.setRadiusOnUse(-0.3f);
-                smokeCloud.setWaitTime(0);
-                smokeCloud.setDuration(120);
-                smokeCloud.setRadiusPerTick(-0.005f);
-                smokeCloud.setParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE);
-                this.level().addFreshEntity(smokeCloud);
             }
         }
+        this.discard();
     }
 }

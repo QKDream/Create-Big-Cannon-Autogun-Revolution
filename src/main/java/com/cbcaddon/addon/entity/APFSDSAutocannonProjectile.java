@@ -1,7 +1,9 @@
 package com.cbcaddon.addon.entity;
 
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import rbasamoyai.createbigcannons.munitions.autocannon.ap_round.APAutocannonProjectile;
 
 public class APFSDSAutocannonProjectile extends APAutocannonProjectile {
@@ -17,10 +19,22 @@ public class APFSDSAutocannonProjectile extends APAutocannonProjectile {
 
     @Override
     public void tick() {
-        if (this.highVelocity && this.tickCount == 1) {
+        if (this.highVelocity && this.tickCount == 0 && !this.level().isClientSide) {
             this.setDeltaMovement(this.getDeltaMovement().scale(2.0));
             this.highVelocity = false;
         }
         super.tick();
+    }
+
+    @Override
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
+        if (this.highVelocity) {
+            Vec3 origVel = this.getDeltaMovement();
+            this.setDeltaMovement(origVel.scale(2.0));
+            super.writeSpawnData(buffer);
+            this.setDeltaMovement(origVel);
+        } else {
+            super.writeSpawnData(buffer);
+        }
     }
 }

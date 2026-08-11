@@ -1,1 +1,6 @@
-{"parent":"createbigcannons:item/autocannon_cartridge"}
+﻿{
+  "parent": "createbigcannons:item/filled_autocannon_cartridge",
+  "overrides": [
+    {"predicate": {"cbcaddon:has_projectile": 1}, "model": "createbigcannons:item/autocannon_cartridge"}
+  ]
+}
