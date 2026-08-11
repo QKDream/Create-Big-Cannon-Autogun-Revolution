@@ -6,9 +6,12 @@ import com.cbcaddon.addon.init.ModDataComponents;
 import com.cbcaddon.addon.init.ModEntities;
 import com.cbcaddon.addon.init.ModItems;
 import com.cbcaddon.addon.init.ModRecipeSerializers;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -27,12 +30,15 @@ public class CBCAddon {
     public static final DeferredRegister<CreativeModeTab> TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
+    private static final ResourceLocation FILLED_CARTRIDGE_ID =
+            ResourceLocation.fromNamespaceAndPath("createbigcannons", "filled_autocannon_cartridge");
+
     public static final Supplier<CreativeModeTab> MAIN_TAB = TABS.register("tab",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.cbcaddon"))
                     .icon(() -> new ItemStack(ModItems.APFSDS_AUTOCANNON_ROUND.get()))
                     .displayItems((params, output) -> {
-                        // Rounds
+                        // All rounds
                         output.accept(ModItems.APFSDS_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.APHE_AUTOCANNON_ROUND.get());
                         output.accept(ModItems.SAP_AUTOCANNON_ROUND.get());
@@ -44,19 +50,32 @@ public class CBCAddon {
                         // Tools
                         output.accept(ModItems.SOUL_FIRE_DEVICE.get());
                         output.accept(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
-                        // Assembled HV cartridge forms
-                        addAssembledCartridge(output, ModItems.APFSDS_AUTOCANNON_ROUND.get());
-                        addAssembledCartridge(output, ModItems.APHE_AUTOCANNON_ROUND.get());
-                        addAssembledCartridge(output, ModItems.SAP_AUTOCANNON_ROUND.get());
-                        addAssembledCartridge(output, ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
-                        addAssembledCartridge(output, ModItems.THERMITE_AUTOCANNON_ROUND.get());
-                        addAssembledCartridge(output, ModItems.MULTIPURPOSE_AUTOCANNON_ROUND.get());
-                        addAssembledCartridge(output, ModItems.SMOKE_AUTOCANNON_ROUND.get());
+                        // Standard Filled Cartridge + round combos
+                        Item filledCartridge = BuiltInRegistries.ITEM.get(FILLED_CARTRIDGE_ID);
+                        if (filledCartridge != null) {
+                            addCartridgeCombo(output, filledCartridge, ModItems.APFSDS_AUTOCANNON_ROUND.get());
+                            addCartridgeCombo(output, filledCartridge, ModItems.APHE_AUTOCANNON_ROUND.get());
+                            addCartridgeCombo(output, filledCartridge, ModItems.SAP_AUTOCANNON_ROUND.get());
+                            addCartridgeCombo(output, filledCartridge, ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
+                            addCartridgeCombo(output, filledCartridge, ModItems.THERMITE_AUTOCANNON_ROUND.get());
+                            addCartridgeCombo(output, filledCartridge, ModItems.MULTIPURPOSE_AUTOCANNON_ROUND.get());
+                            addCartridgeCombo(output, filledCartridge, ModItems.SMOKE_AUTOCANNON_ROUND.get());
+                            addCartridgeCombo(output, filledCartridge, ModItems.FRAG_GRENADE_AUTOCANNON_ROUND.get());
+                        }
+                        // HV Cartridge + round combos (no frag grenade)
+                        Item hvCartridge = ModItems.HIGH_VELOCITY_CARTRIDGE.get();
+                        addCartridgeCombo(output, hvCartridge, ModItems.APFSDS_AUTOCANNON_ROUND.get());
+                        addCartridgeCombo(output, hvCartridge, ModItems.APHE_AUTOCANNON_ROUND.get());
+                        addCartridgeCombo(output, hvCartridge, ModItems.SAP_AUTOCANNON_ROUND.get());
+                        addCartridgeCombo(output, hvCartridge, ModItems.SHRAPNEL_AUTOCANNON_ROUND.get());
+                        addCartridgeCombo(output, hvCartridge, ModItems.THERMITE_AUTOCANNON_ROUND.get());
+                        addCartridgeCombo(output, hvCartridge, ModItems.MULTIPURPOSE_AUTOCANNON_ROUND.get());
+                        addCartridgeCombo(output, hvCartridge, ModItems.SMOKE_AUTOCANNON_ROUND.get());
                     })
                     .build());
 
-    private static void addAssembledCartridge(CreativeModeTab.Output output, net.minecraft.world.item.Item round) {
-        ItemStack cartridge = new ItemStack(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
+    private static void addCartridgeCombo(CreativeModeTab.Output output, Item cartridgeItem, Item round) {
+        ItemStack cartridge = new ItemStack(cartridgeItem);
         ItemStack projectile = new ItemStack(round);
         AutocannonCartridgeItem.writeProjectile(projectile, cartridge);
         output.accept(cartridge);

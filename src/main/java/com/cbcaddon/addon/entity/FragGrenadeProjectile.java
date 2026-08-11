@@ -3,7 +3,6 @@ package com.cbcaddon.addon.entity;
 import com.cbcaddon.addon.init.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -34,9 +33,9 @@ public class FragGrenadeProjectile extends FlakAutocannonProjectile {
             if (sub == null) continue;
             sub.setPos(position.x(), position.y(), position.z());
             Vec3 vel = new Vec3(
-                (this.random.nextDouble() - 0.5) * 1.5,
-                this.random.nextDouble() * 1.0 + 0.5,
-                (this.random.nextDouble() - 0.5) * 1.5
+                (this.random.nextDouble() - 0.5) * 1.0,
+                this.random.nextDouble() * 0.6 + 0.3,
+                (this.random.nextDouble() - 0.5) * 1.0
             );
             sub.setDeltaMovement(vel);
             sub.setOwner(this.getOwner());
