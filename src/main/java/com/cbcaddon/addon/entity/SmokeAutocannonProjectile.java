@@ -3,7 +3,6 @@ package com.cbcaddon.addon.entity;
 import net.minecraft.core.Position;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AreaEffectCloud;
@@ -38,24 +37,13 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
     public void setHighVelocity(boolean hv) { this.highVelocity = hv; }
 
     @Override
-    public void tick() {
-        if (this.highVelocity && this.tickCount == 0 && !this.level().isClientSide) {
-            this.setDeltaMovement(this.getDeltaMovement().scale(2.0));
+    public void setDeltaMovement(Vec3 velocity) {
+        if (this.highVelocity && velocity.lengthSqr() > 0.001) {
             this.highVelocity = false;
+            super.setDeltaMovement(velocity.scale(2.0));
+            return;
         }
-        super.tick();
-    }
-
-    @Override
-    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
-        if (this.highVelocity) {
-            Vec3 origVel = this.getDeltaMovement();
-            this.setDeltaMovement(origVel.scale(2.0));
-            super.writeSpawnData(buffer);
-            this.setDeltaMovement(origVel);
-        } else {
-            super.writeSpawnData(buffer);
-        }
+        super.setDeltaMovement(velocity);
     }
 
     @Override

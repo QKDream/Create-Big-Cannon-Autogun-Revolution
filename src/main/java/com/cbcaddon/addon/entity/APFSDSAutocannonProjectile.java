@@ -1,6 +1,5 @@
 package com.cbcaddon.addon.entity;
 
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -18,23 +17,12 @@ public class APFSDSAutocannonProjectile extends APAutocannonProjectile {
     }
 
     @Override
-    public void tick() {
-        if (this.highVelocity && this.tickCount == 0 && !this.level().isClientSide) {
-            this.setDeltaMovement(this.getDeltaMovement().scale(2.0));
+    public void setDeltaMovement(Vec3 velocity) {
+        if (this.highVelocity && velocity.lengthSqr() > 0.001) {
             this.highVelocity = false;
+            super.setDeltaMovement(velocity.scale(2.0));
+            return;
         }
-        super.tick();
-    }
-
-    @Override
-    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
-        if (this.highVelocity) {
-            Vec3 origVel = this.getDeltaMovement();
-            this.setDeltaMovement(origVel.scale(2.0));
-            super.writeSpawnData(buffer);
-            this.setDeltaMovement(origVel);
-        } else {
-            super.writeSpawnData(buffer);
-        }
+        super.setDeltaMovement(velocity);
     }
 }
