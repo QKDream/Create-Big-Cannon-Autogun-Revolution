@@ -2,12 +2,13 @@ package com.cbcaddon.addon.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -15,7 +16,6 @@ import net.minecraft.core.component.DataComponents;
 import rbasamoyai.createbigcannons.munitions.ProjectileContext;
 import rbasamoyai.createbigcannons.munitions.AbstractCannonProjectile;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
-import rbasamoyai.createbigcannons.munitions.big_cannon.smoke_shell.SmokeExplosion;
 
 public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
     private boolean hasPotion;
@@ -43,9 +43,11 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
     @Override
     protected void detonate(Position position) {
         if (this.level().isClientSide) return;
+        BlockPos center = BlockPos.containing(position);
+        ServerLevel sl = (ServerLevel) this.level();
 
         if (hasPotion && !potionStack.isEmpty()) {
-            BlockPos center = BlockPos.containing(position);
+            // Potion mode: AreaEffectCloud
             AreaEffectCloud cloud = new AreaEffectCloud(this.level(), center.getX() + 0.5, center.getY() + 0.5, center.getZ() + 0.5);
             cloud.setRadius(2.0f);
             cloud.setDuration(100);
@@ -54,13 +56,13 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
             contents.getAllEffects().forEach(e -> cloud.addEffect(new MobEffectInstance(e)));
             this.level().addFreshEntity(cloud);
         } else {
-            SmokeExplosion explosion = new SmokeExplosion(
-                this.level(), this,
-                position.x(), position.y(), position.z(),
-                2.0f, 1.5f,
-                Explosion.BlockInteraction.KEEP
-            );
-            explosion.explode();
+            // Smoke mode: dense smoke particles
+            sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                center.getX() + 0.5, center.getY() + 0.5, center.getZ() + 0.5,
+                40, 1.5, 1.0, 1.5, 0.01);
+            sl.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                center.getX() + 0.5, center.getY() + 1.5, center.getZ() + 0.5,
+                20, 2.0, 1.0, 2.0, 0.01);
         }
     }
 }
