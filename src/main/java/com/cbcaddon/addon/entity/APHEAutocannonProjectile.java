@@ -23,6 +23,9 @@ public class APHEAutocannonProjectile extends FlakAutocannonProjectile {
             this.highVelocity = false;
         }
         super.tick();
+        if (!this.isInGround() && this.getDeltaMovement().lengthSqr() > 0.001) {
+            this.setOrientation(this.getDeltaMovement());
+        }
     }
     @Override
     protected void detonate(Position position) {
