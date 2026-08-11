@@ -64,7 +64,6 @@ public class FragSubProjectile extends Projectile {
 
     private void subDetonate(Position position) {
         if (!this.level().isClientSide) {
-            // Spawn fragment shrapnel wave
             for (int i = 0; i < 10; i++) {
                 FragSubProjectile frag = (FragSubProjectile) this.getType().create(this.level());
                 if (frag == null) continue;
@@ -82,15 +81,14 @@ public class FragSubProjectile extends Projectile {
                 frag.setFragment(true);
                 this.level().addFreshEntity(frag);
             }
-            // Direct damage
             fragmentDamage(position);
         }
         this.discard();
     }
 
     private void fragmentDamage(Position position) {
-        AABB area = new AABB(position.x() - 2, position.y() - 2, position.z() - 2,
-                             position.x() + 2, position.y() + 2, position.z() + 2);
+        AABB area = new AABB(position.x() - 4, position.y() - 4, position.z() - 4,
+                             position.x() + 4, position.y() + 4, position.z() + 4);
         for (LivingEntity e : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
             e.hurt(this.damageSources().explosion(this, this.getOwner()), e.getMaxHealth() * 0.1f);
         }
