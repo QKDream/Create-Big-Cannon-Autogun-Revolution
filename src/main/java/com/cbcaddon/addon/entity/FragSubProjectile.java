@@ -1,5 +1,6 @@
 package com.cbcaddon.addon.entity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -26,9 +27,11 @@ public class FragSubProjectile extends Projectile {
 
     @Override
     public void tick() {
-        // Manual movement - skip super.tick() to avoid premature projectile removal
         Vec3 movement = this.getDeltaMovement();
-        this.setPos(this.getX() + movement.x, this.getY() + movement.y, this.getZ() + movement.z);
+        double nx = this.getX() + movement.x;
+        double ny = this.getY() + movement.y;
+        double nz = this.getZ() + movement.z;
+        this.setPos(nx, ny, nz);
 
         if (!this.isNoGravity()) {
             this.setDeltaMovement(movement.add(0.0, -0.05, 0.0));
@@ -37,11 +40,18 @@ public class FragSubProjectile extends Projectile {
         life++;
 
         if (!this.level().isClientSide) {
-            int detonateTime = 3;
-            if (life >= detonateTime) {
+            // Block collision
+            BlockPos bp = BlockPos.containing(nx, ny, nz);
+            if (!this.level().getBlockState(bp).isAir()) {
                 this.doDamage(this.position());
                 return;
             }
+            // Timer
+            if (life >= 3) {
+                this.doDamage(this.position());
+                return;
+            }
+            // Entity collision
             AABB box = this.getBoundingBox().inflate(0.8);
             for (LivingEntity e : this.level().getEntitiesOfClass(LivingEntity.class, box)) {
                 if (e == this.getOwner()) continue;
