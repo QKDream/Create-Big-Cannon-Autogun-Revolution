@@ -37,15 +37,13 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
     public void setHighVelocity(boolean hv) { this.highVelocity = hv; }
 
     @Override
-    public void setDeltaMovement(Vec3 velocity) {
-        if (this.highVelocity && velocity.lengthSqr() > 0.001) {
+    public void tick() {
+        if (this.highVelocity && this.tickCount == 0) {
+            this.setDeltaMovement(this.getDeltaMovement().scale(2.0));
             this.highVelocity = false;
-            super.setDeltaMovement(velocity.scale(2.0));
-            return;
         }
-        super.setDeltaMovement(velocity);
+        super.tick();
     }
-
     @Override
     protected void detonate(Position position) {
         if (!this.level().isClientSide) {

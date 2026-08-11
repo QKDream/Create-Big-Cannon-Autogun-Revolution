@@ -1,6 +1,5 @@
 package com.cbcaddon.addon.item;
 
-import com.cbcaddon.addon.CBCAddon;
 import com.cbcaddon.addon.entity.APFSDSAutocannonProjectile;
 import com.cbcaddon.addon.entity.APHEAutocannonProjectile;
 import com.cbcaddon.addon.entity.MultiPurposeAutocannonProjectile;
@@ -8,10 +7,8 @@ import com.cbcaddon.addon.entity.SAPAutocannonProjectile;
 import com.cbcaddon.addon.entity.ShrapnelAutocannonProjectile;
 import com.cbcaddon.addon.entity.SmokeAutocannonProjectile;
 import com.cbcaddon.addon.entity.ThermiteAutocannonProjectile;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
