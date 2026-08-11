@@ -17,7 +17,7 @@ public class FragGrenadeProjectile extends FlakAutocannonProjectile {
     @Override
     public void tick() {
         if (!this.isInGround()) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.12, 0));
+            this.setDeltaMovement(this.getDeltaMovement().add(0, -0.24, 0));
         }
         super.tick();
     }
@@ -28,14 +28,18 @@ public class FragGrenadeProjectile extends FlakAutocannonProjectile {
         if (this.level().isClientSide) return;
         BlockPos center = BlockPos.containing(position);
 
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i < 48; i++) {
             FragSubProjectile sub = ModEntities.FRAG_SUB_PROJECTILE.get().create(this.level());
             if (sub == null) continue;
             sub.setPos(position.x(), position.y(), position.z());
+            // Omnidirectional (sphere)
+            double theta = this.random.nextDouble() * Math.PI * 2;
+            double phi = Math.acos(2 * this.random.nextDouble() - 1);
+            double speed = 0.6 + this.random.nextDouble() * 0.8;
             Vec3 vel = new Vec3(
-                (this.random.nextDouble() - 0.5) * 1.0,
-                this.random.nextDouble() * 0.6 + 0.3,
-                (this.random.nextDouble() - 0.5) * 1.0
+                Math.sin(phi) * Math.cos(theta) * speed,
+                Math.sin(phi) * Math.sin(theta) * speed,
+                Math.cos(phi) * speed
             );
             sub.setDeltaMovement(vel);
             sub.setOwner(this.getOwner());
