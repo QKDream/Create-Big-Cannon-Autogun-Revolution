@@ -4,6 +4,7 @@ import com.cbcaddon.addon.CBCAddon;
 import com.cbcaddon.addon.entity.APFSDSAutocannonProjectile;
 import com.cbcaddon.addon.entity.APHEAutocannonProjectile;
 import com.cbcaddon.addon.entity.FragGrenadeProjectile;
+import com.cbcaddon.addon.entity.HeavyExplosiveAutocannonProjectile;
 import com.cbcaddon.addon.entity.FragSubProjectile;
 import com.cbcaddon.addon.entity.MultiPurposeAutocannonProjectile;
 import com.cbcaddon.addon.entity.SAPAutocannonProjectile;
@@ -71,6 +72,12 @@ public class ModEntities {
                             .sized(0.15f, 0.15f).clientTrackingRange(4).updateInterval(1)
                             .build("frag_sub"));
 
+    public static final Supplier<EntityType<HeavyExplosiveAutocannonProjectile>> HEAVY_EXPLOSIVE_AUTOCANNON =
+            ENTITY_TYPES.register("heavy_explosive_autocannon",
+                    () -> EntityType.Builder.<HeavyExplosiveAutocannonProjectile>of(HeavyExplosiveAutocannonProjectile::new, MobCategory.MISC)
+                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .build("heavy_explosive_autocannon"));
+
     public static final Supplier<EntityType<SmokeAutocannonProjectile>> SMOKE_AUTOCANNON =
             ENTITY_TYPES.register("smoke_autocannon",
                     () -> EntityType.Builder.<SmokeAutocannonProjectile>of(SmokeAutocannonProjectile::new, MobCategory.MISC)
@@ -86,6 +93,7 @@ public class ModEntities {
         MunitionPropertiesHandler.registerProjectileHandler(MULTIPURPOSE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
         MunitionPropertiesHandler.registerProjectileHandler(FRAG_GRENADE.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
         MunitionPropertiesHandler.registerProjectileHandler(SMOKE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
+        MunitionPropertiesHandler.registerProjectileHandler(HEAVY_EXPLOSIVE_AUTOCANNON.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
         MunitionPropertiesHandler.registerProjectileHandler(FRAG_SUB.get(), CBCMunitionPropertiesHandlers.FLAK_AUTOCANNON);
     }
 }

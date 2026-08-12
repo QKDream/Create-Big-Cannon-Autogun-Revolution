@@ -38,7 +38,8 @@ public class CBCAddon {
             ModItems.THERMITE_AUTOCANNON_ROUND,
             ModItems.MULTIPURPOSE_AUTOCANNON_ROUND,
             ModItems.FRAG_GRENADE_ROUND,
-            ModItems.SMOKE_AUTOCANNON_ROUND
+            ModItems.SMOKE_AUTOCANNON_ROUND,
+            ModItems.HEAVY_EXPLOSIVE_AUTOCANNON_ROUND
     );
 
     private static final List<Supplier<Item>> HV_ROUNDS = List.of(
@@ -48,7 +49,8 @@ public class CBCAddon {
             ModItems.SHRAPNEL_AUTOCANNON_ROUND,
             ModItems.THERMITE_AUTOCANNON_ROUND,
             ModItems.MULTIPURPOSE_AUTOCANNON_ROUND,
-            ModItems.SMOKE_AUTOCANNON_ROUND
+            ModItems.SMOKE_AUTOCANNON_ROUND,
+            ModItems.HEAVY_EXPLOSIVE_AUTOCANNON_ROUND
     );
 
     private static Item getCBCItem(String name) {
@@ -123,5 +125,6 @@ public class CBCAddon {
         event.registerEntityRenderer(ModEntities.FRAG_GRENADE.get(), AutocannonProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.FRAG_SUB.get(), AutocannonProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.SMOKE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.HEAVY_EXPLOSIVE_AUTOCANNON.get(), AutocannonProjectileRenderer::new);
     }
 }

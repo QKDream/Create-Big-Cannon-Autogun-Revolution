@@ -1,5 +1,10 @@
 # Changelog / 更新日志
 
+## v2.2 — 2026-08-13
+- 🆕 新增重爆弹 — 离膛后持续加速至最高速度（5.0格/tick），命中后引发APHE式大威力爆炸，穿深18，支持高速机炮弹药
+- 🆕 多功能榴弹重做为HEAT行为 — 继承CBC现代战争的HEAP破甲弹（小规模金属射流+锥形破片，威力/规模/穿甲较原版更小）
+- 🆕 新增前置依赖：CBC Modern Warfare 0.0.6+
+- 🔧 修复多语言文件JSON缺失逗号问题
 ## v2.1hotfix3 — 2026-08-12
 - 🔧 修复：恢复所有弹头属性硬编码覆写(getProjectileMass/getBallisticProperties/getDamageProperties)，确保终端弹道学正确读取弹头质量、穿深、韧性数据
 - 🔧 修复：APFSDS钢针穿深500/韧性250/质量100，APHE穿深28/韧性14/质量25，SAP穿深20/韧性10/质量30

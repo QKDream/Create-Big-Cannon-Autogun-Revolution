@@ -4,6 +4,7 @@ import com.cbcaddon.addon.CBCAddon;
 import com.cbcaddon.addon.item.APFSDSAutocannonRoundItem;
 import com.cbcaddon.addon.item.APHEAutocannonRoundItem;
 import com.cbcaddon.addon.item.FragGrenadeRoundItem;
+import com.cbcaddon.addon.item.HeavyExplosiveAutocannonRoundItem;
 import com.cbcaddon.addon.item.HighVelocityAutocannonCartridgeItem;
 import com.cbcaddon.addon.item.MultiPurposeAutocannonRoundItem;
 import com.cbcaddon.addon.item.SAPAutocannonRoundItem;
@@ -30,4 +31,5 @@ public class ModItems {
     public static final Supplier<Item> HIGH_VELOCITY_CARTRIDGE = ITEMS.register("high_velocity_autocannon_cartridge", () -> new HighVelocityAutocannonCartridgeItem(new Item.Properties()));
     public static final Supplier<Item> FRAG_GRENADE_ROUND = ITEMS.register("frag_grenade_autocannon_round", () -> new FragGrenadeRoundItem(new Item.Properties()));
     public static final Supplier<Item> SMOKE_AUTOCANNON_ROUND = ITEMS.register("smoke_autocannon_round", () -> new SmokeAutocannonRoundItem(new Item.Properties().stacksTo(16)));
+    public static final Supplier<Item> HEAVY_EXPLOSIVE_AUTOCANNON_ROUND = ITEMS.register("heavy_explosive_autocannon_round", () -> new HeavyExplosiveAutocannonRoundItem(new Item.Properties()));
 }

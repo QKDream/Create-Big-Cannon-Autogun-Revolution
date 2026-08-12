@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "I",
+    "E",
+    "C"
+  ],
+  "key": {
+    "I": { "tag": "c:ingots/cast_iron" },
+    "C": { "item": "createbigcannons:autocannon_cartridge" },
+    "E": { "tag": "createbigcannons:high_explosive_materials" }
+  },
+  "result": {
+    "count": 1,
+    "id": "cbcaddon:heavy_explosive_autocannon_round"
+  }
+}
