@@ -5,26 +5,13 @@ import net.minecraft.core.Position;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
-import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
-import rbasamoyai.createbigcannons.munitions.config.components.EntityDamagePropertiesComponent;
 
 public class FragGrenadeProjectile extends FlakAutocannonProjectile {
     private boolean hasDetonated = false;
 
-    private static final BallisticPropertiesComponent BALLISTIC = new BallisticPropertiesComponent(
-        -0.05, 0.02, false, 1.0f, 0.0f, 0.0f, 0.40f
-    );
-    private static final EntityDamagePropertiesComponent DAMAGE = new EntityDamagePropertiesComponent(
-        6.0f, false, true, false, 0.5f
-    );
-
     public FragGrenadeProjectile(EntityType<? extends FragGrenadeProjectile> type, Level level) {
         super(type, level);
     }
-
-    @Override protected BallisticPropertiesComponent getBallisticProperties() { return BALLISTIC; }
-    @Override public EntityDamagePropertiesComponent getDamageProperties() { return DAMAGE; }
-    @Override public float getProjectileMass() { return 1.0f; }
 
     @Override
     protected void detonate(Position position) {

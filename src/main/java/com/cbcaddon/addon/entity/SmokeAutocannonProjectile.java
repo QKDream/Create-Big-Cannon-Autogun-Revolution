@@ -1,7 +1,6 @@
 package com.cbcaddon.addon.entity;
 
 import net.minecraft.core.Position;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -13,8 +12,6 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
-import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
-import rbasamoyai.createbigcannons.munitions.config.components.EntityDamagePropertiesComponent;
 import rbasamoyai.createbigcannons.munitions.big_cannon.smoke_shell.SmokeEmitterEntity;
 
 public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
@@ -24,13 +21,6 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
     private boolean hasPotion;
     private PotionContents potionContents;
     private boolean highVelocity;
-
-    private static final BallisticPropertiesComponent BALLISTIC = new BallisticPropertiesComponent(
-        -0.02, 0.01, false, 0.5f, 0.0f, 0.0f, 0.50f
-    );
-    private static final EntityDamagePropertiesComponent DAMAGE = new EntityDamagePropertiesComponent(
-        0.5f, false, false, true, 0.1f
-    );
 
     public SmokeAutocannonProjectile(EntityType<? extends SmokeAutocannonProjectile> type, Level level) {
         super(type, level);
@@ -45,9 +35,14 @@ public class SmokeAutocannonProjectile extends FlakAutocannonProjectile {
 
     public void setHighVelocity(boolean hv) { this.highVelocity = hv; }
 
-    @Override protected BallisticPropertiesComponent getBallisticProperties() { return BALLISTIC; }
-    @Override public EntityDamagePropertiesComponent getDamageProperties() { return DAMAGE; }
-    @Override public float getProjectileMass() { return 0.5f; }
+    @Override
+    public void tick() {
+        if (this.highVelocity && this.tickCount == 0) {
+            this.setDeltaMovement(this.getDeltaMovement().scale(2.0));
+            this.highVelocity = false;
+        }
+        super.tick();
+    }
 
     @Override
     protected void detonate(Position position) {

@@ -7,27 +7,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
-import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
-import rbasamoyai.createbigcannons.munitions.config.components.EntityDamagePropertiesComponent;
 
 public class SAPAutocannonProjectile extends FlakAutocannonProjectile {
     private boolean highVelocity;
     private boolean soulFire;
 
-    private static final BallisticPropertiesComponent BALLISTIC = new BallisticPropertiesComponent(
-        -0.025, 0.01, false, 30.0f, 20.0f, 10.0f, 0.35f
-    );
-    private static final EntityDamagePropertiesComponent DAMAGE = new EntityDamagePropertiesComponent(
-        22.0f, false, true, false, 0.6f
-    );
-
     public SAPAutocannonProjectile(EntityType<? extends SAPAutocannonProjectile> type, Level level) { super(type, level); }
     public void setHighVelocity(boolean hv) { this.highVelocity = hv; }
     public void setSoulFire(boolean sf) { this.soulFire = sf; }
-
-    @Override protected BallisticPropertiesComponent getBallisticProperties() { return BALLISTIC; }
-    @Override public EntityDamagePropertiesComponent getDamageProperties() { return DAMAGE; }
-    @Override public float getProjectileMass() { return 30.0f; }
 
     @Override
     public void tick() {
@@ -36,9 +23,6 @@ public class SAPAutocannonProjectile extends FlakAutocannonProjectile {
             this.highVelocity = false;
         }
         super.tick();
-        if (!this.isInGround() && this.getDeltaMovement().lengthSqr() > 0.001) {
-            this.setOrientation(this.getDeltaMovement());
-        }
     }
     @Override
     protected void detonate(Position position) {

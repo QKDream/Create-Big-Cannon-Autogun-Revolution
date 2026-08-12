@@ -7,27 +7,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
-import rbasamoyai.createbigcannons.munitions.config.components.BallisticPropertiesComponent;
-import rbasamoyai.createbigcannons.munitions.config.components.EntityDamagePropertiesComponent;
 
 public class FragSubProjectile extends FlakAutocannonProjectile {
     private int fuseTimer = 5;
     private boolean hasDetonated = false;
 
-    private static final BallisticPropertiesComponent BALLISTIC = new BallisticPropertiesComponent(
-        -0.025, 0.01, false, 1.0f, 0.0f, 0.0f, 0.10f
-    );
-    private static final EntityDamagePropertiesComponent DAMAGE = new EntityDamagePropertiesComponent(
-        4.0f, false, true, false, 0.3f
-    );
-
     public FragSubProjectile(EntityType<? extends FragSubProjectile> type, Level level) {
         super(type, level);
     }
-
-    @Override protected BallisticPropertiesComponent getBallisticProperties() { return BALLISTIC; }
-    @Override public EntityDamagePropertiesComponent getDamageProperties() { return DAMAGE; }
-    @Override public float getProjectileMass() { return 1.0f; }
 
     @Override
     public void tick() {
