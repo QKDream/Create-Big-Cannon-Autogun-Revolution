@@ -16,7 +16,7 @@
   "shrapnel_count": 5,
   "entity_damaging_explosive_power": 8.0,
   "block_damaging_explosive_power": 5.0,
-  "penetration": 4.0,
-  "toughness": 3.0,
+  "penetration": 0.0,
+  "toughness": 0.0,
   "deflection": 0.50
 }
