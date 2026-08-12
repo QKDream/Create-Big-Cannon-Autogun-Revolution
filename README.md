@@ -8,7 +8,7 @@
 
 | 物品 | 中文 | English | Русский |
 |------|------|---------|---------|
-| **APFSDS Round** | 尾翼稳定脱壳穿甲弹。动能长杆穿透，穿深60，机炮最高穿甲弹头。 | Fin-stabilized discarding sabot. Kinetic long-rod penetrator, pen 60. Highest AP round. | Бронебойный оперённый подкалиберный снаряд. Кинетический сердечник, пробитие 60. |
+| **APFSDS Round** | 尾翼稳定脱壳穿甲弹。动能长杆穿透，穿深120，机炮最高穿甲弹头。 | Fin-stabilized discarding sabot. Kinetic long-rod penetrator, pen 120. Highest AP round. | Бронебойный оперённый подкалиберный снаряд. Кинетический сердечник, пробитие 120. |
 | **APHE Round** | 穿甲高爆弹。穿透后引爆，穿深14，附带爆炸伤害。可装引信+灵魂火装置。 | Armor-piercing high-explosive. Penetrates then detonates, pen 14. Fuze + Soul Fire compatible. | Бронебойно-фугасный снаряд. Пробивает и взрывается, пробитие 14. |
 | **SAP Round** | 半穿甲弹。兼顾穿透与爆炸，穿深12。可装引信+灵魂火装置。 | Semi-armor-piercing. Balanced pen (12) and explosive filler. Fuze + Soul Fire compatible. | Полубронебойный снаряд. Сбалансированная бронепробиваемость (12). |
 | **Shrapnel Round** | 榴霰弹。引爆释放40枚破片，密集散布反人员。可装引信+灵魂火装置。 | Shrapnel shell. Releases 40 fragments on detonation, dense anti-personnel spread. | Шрапнельный снаряд. 40 поражающих элементов, противопехотный. |

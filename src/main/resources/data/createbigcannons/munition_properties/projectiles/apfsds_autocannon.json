@@ -1,5 +1,5 @@
 {
-  "entity_damage": 30.0,
+  "entity_damage": 35.0,
   "durability_mass": 10.0,
   "renders_invulnerable": false,
   "ignores_invulnerability": true,
@@ -10,7 +10,7 @@
   "knockback": 2.0,
   "added_recoil": 2.5,
   "can_squib": true,
-  "penetration": 60.0,
-  "toughness": 40.0,
+  "penetration": 120.0,
+  "toughness": 60.0,
   "deflection": 0.10
 }
