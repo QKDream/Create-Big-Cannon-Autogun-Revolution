@@ -25,10 +25,9 @@ public class APHEAutocannonProjectile extends FlakAutocannonProjectile {
     public void setHighVelocity(boolean hv) { this.highVelocity = hv; }
     public void setSoulFire(boolean sf) { this.soulFire = sf; }
 
-    @Override
-    protected BallisticPropertiesComponent getBallisticProperties() { return BALLISTIC; }
-    @Override
-    public EntityDamagePropertiesComponent getDamageProperties() { return DAMAGE; }
+    @Override protected BallisticPropertiesComponent getBallisticProperties() { return BALLISTIC; }
+    @Override public EntityDamagePropertiesComponent getDamageProperties() { return DAMAGE; }
+    @Override public float getProjectileMass() { return 25.0f; }
 
     @Override
     public void tick() {

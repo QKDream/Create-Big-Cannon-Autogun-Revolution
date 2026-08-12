@@ -12,7 +12,6 @@ public class APFSDSAutocannonProjectile extends APAutocannonProjectile {
     private static final BallisticPropertiesComponent BALLISTIC = new BallisticPropertiesComponent(
         -0.005, 0.001, false, 100.0f, 500.0f, 250.0f, 0.02f
     );
-
     private static final EntityDamagePropertiesComponent DAMAGE = new EntityDamagePropertiesComponent(
         50.0f, false, true, false, 2.0f
     );
@@ -21,19 +20,11 @@ public class APFSDSAutocannonProjectile extends APAutocannonProjectile {
         super(type, level);
     }
 
-    public void setHighVelocity(boolean hv) {
-        this.highVelocity = hv;
-    }
+    public void setHighVelocity(boolean hv) { this.highVelocity = hv; }
 
-    @Override
-    protected BallisticPropertiesComponent getBallisticProperties() {
-        return BALLISTIC;
-    }
-
-    @Override
-    public EntityDamagePropertiesComponent getDamageProperties() {
-        return DAMAGE;
-    }
+    @Override protected BallisticPropertiesComponent getBallisticProperties() { return BALLISTIC; }
+    @Override public EntityDamagePropertiesComponent getDamageProperties() { return DAMAGE; }
+    @Override public float getProjectileMass() { return 100.0f; }
 
     @Override
     public void tick() {
