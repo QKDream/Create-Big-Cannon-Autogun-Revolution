@@ -10,11 +10,11 @@ public class APFSDSAutocannonProjectile extends APAutocannonProjectile {
     private boolean highVelocity = false;
 
     private static final BallisticPropertiesComponent BALLISTIC = new BallisticPropertiesComponent(
-        -0.005, 0.001, false, 10.0f, 250.0f, 120.0f, 0.03f
+        -0.005, 0.001, false, 100.0f, 500.0f, 250.0f, 0.02f
     );
 
     private static final EntityDamagePropertiesComponent DAMAGE = new EntityDamagePropertiesComponent(
-        40.0f, false, true, false, 2.0f
+        50.0f, false, true, false, 2.0f
     );
 
     public APFSDSAutocannonProjectile(EntityType<? extends APFSDSAutocannonProjectile> type, Level level) {
