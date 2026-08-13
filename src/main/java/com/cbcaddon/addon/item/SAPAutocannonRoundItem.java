@@ -34,7 +34,7 @@ public class SAPAutocannonRoundItem extends FlakAutocannonRoundItem {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
         tooltip.add(Component.translatable("tooltip.cbcaddon.sap_round"));
-        tooltip.add(Component.translatable("tooltip.cbcaddon.penetration", 8));
+        tooltip.add(Component.translatable("tooltip.cbcaddon.penetration", 4));
         CustomData d = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         if (d.contains("soul_fire")) tooltip.add(Component.translatable("tooltip.cbcaddon.soul_fire_applied"));
     }

@@ -14,9 +14,9 @@
   "lifetime": 1200,
   "shrapnel_spread": 0.3,
   "shrapnel_count": 10,
-  "entity_damaging_explosive_power": 6.0,
-  "block_damaging_explosive_power": 4.0,
-  "penetration": 28,
-  "toughness": 14,
+  "entity_damaging_explosive_power": 4.5,
+  "block_damaging_explosive_power": 3.0,
+  "penetration": 10,
+  "toughness": 5,
   "deflection": 0.3
 }

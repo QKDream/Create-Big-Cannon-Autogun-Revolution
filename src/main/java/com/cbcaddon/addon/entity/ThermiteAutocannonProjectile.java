@@ -7,11 +7,18 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import rbasamoyai.createbigcannons.munitions.AbstractCannonProjectile.ImpactResult;
+import rbasamoyai.createbigcannons.munitions.ProjectileContext;
 import rbasamoyai.createbigcannons.munitions.autocannon.flak.FlakAutocannonProjectile;
 
 public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
     private boolean highVelocity;
     private boolean soulFire;
+    private boolean hasDetonated;
+    private BlockPos targetBlock;
 
     public ThermiteAutocannonProjectile(EntityType<? extends ThermiteAutocannonProjectile> type, Level level) { super(type, level); }
     public void setHighVelocity(boolean hv) { this.highVelocity = hv; }
@@ -26,11 +33,29 @@ public class ThermiteAutocannonProjectile extends FlakAutocannonProjectile {
         super.tick();
     }
     @Override
+    protected boolean onImpact(HitResult hitResult, ImpactResult impactResult, ProjectileContext projectileContext) {
+        if (hitResult instanceof BlockHitResult blockHit) {
+            this.targetBlock = blockHit.getBlockPos().immutable();
+        }
+        boolean handled = super.onImpact(hitResult, impactResult, projectileContext);
+        if (handled || this.level().isClientSide || this.hasDetonated) return handled;
+        this.hasDetonated = true;
+        if (this.targetBlock != null) {
+            this.detonate(Vec3.atCenterOf(this.targetBlock));
+        } else {
+            this.detonate(hitResult.getLocation());
+        }
+        this.removeNextTick = true;
+        return true;
+    }
+    @Override
     protected void detonate(Position position) {
         super.detonate(position);
-        BlockPos center = BlockPos.containing(position);
+        BlockPos center = this.targetBlock != null ? this.targetBlock : BlockPos.containing(position);
         if (!this.level().isClientSide) {
-            this.level().destroyBlock(center, false, this.getOwner());
+            if (this.random.nextFloat() < 0.33f) {
+                this.level().destroyBlock(center, false, this.getOwner());
+            }
             BlockPos above = center.above();
             if (this.level().isEmptyBlock(above)) {
                 this.level().setBlock(above, this.soulFire ? Blocks.SOUL_FIRE.defaultBlockState() : Blocks.FIRE.defaultBlockState(), 3);

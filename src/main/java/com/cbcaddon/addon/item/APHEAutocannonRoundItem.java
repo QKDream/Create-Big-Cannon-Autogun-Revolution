@@ -34,7 +34,7 @@ public class APHEAutocannonRoundItem extends FlakAutocannonRoundItem {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
         tooltip.add(Component.translatable("tooltip.cbcaddon.aphe_round"));
-        tooltip.add(Component.translatable("tooltip.cbcaddon.penetration", 14));
+        tooltip.add(Component.translatable("tooltip.cbcaddon.penetration", 5));
         CustomData d = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         if (d.contains("soul_fire")) tooltip.add(Component.translatable("tooltip.cbcaddon.soul_fire_applied"));
     }
