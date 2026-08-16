@@ -4,7 +4,7 @@ license = "MIT"
 
 [[mods]]
 modId = "cbcaddon"
-version = "2.3"
+version = "2.4"
 displayName = "Create Big Cannons: Autocannon Revolution"
 authors = "QKDream"
 description = "Adds APFSDS, APHE, SAP, Shrapnel, Thermite, Multi-Purpose HEAT, Frag Grenade, Smoke/Potion and Heavy Explosive autocannon rounds, High-Velocity Cartridge, and Soul Fire Device."
