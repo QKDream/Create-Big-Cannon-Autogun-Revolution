@@ -12,6 +12,7 @@ import com.cbcaddon.addon.item.ShrapnelAutocannonRoundItem;
 import com.cbcaddon.addon.item.SmokeAutocannonRoundItem;
 import com.cbcaddon.addon.item.SoulFireDeviceItem;
 import com.cbcaddon.addon.item.ThermiteAutocannonRoundItem;
+import com.cbcaddon.addon.item.UniversalProximityFuzeItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -32,4 +33,5 @@ public class ModItems {
     public static final Supplier<Item> FRAG_GRENADE_ROUND = ITEMS.register("frag_grenade_autocannon_round", () -> new FragGrenadeRoundItem(new Item.Properties()));
     public static final Supplier<Item> SMOKE_AUTOCANNON_ROUND = ITEMS.register("smoke_autocannon_round", () -> new SmokeAutocannonRoundItem(new Item.Properties().stacksTo(16)));
     public static final Supplier<Item> HEAVY_EXPLOSIVE_AUTOCANNON_ROUND = ITEMS.register("heavy_explosive_autocannon_round", () -> new HeavyExplosiveAutocannonRoundItem(new Item.Properties()));
+    public static final Supplier<Item> UNIVERSAL_PROXIMITY_FUZE = ITEMS.register("universal_proximity_fuze", () -> new UniversalProximityFuzeItem(new Item.Properties().stacksTo(64)));
 }

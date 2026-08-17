@@ -1,5 +1,28 @@
 # Changelog / 更新日志
 
+## v2.5 — 2026-08-17
+
+**English**
+- 🆕 New: Universal Proximity Fuze — stackable; right-click opens CBC's fuze GUI to set the detonation distance; hold Shift to view the current distance
+- 🎯 Proximity detonation against SABLE structures (sublevel bounds detection)
+- 🚀 Proximity detonation against in-flight missiles — vestalihy PTUR / TOW / PTUR-Jet / Malytka, plus any entity whose type name contains "missile" or "rocket" (e.g. mianbao missiles)
+- 🔧 Fixed: crash when opening the fuze distance GUI
+- 🌐 Removed in-game en_us / ru_ru translations (Chinese only in-game); multilingual text is kept for the changelog
+
+**中文**
+- 🆕 新增：通用近炸引信 — 可堆叠，右键打开 CBC 同款调距界面设置近炸距离，按住 Shift 查看当前距离
+- 🎯 对 SABLE 结构近炸（检测副等级结构边界盒）
+- 🚀 对飞行中导弹近炸 — vestalihy 的 PTUR / TOW / PTUR-Jet / Malytka，以及类型名包含 missile / rocket 的实体（如面包学的导弹）
+- 🔧 修复：打开引信调距界面闪退
+- 🌐 移除游戏内 en_us / ru_ru 语言文件（游戏内仅中文），多语言仅用于日志
+
+**Русский**
+- 🆕 Новое: универсальный неконтактный взрыватель — стакается; ПКМ открывает меню радиуса подрыва (как у CBC), Shift показывает текущий радиус
+- 🎯 Подрыв у SABLE-структур (по границам суб-уровней)
+- 🚀 Подрыв у летящих ракет — vestalihy PTUR / TOW / PTUR-Jet / Malytka, а также сущности с "missile" / "rocket" в имени типа (например, ракеты mianbao)
+- 🔧 Исправлено: вылет при открытии меню радиуса взрывателя
+- 🌐 Убраны игровые переводы en_us / ru_ru (в игре только китайский); мультиязычность — только в журнале изменений
+
 ## v2.4 — 2026-08-16
 - 🎨 美术2.0：全部弹头/装置贴图更新为 32×32 像素画 — APFSDS、APHE、SAP、榴霰弹、铝热剂弹头、多用途榴弹、低速破片榴弹、烟雾药水弹、重爆弹、灵魂火装置
 

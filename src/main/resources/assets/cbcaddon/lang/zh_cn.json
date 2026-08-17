@@ -11,6 +11,7 @@
   "item.cbcaddon.heavy_explosive_autocannon_round": "重爆弹",
   "item.cbcaddon.soul_fire_device": "灵魂火装置",
   "item.cbcaddon.high_velocity_autocannon_cartridge": "高速机炮弹药",
+  "item.cbcaddon.universal_proximity_fuze": "通用近炸引信",
   "entity.cbcaddon.apfsds_autocannon": "APFSDS 弹头",
   "entity.cbcaddon.aphe_autocannon": "APHE 弹头",
   "entity.cbcaddon.sap_autocannon": "SAP 弹头",
@@ -37,5 +38,9 @@
   "tooltip.cbcaddon.soul_fire_device": "§c与弹药合成，附加火焰爆炸 + 25%生命伤害",
   "tooltip.cbcaddon.high_velocity": "§b初速2倍",
   "tooltip.cbcaddon.penetration": "§7穿深: §f%s",
-  "tooltip.cbcaddon.soul_fire_applied": "§c灵魂火装置已安装"
+  "tooltip.cbcaddon.soul_fire_applied": "§c灵魂火装置已安装",
+
+  "tooltip.cbcaddon.universal_proximity_fuze.hint": "§7按住 [Shift] 查看近炸距离",
+  "tooltip.cbcaddon.universal_proximity_fuze.distance": "§7当前近炸距离: §f%s §7格",
+  "tooltip.cbcaddon.universal_proximity_fuze.targets": "§7可感应 SABLE 结构与飞行中的导弹"
 }

@@ -76,6 +76,7 @@ public class CBCAddon {
                             output.accept(round.get());
                         }
                         output.accept(ModItems.SOUL_FIRE_DEVICE.get());
+                        output.accept(ModItems.UNIVERSAL_PROXIMITY_FUZE.get());
                         output.accept(ModItems.HIGH_VELOCITY_CARTRIDGE.get());
 
                         Item cbcCartridge = getCBCItem("autocannon_cartridge");

@@ -6,6 +6,7 @@
     "createbigcannons:delayed_impact_fuze",
     "createbigcannons:wired_fuze",
     "createbigcannons:inertia_fuze",
-    "createbigcannons:delayed_inertia_fuze"
+    "createbigcannons:delayed_inertia_fuze",
+    "cbcaddon:universal_proximity_fuze"
   ]
 }

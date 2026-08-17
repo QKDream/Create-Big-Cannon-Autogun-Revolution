@@ -13,6 +13,8 @@ $cpParts = @(
   "$mcLib/net/neoforged/fancymodloader/loader/4.0.42/loader-4.0.42.jar",
   "$mcLib/net/neoforged/bus/8.0.5/bus-8.0.5.jar",
   "$mcLib/net/neoforged/coremods/7.0.3/coremods-7.0.3.jar",
+  "$mcLib/io/netty/netty-buffer/4.1.97.Final/netty-buffer-4.1.97.Final.jar",
+  "$mcLib/io/netty/netty-common/4.1.97.Final/netty-common-4.1.97.Final.jar",
   "$mcLib/com/mojang/datafixerupper/6.0.6/datafixerupper-6.0.6.jar",
   "$mcLib/com/mojang/brigadier/1.3.10/brigadier-1.3.10.jar",
   "$mcLib/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar",
