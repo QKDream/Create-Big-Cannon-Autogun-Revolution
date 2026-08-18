@@ -34,22 +34,28 @@
 <div class="container">
 <h1>🔫 Create Big Cannons: Autocannon Revolution</h1>
 <p>为 <a href="https://github.com/rbasamoyai/CreateBigCannons">Create Big Cannons</a> 扩展的机炮弹药模组。</p>
-<h2>新增弹药</h2>
+<h2>新增物品</h2>
 <table>
-<tr><th>弹药</th><th>类型</th><th>穿深</th><th>爆炸</th><th>特色</th></tr>
-<tr><td><strong>APFSDS</strong></td><td>动能穿甲</td><td>300</td><td>无</td><td>极高穿深，低阻力</td></tr>
-<tr><td><strong>APHE</strong></td><td>穿甲高爆</td><td>14</td><td>6.0</td><td>穿透后内部爆炸</td></tr>
-<tr><td><strong>SAP</strong></td><td>半穿甲</td><td>10</td><td>8.4</td><td>高装药量，爆炸伤害高</td></tr>
-<tr><td><strong>榴霰弹</strong></td><td>霰弹</td><td>0</td><td>5.0</td><td>40枚破片</td></tr>
-<tr><td><strong>铝热剂弹头</strong></td><td>燃烧穿甲</td><td>0</td><td>4.0</td><td>撞击点挖掘 + 引燃</td></tr>
-<tr><td><strong>多用途榴弹</strong></td><td>小型破甲</td><td>8</td><td>4.0</td><td>小型HEAT，破片+爆炸</td></tr>
-<tr><td><strong>灵魂火装置</strong></td><td>附魔装置</td><td>—</td><td>2.0</td><td>火焰爆炸 + 25%HP伤害</td></tr>
+<tr><th>物品</th><th>类型</th><th>穿深/韧度</th><th>爆炸(实体/方块)</th><th>特色</th></tr>
+<tr><td><strong>APFSDS</strong></td><td>动能穿甲</td><td>120/60</td><td>无</td><td>极高穿深，低阻力</td></tr>
+<tr><td><strong>APHE</strong></td><td>穿甲高爆</td><td>10/5</td><td>4.5/3.0</td><td>穿透后内部爆炸，10枚破片</td></tr>
+<tr><td><strong>SAP</strong></td><td>半穿甲</td><td>8/4</td><td>4.5/3.0</td><td>高装药量，10枚破片</td></tr>
+<tr><td><strong>榴霰弹</strong></td><td>霰弹</td><td>0</td><td>5.0/2.0</td><td>40枚破片</td></tr>
+<tr><td><strong>铝热剂弹头</strong></td><td>燃烧</td><td>0</td><td>8.0/5.0</td><td>33%概率挖掘撞击点 + 引燃</td></tr>
+<tr><td><strong>多用途榴弹</strong></td><td>小型破甲</td><td>1/1</td><td>4.0/2.0</td><td>小型HEAT，金属射流+破片，无视实体护甲</td></tr>
+<tr><td><strong>重爆弹</strong></td><td>重高爆</td><td>7/3*</td><td>4.5/3.0</td><td>离膛持续加速，自带尾迹，*穿深随飞行距离增长</td></tr>
+<tr><td><strong>低速破片榴弹</strong></td><td>破片</td><td>0</td><td>4.0/3.0</td><td>8枚子弹药二段爆炸，全向破片，弓箭级低速</td></tr>
+<tr><td><strong>烟雾/药水弹</strong></td><td>烟雾/药水</td><td>0</td><td>2.0/1.0</td><td>无药水生成烟幕，装滞留药水生成药水云团</td></tr>
+<tr><td><strong>高速机炮弹药</strong></td><td>弹壳</td><td>—</td><td>—</td><td>初速2倍，支持所有弹头+引信</td></tr>
+<tr><td><strong>灵魂火装置</strong></td><td>装置</td><td>—</td><td>—</td><td>火焰爆炸 + 25%HP伤害（3×3×3）</td></tr>
 <tr><td><strong>通用近炸引信</strong></td><td>引信</td><td>—</td><td>—</td><td>SABLE 结构与飞行导弹近炸，右键调距</td></tr>
 </table>
+<p>穿深/韧度在装有终端弹道学（CBC Terminal Ballistics）时生效；爆炸为对实体/对方块威力。</p>
 <h2>高速机炮弹药</h2>
 <ul><li>初速 <strong>2倍</strong></li><li>支持所有弹头</li><li>支持引信 + 灵魂火</li></ul>
 <h2>依赖</h2>
-<ul><li>Minecraft 1.21.1 / NeoForge 21.1</li><li><a href="https://modrinth.com/mod/create">Create 6.0</a></li><li><a href="https://modrinth.com/mod/create-big-cannons">Create Big Cannons 5.11.7</a></li><li><a href="https://modrinth.com/mod/ritchiesprojectilelib">Ritchie''s Projectile Library 2.1</a></li></ul>
+<ul><li>Minecraft 1.21.1 / NeoForge 21.1</li><li><a href="https://modrinth.com/mod/create">Create 6.0</a></li><li><a href="https://modrinth.com/mod/create-big-cannons">Create Big Cannons 5.11.7</a></li><li>CBC Modern Warfare 0.0.6+</li><li><a href="https://modrinth.com/mod/ritchiesprojectilelib">Ritchie''s Projectile Library 2.1</a></li></ul>
+<p>可选：SABLE / Vestalihy — 通用近炸引信对结构与导弹的近炸功能需要它们</p>
 <h2>更新日志</h2>
 <p>详见 <a href="https://github.com/QKDream/Create-Big-Cannon-Autogun-Revolution/blob/main/CHANGELOG.md">CHANGELOG.md</a></p>
 </div>
