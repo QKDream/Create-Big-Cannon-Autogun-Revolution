@@ -1,5 +1,16 @@
 # Changelog / 更新日志
 
+## v2.5hotfix2 — 2026-08-18
+
+**English**
+- 🔧 Fixed: projectiles visibly spinning/rotating in flight again — projectile orientation now resyncs to the actual velocity every tick (restored the orientation sync removed during the terminal-ballistics refactor)
+
+**中文**
+- 🔧 修复：炮弹再次出现旋转着飞出的视觉问题 — 弹体朝向每 tick 与真实速度方向同步（恢复终端弹道学重构中移除的朝向同步代码）
+
+**Русский**
+- 🔧 Исправлено: снаряды снова визуально вращались в полёте — ориентация снаряда теперь каждый тик синхронизируется с фактическим вектором скорости (восстановлена синхронизация, удалённая при рефакторинге терминальной баллистики)
+
 ## v2.5hotfix — 2026-08-18
 
 **English**

@@ -45,6 +45,9 @@ public class HeavyExplosiveAutocannonProjectile extends FlakAutocannonProjectile
             this.setDeltaMovement(accelerated);
         }
         super.tick();
+        if (!this.isInGround() && this.getDeltaMovement().lengthSqr() > 0.001) {
+            this.setOrientation(this.getDeltaMovement());
+        }
         if (!this.isRemoved() && !this.level().isClientSide && !this.isInGround()) {
             Vec3 after = this.position();
             Vec3 step = after.subtract(before);

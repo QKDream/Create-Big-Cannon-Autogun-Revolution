@@ -23,6 +23,9 @@ public class FragSubProjectile extends FlakAutocannonProjectile {
             return;
         }
         super.tick();
+        if (!this.isInGround() && this.getDeltaMovement().lengthSqr() > 0.001) {
+            this.setOrientation(this.getDeltaMovement());
+        }
 
         if (!this.level().isClientSide) {
             this.fuseTimer--;

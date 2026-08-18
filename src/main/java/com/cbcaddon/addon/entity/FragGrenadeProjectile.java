@@ -12,6 +12,13 @@ public class FragGrenadeProjectile extends FlakAutocannonProjectile {
     public FragGrenadeProjectile(EntityType<? extends FragGrenadeProjectile> type, Level level) {
         super(type, level);
     }
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.isInGround() && this.getDeltaMovement().lengthSqr() > 0.001) {
+            this.setOrientation(this.getDeltaMovement());
+        }
+    }
 
     @Override
     protected void detonate(Position position) {

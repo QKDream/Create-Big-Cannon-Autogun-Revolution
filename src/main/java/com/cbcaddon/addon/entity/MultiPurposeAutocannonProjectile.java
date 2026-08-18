@@ -29,6 +29,9 @@ public class MultiPurposeAutocannonProjectile extends FlakAutocannonProjectile {
             this.highVelocity = false;
         }
         super.tick();
+        if (!this.isInGround() && this.getDeltaMovement().lengthSqr() > 0.001) {
+            this.setOrientation(this.getDeltaMovement());
+        }
     }
 
     @Override
