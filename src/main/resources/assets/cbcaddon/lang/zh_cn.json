@@ -41,6 +41,7 @@
   "tooltip.cbcaddon.soul_fire_applied": "§c灵魂火装置已安装",
 
   "tooltip.cbcaddon.universal_proximity_fuze.hint": "§7按住 [Shift] 查看近炸距离",
+  "tooltip.cbcaddon.universal_proximity_fuze.desc": "§6近炸引信 §7- 对 SABLE 结构与飞行中的导弹近炸引爆",
   "tooltip.cbcaddon.universal_proximity_fuze.distance": "§7当前近炸距离: §f%s §7格",
   "tooltip.cbcaddon.universal_proximity_fuze.targets": "§7可感应 SABLE 结构与飞行中的导弹"
 }

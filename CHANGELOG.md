@@ -1,5 +1,16 @@
 # Changelog / 更新日志
 
+## v2.5hotfix — 2026-08-18
+
+**English**
+- 🔧 Added an in-game item description for the Universal Proximity Fuze — the tooltip now always shows a function summary, hold Shift for the detonation distance
+
+**中文**
+- 🔧 通用近炸引信新增游戏内物品描述 — 提示栏常驻显示功能简介，按住 Shift 显示当前近炸距离
+
+**Русский**
+- 🔧 Добавлено игровое описание универсального неконтактного взрывателя — в подсказке всегда видно описание функции, Shift показывает радиус подрыва
+
 ## v2.5 — 2026-08-17
 
 **English**

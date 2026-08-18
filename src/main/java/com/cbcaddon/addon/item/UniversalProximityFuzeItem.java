@@ -104,6 +104,7 @@ public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
         int distance = Math.max(1, stack.getOrDefault(CBCDataComponents.DETONATION_DISTANCE, 1));
+        tooltip.add(Component.translatable("tooltip.cbcaddon.universal_proximity_fuze.desc"));
         boolean sneaking = false;
         try {
             Player player = Minecraft.getInstance().player;
