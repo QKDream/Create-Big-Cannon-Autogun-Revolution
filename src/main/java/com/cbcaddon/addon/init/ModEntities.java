@@ -27,61 +27,61 @@ public class ModEntities {
     public static final Supplier<EntityType<APFSDSAutocannonProjectile>> APFSDS_AUTOCANNON =
             ENTITY_TYPES.register("apfsds_autocannon",
                     () -> EntityType.Builder.<APFSDSAutocannonProjectile>of(APFSDSAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("apfsds_autocannon"));
 
     public static final Supplier<EntityType<APHEAutocannonProjectile>> APHE_AUTOCANNON =
             ENTITY_TYPES.register("aphe_autocannon",
                     () -> EntityType.Builder.<APHEAutocannonProjectile>of(APHEAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("aphe_autocannon"));
 
     public static final Supplier<EntityType<SAPAutocannonProjectile>> SAP_AUTOCANNON =
             ENTITY_TYPES.register("sap_autocannon",
                     () -> EntityType.Builder.<SAPAutocannonProjectile>of(SAPAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("sap_autocannon"));
 
     public static final Supplier<EntityType<ShrapnelAutocannonProjectile>> SHRAPNEL_AUTOCANNON =
             ENTITY_TYPES.register("shrapnel_autocannon",
                     () -> EntityType.Builder.<ShrapnelAutocannonProjectile>of(ShrapnelAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("shrapnel_autocannon"));
 
     public static final Supplier<EntityType<ThermiteAutocannonProjectile>> THERMITE_AUTOCANNON =
             ENTITY_TYPES.register("thermite_autocannon",
                     () -> EntityType.Builder.<ThermiteAutocannonProjectile>of(ThermiteAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("thermite_autocannon"));
 
     public static final Supplier<EntityType<MultiPurposeAutocannonProjectile>> MULTIPURPOSE_AUTOCANNON =
             ENTITY_TYPES.register("multipurpose_autocannon",
                     () -> EntityType.Builder.<MultiPurposeAutocannonProjectile>of(MultiPurposeAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("multipurpose_autocannon"));
 
     public static final Supplier<EntityType<FragGrenadeProjectile>> FRAG_GRENADE =
             ENTITY_TYPES.register("frag_grenade",
                     () -> EntityType.Builder.<FragGrenadeProjectile>of(FragGrenadeProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("frag_grenade"));
 
     public static final Supplier<EntityType<FragSubProjectile>> FRAG_SUB =
             ENTITY_TYPES.register("frag_sub",
                     () -> EntityType.Builder.<FragSubProjectile>of(FragSubProjectile::new, MobCategory.MISC)
-                            .sized(0.15f, 0.15f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.15f, 0.15f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("frag_sub"));
 
     public static final Supplier<EntityType<HeavyExplosiveAutocannonProjectile>> HEAVY_EXPLOSIVE_AUTOCANNON =
             ENTITY_TYPES.register("heavy_explosive_autocannon",
                     () -> EntityType.Builder.<HeavyExplosiveAutocannonProjectile>of(HeavyExplosiveAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("heavy_explosive_autocannon"));
 
     public static final Supplier<EntityType<SmokeAutocannonProjectile>> SMOKE_AUTOCANNON =
             ENTITY_TYPES.register("smoke_autocannon",
                     () -> EntityType.Builder.<SmokeAutocannonProjectile>of(SmokeAutocannonProjectile::new, MobCategory.MISC)
-                            .sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(1)
+                            .sized(0.25f, 0.25f).clientTrackingRange(16).updateInterval(1).fireImmune().setShouldReceiveVelocityUpdates(false)
                             .build("smoke_autocannon"));
 
     public static void registerProjectileHandlers() {
