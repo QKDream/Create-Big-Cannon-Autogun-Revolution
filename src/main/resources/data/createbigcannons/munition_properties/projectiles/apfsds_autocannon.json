@@ -10,7 +10,8 @@
   "knockback": 2.0,
   "added_recoil": 2.5,
   "can_squib": true,
-  "penetration": 120.0,
-  "toughness": 60.0,
+  "penetration": 6.0,
+  "toughness": 3.0,
   "deflection": 0.02
 }
+

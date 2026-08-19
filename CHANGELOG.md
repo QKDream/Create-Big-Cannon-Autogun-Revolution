@@ -1,5 +1,19 @@
 # Changelog / 更新日志
 
+## v2.5hotfix4 — 2026-08-19
+
+**English**
+- ⚖️ Balance: nerfed all kinetic AP warheads in sync — APHE 10/5 → 5/2.5, SAP 8/4 → 4/2, Heavy Explosive 7/3 → 4/2 (still above the CBCMW 3/1 baseline)
+- ⚖️ Balance: APFSDS steel dart penetration 120/60 → 6/3 with a small final callback (slightly stronger than CBCMW APDS 3/1)
+
+**中文**
+- ⚖️ 平衡：同步削弱动能穿甲弹头 — APHE 10/5 → 5/2.5，SAP 8/4 → 4/2，重爆弹 7/3 → 4/2（仍强于 CBCMW 3/1 基线）
+- ⚖️ 平衡：钢针(APFSDS)穿深 120/60 下调至 6/3，末尾小幅回调，略强于 CBCMW APDS（3/1）
+
+**Русский**
+- ⚖️ Баланс: синхронно ослаблены кинетические бронебойные боеприпасы — APHE 10/5 → 5/2.5, SAP 8/4 → 4/2, тяжёлый фугас 7/3 → 4/2 (всё ещё выше базовой линии CBCMW 3/1)
+- ⚖️ Баланс: APFSDS-стрела — пробитие 120/60 снижено до 6/3 с небольшим финальным откатом (немного сильнее APDS из CBCMW 3/1)
+
 ## v2.5hotfix2 — 2026-08-18
 
 **English**
