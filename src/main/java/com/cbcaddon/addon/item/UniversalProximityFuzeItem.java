@@ -158,18 +158,20 @@ public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider
     }
 
     private static Vec3 findMissileTarget(Level level, AbstractCannonProjectile proj, Vec3 segStart, Vec3 segEnd, double radius) {
-        AABB searchBox = new AABB(segStart, segEnd).inflate(radius);
+        AABB searchBox = new AABB(segStart, segEnd).inflate(Math.max(radius, 4.0));
         double bestAlongSqr = Double.MAX_VALUE;
         Vec3 bestPosition = null;
         for (Entity entity : level.getEntities(proj, searchBox, e -> e != proj && !e.isRemoved())) {
             if (!isMissileEntity(entity)) continue;
-            Vec3 position = entity.position();
-            Vec3 closest = closestPointOnSegment(segStart, segEnd, position);
-            if (closest.distanceToSqr(position) <= radius * radius) {
-                double alongSqr = closest.distanceToSqr(segStart);
+            Vec3 missileEnd = entity.position();
+            Vec3 missileStart = missileEnd.subtract(entity.getDeltaMovement());
+            Vec3 closestOnShell = closestPointBetweenSegments(segStart, segEnd, missileStart, missileEnd);
+            Vec3 closestOnMissile = closestPointOnSegment(missileStart, missileEnd, closestOnShell);
+            if (closestOnShell.distanceToSqr(closestOnMissile) <= radius * radius) {
+                double alongSqr = closestOnShell.distanceToSqr(segStart);
                 if (alongSqr < bestAlongSqr) {
                     bestAlongSqr = alongSqr;
-                    bestPosition = position;
+                    bestPosition = closestOnShell;
                 }
             }
         }
@@ -183,9 +185,22 @@ public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider
             return "ptur".equals(key) || "tow".equals(key) || "ptur_jet".equals(key) || "malytka".equals(key);
         }
         String lower = typeName.toLowerCase(Locale.ROOT);
+        boolean mianbao = lower.startsWith("mianbaos_modernwarfare:") || lower.contains("tanshe");
+        if (mianbao) {
+            String key = lower.substring(lower.lastIndexOf(':') + 1);
+            return key.contains("missile") || key.contains("rocket") || key.startsWith("agm_") || key.startsWith("jdam");
+        }
         return lower.contains("missile") || lower.contains("rocket");
     }
 
+    private static Vec3 closestPointBetweenSegments(Vec3 a1, Vec3 a2, Vec3 b1, Vec3 b2) {
+        Vec3 p = closestPointOnSegment(a1, a2, b1);
+        for (int i = 0; i < 4; i++) {
+            Vec3 q = closestPointOnSegment(b1, b2, p);
+            p = closestPointOnSegment(a1, a2, q);
+        }
+        return p;
+    }
     private static double segmentDistanceSqrToBox(Vec3 segStart, Vec3 segEnd, AABB box) {
         Vec3 p = closestPointOnSegment(segStart, segEnd, box.getCenter());
         for (int i = 0; i < 3; i++) {

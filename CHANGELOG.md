@@ -1,5 +1,18 @@
 # Changelog / 更新日志
 
+## v2.5hotfix5 — 2026-08-21
+
+**English**
+- 🔧 Fixed: Universal Proximity Fuze failed to detonate on mianbao missiles in multiplayer — added an explicit mianbaos_modernwarfare entity whitelist (missile / rocket / AGM / JDAM projectiles)
+- 🎯 Proximity check upgraded from point-vs-segment to segment-vs-segment, rebuilding each missile's tick path from its own velocity — fast missiles no longer slip between ticks (tunneling)
+
+**中文**
+- 🔧 修复：多人下通用近炸引信无法被面包学导弹引爆 — 新增 mianbaos_modernwarfare 实体白名单（missile / rocket / agm_ / jdam 弹射物）
+- 🎯 近炸判定由"点对线段"升级为"线段对线段"（按导弹自身速度重建本 tick 飞行路径），修复高速导弹两帧之间隧穿漏判
+
+**Русский**
+- 🔧 Исправлено: универсальный неконтактный взрыватель не срабатывал по ракетам mianbao в мультиплеере — добавлен явный белый список сущностей mianbaos_modernwarfare (missile / rocket / agm_ / jdam)
+- 🎯 Проверка близости улучшена с «точка-отрезок» до «отрезок-отрезок» (путь ракеты за тик восстанавливается по её скорости) — быстрые ракеты больше не проскакивают между тиками
 ## v2.5hotfix4 — 2026-08-19
 
 **English**
