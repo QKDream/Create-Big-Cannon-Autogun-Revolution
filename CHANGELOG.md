@@ -1,5 +1,21 @@
 # Changelog / 更新日志
 
+## v2.6 — 2026-08-23
+
+**English**
+- 🆕 Self-destruct: cbcaddon projectiles that stay airborne for 20 seconds are silently discarded (no explosion, no debris)
+- 🆕 Out-of-chunk cleanup: airborne projectiles are removed as soon as they leave loaded chunks, and airborne projectiles are discarded when their chunk unloads — frozen projectiles no longer linger or reappear
+- 🔧 Fixed: the chunk-unload handler previously lived in the mixin package, which crashed mod construction (IllegalClassLoadError → chain-crash of the whole mod state); moved to a plain package
+
+**中文**
+- 🆕 自毁机制：本 mod 弹体飞行满 20 秒后静默消失（直接删除，不爆炸、无残骸）
+- 🆕 区块外清理：飞行中飞出已加载区块立即删除；区块卸载时清除其中仍在飞行的弹体（不再冻结残留、不再随区块加载复现）
+- 🔧 修复：区块卸载监听器此前位于 mixin 专属包，导致 mod 构造崩溃（IllegalClassLoadError → 全模组状态连锁崩溃）；已移至普通包
+
+**Русский**
+- 🆕 Самоликвидация: снаряды cbcaddon, находящиеся в полёте 20 секунд, бесшумно удаляются (без взрыва и обломков)
+- 🆕 Очистка вне чанков: летящие снаряды удаляются сразу после выхода из загруженных чанков; при выгрузке чанка летящие снаряды в нём удаляются (не зависают и не появляются вновь)
+- 🔧 Исправлено: обработчик выгрузки чанка находился в mixin-пакете, что ломало конструкцию мода (IllegalClassLoadError → каскадный сбой состояния всех модов); перенесён в обычный пакет
 ## v2.5hotfix5 — 2026-08-21
 
 **English**

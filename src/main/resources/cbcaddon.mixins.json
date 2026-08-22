@@ -4,6 +4,9 @@
   "package": "com.cbcaddon.addon.mixin",
   "plugin": "com.cbcaddon.addon.mixin.CBCAddonMixinPlugin",
   "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ProjectileSelfDestructMixin"
+  ],
   "client": [
     "client.ClientPacketListenerMixin",
     "sable.EntitySubLevelRotationHelperMixin"

@@ -3,6 +3,7 @@ package com.cbcaddon.addon;
 import com.cbcaddon.addon.init.ModBlockEntities;
 import com.cbcaddon.addon.init.ModBlocks;
 import com.cbcaddon.addon.init.ModDataComponents;
+import com.cbcaddon.addon.handler.ProjectileSelfDestructChunkHandler;
 import com.cbcaddon.addon.init.ModEntities;
 import com.cbcaddon.addon.init.ModItems;
 import com.cbcaddon.addon.init.ModRecipeSerializers;
@@ -19,6 +20,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonCartridgeItem;
 import rbasamoyai.createbigcannons.munitions.autocannon.AutocannonProjectileRenderer;
@@ -104,6 +106,7 @@ public class CBCAddon {
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::registerRenderers);
         modEventBus.addListener(this::onClientSetup);
+        NeoForge.EVENT_BUS.addListener(ProjectileSelfDestructChunkHandler::onChunkUnload);
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event) { ModEntities.registerProjectileHandlers(); }
