@@ -1,5 +1,21 @@
 # Changelog / 更新日志
 
+## v2.6hotfix1 — 2026-08-23
+
+**English**
+- ⚖️ Balance fix: with CBC Terminal Ballistics installed the previous AP penetration nerfs had no effect — CTB's kinetic model is driven by projectile mass (CBC `durability_mass`), and our AP rounds carried 10–50× reference mass, swamping the JSON penetration values
+- ⚖️ Rebalanced `durability_mass` to match the nerfed penetration design: APFSDS 100 → 5.0, SAP 30 → 3.5, APHE 25 → 3.5, Heavy Explosive 35 → 3.0 (reference: vanilla CBC AP = 2.0, CBCMW APDS = 3.5); under CTB the steel dart now lands at ~1.4× the CBCMW APDS energy
+- 📝 Vanilla (no CTB) pass-through behavior is unchanged (still driven by penetration/toughness); only the previously absurd per-hit block damage scales down
+
+**中文**
+- ⚖️ 平衡修复：装有终端弹道学时，此前穿深削弱不生效——CTB 的动能模型以弹体质量（CBC 的 durability_mass）为能量来源，我方穿甲弹质量高达参考弹的 10~50 倍，淹没了 JSON 穿深削弱
+- ⚖️ 将 durability_mass 调整到与削弱后穿深匹配：APFSDS 100→5.0、SAP 30→3.5、APHE 25→3.5、重爆弹 35→3.0（参考：原版 CBC AP=2.0，CBCMW APDS=3.5）；弹道学下钢针动能约为 CBCMW APDS 的 1.4 倍
+- 📝 无弹道学时原版穿透判定不变（仍由穿深/韧性决定），仅修正了此前质量过大导致的超量方块破坏
+
+**Русский**
+- ⚖️ Баланс: при установленном CBC Terminal Ballistics прежние ослабления пробития не работали — кинетическая модель CTB использует массу снаряда (durability_mass из CBC) как источник энергии, а наши бронебойные снаряды имели массу в 10–50 раз больше эталона, полностью перекрывая ослабление из JSON
+- ⚖️ durability_mass приведён в соответствие ослабленному пробитию: APFSDS 100 → 5.0, SAP 30 → 3.5, APHE 25 → 3.5, тяжёлый фугас 35 → 3.0 (эталоны: CBC AP = 2.0, CBCMW APDS = 3.5); под CTB кинетическая энергия стрелы ≈ 1.4× APDS из CBCMW
+- 📝 Без CTB логика пробития ванили не изменилась (по-прежнему определяется пробитием/прочностью); скорректирован только избыточный урон блокам от ранее завышенной массы
 ## v2.6 — 2026-08-23
 
 **English**
