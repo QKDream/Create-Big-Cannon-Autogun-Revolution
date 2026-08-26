@@ -18,7 +18,7 @@
 | **Frag Grenade** | 低速破片榴弹。速度极低，8枚子母弹全向散射，碰撞/5tick二次引爆大量破片。不可用于高速弹药。 | Low-velocity frag grenade. 8 submunitions, omnidirectional, dual-phase detonation. Not for HV cartridge. | Низкоскоростная осколочная граната. 8 суббоеприпасов, двухфазный подрыв. |
 | **Smoke/Potion Round** | 烟雾/药水弹。无穿甲。空装时产生烟幕云团；装载滞留药水后释放药水云团。Shift查看已装药水。不可装灵魂火装置。 | Smoke/potion round. No pen. Empty: smokescreen. Loaded with lingering potion: potion cloud. Shift to inspect. | Дымовой/зельевой снаряд. Без пробития. Пустой: дым. С зельем: облако эффектов. |
 | **Soul Fire Device** | 灵魂火装置。与弹药合成，爆炸附加火焰+对3×3×3范围内生物造成25%最大生命伤害。与Incendiary Tip互斥。 | Soul fire device. Craft with ammo: adds fire field + 25% max HP damage in 3×3×3 area. Mutually exclusive with Incendiary Tip. | Устройство адского пламени. Добавляет огонь + 25% макс. HP урона в области 3×3×3. |
-| **Universal Proximity Fuze** | 通用近炸引信。可堆叠，右键打开界面调节近炸距离；对 SABLE 结构与飞行中的导弹近炸起爆。Shift 查看当前设定距离。 | Universal proximity fuze. Stackable; right-click to open the GUI and tune detonation distance. Detonates near SABLE structures and flying missiles. Shift to inspect current range. | Универсальный неконтактный взрыватель. Настраиваемая дистанция подрыва; срабатывает у SABLE-конструкций и летящих ракет. |
+| **Universal Proximity Fuze** | 通用近炸引信。可堆叠，右键打开界面调节近炸距离；对 SABLE 结构、飞行中的导弹、CBC 武器拓展的鱼雷/火箭弹/深水炸弹/炸弹、TAOV 的 TAU 与地狱火近炸起爆。Shift 查看当前设定距离。 | Universal proximity fuze. Stackable; right-click to open the GUI and tune detonation distance. Detonates near SABLE structures, flying missiles, CBC Military Supplement torpedoes/rockets/depth charges/bombs, and TAOV TAU & Hellfire. Shift to inspect current range. | Универсальный неконтактный взрыватель. Настраиваемая дистанция подрыва; срабатывает у SABLE-конструкций, летящих ракет, торпед/ракет/глубинных бомб из CBC Military Supplement и ракет TAU и Hellfire из TAOV. |
 | **High-Velocity Cartridge** | 高速机炮弹药。初速2倍，支持除破片榴弹外所有弹头。未装弹头时外观为装药弹壳，装弹头后外观为标准弹药。 | High-velocity cartridge. 2x muzzle velocity. Accepts all rounds except Frag Grenade. Empty: filled case model; loaded: standard cartridge model. | Высокоскоростной патрон. 2x начальная скорость. Принимает все снаряды кроме осколочной гранаты. |
 
 ---
@@ -57,7 +57,7 @@
 - Ritchie's Projectile Library 2.1+
 - CBC Modern Warfare 0.0.6+
 
-可选 / Optional: SABLE、Vestalihy — 通用近炸引信对结构与导弹的近炸功能需要它们。
+可选 / Optional: SABLE、Vestalihy、CBC Military Supplement、TAOV Weapons（TAU/地狱火）— 通用近炸引信对结构、导弹、鱼雷、火箭弹、深水炸弹、炸弹的近炸功能需要它们。
 
 ## 链接 / Links / Ссылки
 

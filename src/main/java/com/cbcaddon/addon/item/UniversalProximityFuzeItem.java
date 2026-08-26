@@ -1,11 +1,15 @@
 package com.cbcaddon.addon.item;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Locale;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -29,8 +33,13 @@ import rbasamoyai.createbigcannons.munitions.AbstractCannonProjectile;
 import rbasamoyai.createbigcannons.munitions.ProjectileContext;
 import rbasamoyai.createbigcannons.munitions.fuzes.FuzeItem;
 import rbasamoyai.createbigcannons.munitions.fuzes.ProximityFuzeContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger("cbcaddon:UniversalProximityFuze");
+    private static int shaolibDebugCounter = 0;
 
     public UniversalProximityFuzeItem(Properties properties) {
         super(properties);
@@ -66,6 +75,9 @@ public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider
         Vec3 detonationPosition = findSableTarget(proj.level(), proj, v0, v1, radius);
         if (detonationPosition == null) {
             detonationPosition = findMissileTarget(proj.level(), proj, v0, v1, radius);
+        }
+        if (detonationPosition == null) {
+            detonationPosition = findShaolibTarget(proj.level(), proj, v0, v1, radius);
         }
         if (detonationPosition != null) {
             context.setDetonationPositionForClip(detonationPosition);
@@ -178,19 +190,96 @@ public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider
         return bestPosition;
     }
 
+    private static Vec3 findShaolibTarget(Level level, AbstractCannonProjectile proj, Vec3 segStart, Vec3 segEnd, double radius) {
+        if (!(level instanceof ServerLevel)) return null;
+        try {
+            ShaolibApi api = ShaolibApi.resolve();
+            if (api == null) {
+                if (shaolibDebugCounter++ < 5) LOGGER.warn("[CBCAddon] UniversalProximityFuze: Shaolib API unavailable, skipping TAOV detection");
+                return null;
+            }
+            Collection<?> projectiles = (Collection<?>) api.activeProjectiles.invoke(null);
+            if (projectiles == null || projectiles.isEmpty()) return null;
+            String dimensionId = level.dimension().location().toString();
+            double bestAlongSqr = Double.MAX_VALUE;
+            Vec3 bestPosition = null;
+            boolean sawTaovMissile = false;
+            for (Object projectile : projectiles) {
+                if (projectile == null) continue;
+                if (!(Boolean) api.instanceIsAlive.invoke(projectile)) continue;
+                if ((Boolean) api.instanceIsDiscarded.invoke(projectile)) continue;
+                Object instanceDimension = api.instanceDimensionId.invoke(projectile);
+                if (!dimensionId.equals(instanceDimension)) {
+                    if (shaolibDebugCounter++ < 10) LOGGER.warn("[CBCAddon] UniversalProximityFuze: dimension mismatch shell={} projectile={}", dimensionId, instanceDimension);
+                    continue;
+                }
+                Object typeId = api.typeId.invoke(api.instanceType.invoke(projectile));
+                if (!(typeId instanceof ResourceLocation resourceLocation)) continue;
+                if (!"taov_weapons".equals(resourceLocation.getNamespace())) continue;
+                String path = resourceLocation.getPath();
+                if (!"tau_missile".equals(path) && !"hellfire_missile".equals(path)) continue;
+                sawTaovMissile = true;
+                Vec3 missileEnd = (Vec3) api.instancePosition.invoke(projectile);
+                Vec3 missileStart = (Vec3) api.instancePreviousPosition.invoke(projectile);
+                if ((Boolean) api.instanceIsEmbedded.invoke(projectile)) {
+                    if (api.bodyQueries == null) continue;
+                    Object optional = api.instanceEmbeddedWorldPosition.invoke(projectile, level, api.bodyQueries);
+                    if (optional instanceof Optional<?> worldPosition && worldPosition.isPresent()) {
+                        missileEnd = (Vec3) worldPosition.get();
+                        missileStart = missileEnd;
+                    } else {
+                        continue;
+                    }
+                }
+                if (shaolibDebugCounter++ < 10) LOGGER.info("[CBCAddon] UniversalProximityFuze: found flying {} at {} (shell segment {} -> {})", path, missileEnd, segStart, segEnd);
+                Vec3 closestOnShell = closestPointBetweenSegments(segStart, segEnd, missileStart, missileEnd);
+                Vec3 closestOnMissile = closestPointOnSegment(missileStart, missileEnd, closestOnShell);
+                if (closestOnShell.distanceToSqr(closestOnMissile) <= radius * radius) {
+                    double alongSqr = closestOnShell.distanceToSqr(segStart);
+                    if (alongSqr < bestAlongSqr) {
+                        bestAlongSqr = alongSqr;
+                        bestPosition = closestOnShell;
+                    }
+                }
+            }
+            if (!sawTaovMissile && projectiles.size() > 0 && shaolibDebugCounter++ < 10) {
+                StringBuilder sample = new StringBuilder();
+                int shown = 0;
+                for (Object projectile : projectiles) {
+                    if (shown >= 3 || projectile == null) break;
+                    try {
+                        if (!(Boolean) api.instanceIsAlive.invoke(projectile)) continue;
+                        sample.append(api.typeId.invoke(api.instanceType.invoke(projectile))).append(' ');
+                        shown++;
+                    } catch (Throwable ignored) {
+                    }
+                }
+                LOGGER.warn("[CBCAddon] UniversalProximityFuze: {} active Shaolib projectiles, none is taov missile; sample: {}", projectiles.size(), sample.toString().trim());
+            }
+            return bestPosition;
+        } catch (Throwable t) {
+            if (shaolibDebugCounter++ < 5) LOGGER.warn("[CBCAddon] UniversalProximityFuze: Shaolib detection failed", t);
+            return null;
+        }
+    }
+
     private static boolean isMissileEntity(Entity entity) {
-        String typeName = entity.getType().toShortString();
-        if (typeName.startsWith("vestalihy:")) {
-            String key = typeName.substring("vestalihy:".length());
+        ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+        String namespace = id == null ? "" : id.getNamespace();
+        String key = id == null ? "" : id.getPath();
+        if ("vestalihy".equals(namespace)) {
             return "ptur".equals(key) || "tow".equals(key) || "ptur_jet".equals(key) || "malytka".equals(key);
         }
-        String lower = typeName.toLowerCase(Locale.ROOT);
+        String lower = (namespace + ":" + key).toLowerCase(Locale.ROOT);
         boolean mianbao = lower.startsWith("mianbaos_modernwarfare:") || lower.contains("tanshe");
         if (mianbao) {
-            String key = lower.substring(lower.lastIndexOf(':') + 1);
             return key.contains("missile") || key.contains("rocket") || key.startsWith("agm_") || key.startsWith("jdam");
         }
-        return lower.contains("missile") || lower.contains("rocket");
+        if ("cbcmoreshells".equals(namespace)) {
+            return key.contains("torpedo") || key.contains("rocket") || key.contains("depth_charge")
+                    || key.contains("depthcharge") || key.contains("bomb") || key.contains("missile");
+        }
+        return key.contains("missile") || key.contains("rocket");
     }
 
     private static Vec3 closestPointBetweenSegments(Vec3 a1, Vec3 a2, Vec3 b1, Vec3 b2) {
@@ -282,6 +371,94 @@ public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider
                 }
             }
             return instance;
+        }
+    }
+
+    private static final class ShaolibApi {
+        final Method activeProjectiles;
+        final Method instanceIsAlive;
+        final Method instanceIsDiscarded;
+        final Method instanceDimensionId;
+        final Method instanceType;
+        final Method typeId;
+        final Method instancePosition;
+        final Method instancePreviousPosition;
+        final Method instanceIsEmbedded;
+        final Method instanceEmbeddedWorldPosition;
+        final Object bodyQueries;
+
+        private ShaolibApi(Method activeProjectiles, Method instanceIsAlive, Method instanceIsDiscarded,
+                           Method instanceDimensionId, Method instanceType, Method typeId,
+                           Method instancePosition, Method instancePreviousPosition, Method instanceIsEmbedded,
+                           Method instanceEmbeddedWorldPosition, Object bodyQueries) {
+            this.activeProjectiles = activeProjectiles;
+            this.instanceIsAlive = instanceIsAlive;
+            this.instanceIsDiscarded = instanceIsDiscarded;
+            this.instanceDimensionId = instanceDimensionId;
+            this.instanceType = instanceType;
+            this.typeId = typeId;
+            this.instancePosition = instancePosition;
+            this.instancePreviousPosition = instancePreviousPosition;
+            this.instanceIsEmbedded = instanceIsEmbedded;
+            this.instanceEmbeddedWorldPosition = instanceEmbeddedWorldPosition;
+            this.bodyQueries = bodyQueries;
+        }
+
+        private static volatile ShaolibApi instance;
+        private static volatile boolean resolved;
+
+        static ShaolibApi resolve() {
+            if (!resolved) {
+                synchronized (ShaolibApi.class) {
+                    if (!resolved) {
+                        try {
+                            Class<?> projectileInstanceClass = forName("com.verr1.shaolib.api.projectile.ProjectileInstance");
+                            Class<?> projectileTypeClass = forName("com.verr1.shaolib.api.projectile.ProjectileType");
+                            Class<?> bodyQueriesClass = forName("com.verr1.shaolib.api.projectile.body.ProjectileBodyQueries");
+                            Class<?> shaolibProjectilesClass = forName("com.verr1.shaolib.api.projectile.ShaolibProjectiles");
+                            Object sableBodyQueries = null;
+                            try {
+                                Class<?> sableBodyQueriesClass = forName("com.verr1.shaolib.compat.sable.SableBodyQueries");
+                                sableBodyQueries = sableBodyQueriesClass.getField("INSTANCE").get(null);
+                            } catch (Throwable ignored) {
+                            }
+                            instance = new ShaolibApi(
+                                    shaolibProjectilesClass.getMethod("activeProjectiles"),
+                                    projectileInstanceClass.getMethod("isAlive"),
+                                    projectileInstanceClass.getMethod("isDiscarded"),
+                                    projectileInstanceClass.getMethod("dimensionId"),
+                                    projectileInstanceClass.getMethod("type"),
+                                    projectileTypeClass.getMethod("id"),
+                                    projectileInstanceClass.getMethod("position"),
+                                    projectileInstanceClass.getMethod("previousPosition"),
+                                    projectileInstanceClass.getMethod("isEmbedded"),
+                                    projectileInstanceClass.getMethod("embeddedWorldPosition", Level.class, bodyQueriesClass),
+                                    sableBodyQueries);
+                        } catch (Throwable t) {
+                            instance = null;
+                            if (shaolibDebugCounter++ < 5) {
+                                LOGGER.warn("[CBCAddon] UniversalProximityFuze: ShaolibApi.resolve() failed - Shaolib missing or incompatible", t);
+                            }
+                        }
+                        resolved = true;
+                    }
+                }
+            }
+            return instance;
+        }
+
+        private static Class<?> forName(String name) throws ClassNotFoundException {
+            ClassLoader contextLoader = Thread.currentThread().getContextClassLoader();
+            ClassLoader ownLoader = ShaolibApi.class.getClassLoader();
+            ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
+            for (ClassLoader loader : new ClassLoader[]{contextLoader, ownLoader, systemLoader}) {
+                if (loader == null) continue;
+                try {
+                    return Class.forName(name, false, loader);
+                } catch (Throwable ignored) {
+                }
+            }
+            return Class.forName(name);
         }
     }
 }
