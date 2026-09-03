@@ -5,8 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Locale;
+import java.util.function.BooleanSupplier;
 
-import net.minecraft.client.Minecraft;
+import com.cbcaddon.addon.client.ClientTooltipUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.fml.loading.FMLEnvironment;
 import rbasamoyai.createbigcannons.config.CBCConfigs;
 import rbasamoyai.createbigcannons.index.CBCDataComponents;
 import rbasamoyai.createbigcannons.index.CBCMenuTypes;
@@ -119,8 +121,9 @@ public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider
         tooltip.add(Component.translatable("tooltip.cbcaddon.universal_proximity_fuze.desc"));
         boolean sneaking = false;
         try {
-            Player player = Minecraft.getInstance().player;
-            sneaking = player != null && player.isShiftKeyDown();
+            if (FMLEnvironment.dist.isClient()) {
+                sneaking = ((BooleanSupplier) (ClientTooltipUtils::isPlayerSneaking)).getAsBoolean();
+            }
         } catch (Throwable ignored) {
         }
         if (sneaking) {

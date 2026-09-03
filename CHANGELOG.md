@@ -1,5 +1,16 @@
 # Changelog / 更新日志
 
+## v2.7fix1 — 2026-09-03
+
+**English**
+- 🔧 Fixed a dedicated-server crash: the proximity fuze tooltip referenced the client-only `Minecraft` class from `appendHoverText`, which runs on both sides; the sneak check is now gated behind `FMLEnvironment.dist.isClient()` and delegates to a client-only helper, so servers never load client classes
+
+**中文**
+- 🔧 修复专用服务器崩溃：近炸引信的物品悬浮提示在两端都会执行，却直接引用了客户端专属的 `Minecraft` 类，导致服务器抛出 `NoClassDefFoundError`；潜行判定现改为 `FMLEnvironment.dist.isClient()` 环境守卫并委托给客户端专用工具类，服务器不再加载任何客户端类
+
+**Русский**
+- 🔧 Исправлен краш выделенного сервера: подсказка неконтактного взрывателя обращалась к клиентскому классу `Minecraft` из `appendHoverText`, который выполняется на обеих сторонах; проверка приседания теперь ограничена `FMLEnvironment.dist.isClient()` и делегирована клиентскому помощнику — сервер больше не загружает клиентские классы
+
 ## v2.7 — 2026-08-26
 
 **English**
