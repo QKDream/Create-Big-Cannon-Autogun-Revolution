@@ -1,5 +1,16 @@
 # Changelog / 更新日志
 
+## v2.7fix2 — 2026-09-08
+
+**English**
+- 🔧 Universal Proximity Fuze now recognizes every Fire Control Eye missile (beam-riding, infrared, aircraft infrared, loitering munition and heavy air-defense) as a valid proximity target. Their `firecontrolcompat:*_tanshe` entity keys previously fell into the Mianbao branch and were filtered out, so the fuze never triggered against them
+
+**中文**
+- 🔧 通用近炸引信新增对火控之眼全部导弹（驾束导弹、红外导弹、机载红外导弹、巡飞弹、重型防空导弹）的近炸感应。此前它们的 `firecontrolcompat:*_tanshe` 实体键名会落入面包学分支并被筛除，导致引信对其完全不生效
+
+**Русский**
+- 🔧 Универсальный неконтактный взрыватель теперь распознаёт все ракеты Fire Control Eye (лучевые, инфракрасные, авиационные ИК, барражирующие боеприпасы и тяжёлые ЗУР) как цели. Их ключи `firecontrolcompat:*_tanshe` раньше попадали в ветку Mianbao и отбрасывались, поэтому взрыватель на них не срабатывал
+
 ## v2.7fix1 — 2026-09-03
 
 **English**

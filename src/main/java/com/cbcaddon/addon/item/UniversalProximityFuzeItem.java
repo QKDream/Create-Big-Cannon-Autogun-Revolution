@@ -273,6 +273,9 @@ public class UniversalProximityFuzeItem extends FuzeItem implements MenuProvider
         if ("vestalihy".equals(namespace)) {
             return "ptur".equals(key) || "tow".equals(key) || "ptur_jet".equals(key) || "malytka".equals(key);
         }
+        if ("firecontrolcompat".equals(namespace)) {
+            return key.endsWith("_tanshe") || key.contains("missile");
+        }
         String lower = (namespace + ":" + key).toLowerCase(Locale.ROOT);
         boolean mianbao = lower.startsWith("mianbaos_modernwarfare:") || lower.contains("tanshe");
         if (mianbao) {
