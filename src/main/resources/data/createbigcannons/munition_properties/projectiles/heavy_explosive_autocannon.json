@@ -1,6 +1,6 @@
 {
   "entity_damage": 30,
-  "durability_mass": 3.0,
+  "durability_mass": 4.5,
   "renders_invulnerable": false,
   "ignores_invulnerability": true,
   "ignores_entity_armor": false,
@@ -16,7 +16,7 @@
   "shrapnel_count": 10,
   "entity_damaging_explosive_power": 4.5,
   "block_damaging_explosive_power": 3.0,
-  "penetration": 4,
-  "toughness": 2,
+  "penetration": 6,
+  "toughness": 3,
   "deflection": 0.3
 }

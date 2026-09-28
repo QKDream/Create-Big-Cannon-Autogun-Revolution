@@ -1,5 +1,22 @@
 # Changelog / 更新日志
 
+## v2.8 — 2026-09-28
+
+**English**
+- ⚖️ Balance: penetration raised for APFSDS (6 → 9), APHE (5 → 7), SAP (4 → 6) and Heavy Explosive Shell (4 → 6), with toughness and durability mass scaled to match, so the buff applies both with vanilla CBC ballistics and with CBC Terminal Ballistics
+- 📝 In-game penetration tooltips updated to the new values
+- 📝 Version bumped to 2.8
+
+**中文**
+- ⚖️ 平衡性调整：尾翼稳定脱壳穿甲弹（APFSDS）穿深 6 → 9、APHE 穿深 5 → 7、SAP 穿深 4 → 6、重爆弹穿深 4 → 6，韧性与耐久质量同步上调，无论是否安装《终端弹道学》都能生效
+- 📝 游戏内穿深悬浮提示同步更新为新数值
+- 📝 版本号提升至 2.8
+
+**Русский**
+- ⚖️ Баланс: бронепробитие повышено — APFSDS (6 → 9), APHE (5 → 7), SAP (4 → 6) и тяжёлый фугасный снаряд (4 → 6); прочность и масса снаряда масштабированы соответственно, поэтому усиление работает и с обычной баллистикой CBC, и с CBC Terminal Ballistics
+- 📝 Подсказки бронепробития в игре обновлены под новые значения
+- 📝 Версия повышена до 2.8
+
 ## v2.7fix2 — 2026-09-08
 
 **English**
