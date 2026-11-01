@@ -1,5 +1,46 @@
 # Changelog / 更新日志
 
+## v2.8fix1 — 2026-10-30
+
+**English**
+- 🔧 Fixed the Universal Proximity Fuze never air-bursting: the sensing radius was read straight from `DETONATION_DISTANCE`, which defaults to 1 — a 1-block radius amounts to "direct hit only", so the fuze behaved as if it were not installed. It now never drops below CBC's own proximity-fuze footprint (`proximityFuzeScale × proximityFuzeSpacing`, 7.5 blocks by default) while still honouring a larger player-set distance; if the CBC config cannot be read, the radius falls back to the same 7.5 blocks instead of collapsing to 1
+- 🔧 Air-bursts now detonate **on the target** instead of on the shell's own flight path (previously up to `radius` blocks short of it), matching CBC's proximity fuze, so the warhead actually connects
+- 🛡 Missile detection now runs first and uses only vanilla classes; the SABLE and Shaolib reflection branches come after it, so a reflection problem can never mask a missile again
+- 🛡 Proximity detection no longer relies solely on CBC's `clipAndDamage() → onClip` path: every projectile tick runs a fallback sweep (de-duplicated per tick, no double detonation)
+- 🔧 Fixed the fuze never triggering against SABLE structures. Two independent causes: the SABLE class probe only tried the thread-context `ClassLoader` and permanently gave up on failure (SABLE's companion maths jar is a nested `META-INF/jarjar` archive the context loader often cannot see), and structure lookup went through `ServerSubLevelContainer.getContainer`/`getAllSubLevels`, which returns nothing usable in some setups. The probe now tries context → own → SABLE's own loader → CBC's loader → system, and structure lookup goes through `Sable.HELPER.getAllIntersecting(...)` — the very entry CBC's own SABLE compat uses — so no container is needed at all (the container path is kept as a fallback)
+- 🔧 The ship a shell was fired from is now excluded (`Sable.HELPER.getContaining` on the muzzle position), and a shell whose segment already starts inside a ship's box is not treated as "approaching". Before this, a deck-mounted autocannon detonated on its own ship at distance 0
+- 🔧 Sub-levels whose bounding box is degenerate or implausibly large are ignored instead of producing bogus hits
+- ⚖️ Shrapnel round: fragments 40 → 24, spread 0.15 → 0.24. CBC sends 20 block particles, one block-damage hit and one break sound **per fragment impact**, so 40 fragments in a tight cone landing on the same wall face meant roughly 800 particles and 40 hits within 1–2 ticks
+- 🔧 Shrapnel round gained a one-shot detonation guard: with `deflection` 0.30 a grazing hit bounces, and every bounce used to burst a fresh full fragment cloud
+- 📝 The fuze tooltip shows the effective sensing radius
+- 📝 Version bumped to 2.8fix1
+
+**中文**
+- 🔧 修复通用近炸引信完全不空爆：感应半径此前直接取 `DETONATION_DISTANCE`，而它默认是 1 —— 1 格半径等于"只有直接命中才起爆"，引信看起来完全没装。现改为不低于 CBC 自带近炸引信的覆盖半宽（`proximityFuzeScale × proximityFuzeSpacing`，默认 7.5 格），玩家把距离调大时以玩家值为准；CBC 配置读不到时也退回同样的 7.5 格，不再退化成 1 格
+- 🔧 空爆点改到**目标身上**（此前落在弹体航迹上，最多偏离目标 `radius` 格），与 CBC 自带引信一致，战斗部威力不再白扔
+- 🛡 导弹判定提到最前，且只用原版类；SABLE 与 Shaolib 两条反射分支排在它后面，反射出问题也绝不会再屏蔽导弹
+- 🛡 近炸判定不再只依赖 CBC 的 `clipAndDamage() → onClip` 链路：弹体每 tick 追加一次兜底扫描（同 tick 去重，不会重复起爆）
+- 🔧 修复对 SABLE 结构完全不炸。两个独立成因：一是 SABLE 的类探测只试线程上下文 `ClassLoader`，失败就永久放弃（而 SABLE 的 companion 数学库是 `META-INF/jarjar` 里的嵌套 jar，上下文加载器经常看不见）；二是结构查询走 `ServerSubLevelContainer.getContainer`/`getAllSubLevels`，在部分环境下取不到东西。现在类探测按"上下文 → 本模组 → SABLE 自身 → CBC → 系统"依次尝试，结构查询改用 `Sable.HELPER.getAllIntersecting(...)` —— 正是 CBC 自己 SABLE 兼容层用的入口，不再需要容器（容器路径保留为兜底）
+- 🔧 排除"开炮那条船"（用 `Sable.HELPER.getContaining` 判定炮口位置），并且本 tick 起点已经在船体盒内的炮弹不算"接近"。此前甲板上的机炮会以距离 0 对自己船近炸
+- 🔧 包围盒退化或尺寸明显不像一条船的子关卡直接忽略，不再产生假命中
+- ⚖️ 榴霰弹破片 40 → 24 枚、散布 0.15 → 0.24。CBC 对**每一个**破片落地都要发 20 个方块粒子 + 一次方块破坏 + 一次碎裂音效，40 枚密集锥打在同一个墙面上就是 1~2 tick 内约 800 个粒子、40 次破坏
+- 🔧 榴霰弹补上一次性起爆闸：`deflection` 0.30 让掠射命中会弹跳，而此前每弹一次就会再爆一整团破片
+- 📝 引信 tooltip 显示实际感应半径
+- 📝 版本号提升至 2.8fix1
+
+**Русский**
+- 🔧 Исправлено отсутствие воздушного подрыва у универсального неконтактного взрывателя: радиус срабатывания брался напрямую из `DETONATION_DISTANCE` со значением по умолчанию 1 — радиус в 1 блок фактически означает «только прямое попадание», поэтому взрыватель вёл себя так, будто его нет. Теперь радиус не меньше зоны действия штатного взрывателя CBC (`proximityFuzeScale × proximityFuzeSpacing`, по умолчанию 7.5 блока), при этом большее значение, заданное игроком, по-прежнему учитывается; если конфиг CBC прочитать не удаётся, радиус откатывается к тем же 7.5 блока, а не к 1
+- 🔧 Воздушный подрыв теперь происходит **на самой цели**, а не на траектории снаряда (раньше — до `radius` блоков до неё), как у штатного взрывателя CBC
+- 🛡 Обнаружение ракет теперь выполняется первым и использует только классы ваниллы; ветки отражения для SABLE и Shaolib идут после, поэтому проблема с отражением больше не может скрыть ракету
+- 🛡 Обнаружение цели больше не зависит только от цепочки CBC `clipAndDamage() → onClip`: каждый тик снаряда выполняется резервное сканирование (с дедупликацией за тик, без двойного подрыва)
+- 🔧 Исправлено отсутствие срабатывания по конструкциям SABLE. Две независимые причины: определение классов SABLE пыталось использовать только контекстный `ClassLoader` потока и при неудаче сдавалось навсегда (математическая библиотека SABLE поставляется вложенным архивом `META-INF/jarjar`, который контекстный загрузчик часто не видит), а поиск конструкций шёл через `ServerSubLevelContainer.getContainer`/`getAllSubLevels`, что в ряде конфигураций ничего не возвращает. Теперь определение классов пробует контекстный → собственный → загрузчик самой SABLE → загрузчик CBC → системный, а поиск конструкций идёт через `Sable.HELPER.getAllIntersecting(...)` — тот самый вход, который использует собственная совместимость CBC с SABLE, поэтому контейнер больше не нужен (путь через контейнер оставлен как резервный)
+- 🔧 Корабль, с которого был произведён выстрел, теперь исключается (`Sable.HELPER.getContaining` по позиции дульного среза), а снаряд, чей отрезок уже начинается внутри бокса корабля, не считается «приближающимся». Раньше орудие на палубе срабатывало по своему же кораблю на расстоянии 0
+- 🔧 Под-уровни с вырожденным или неправдоподобно большим ограничивающим боксом игнорируются вместо ложных срабатываний
+- ⚖️ Шрапнельный снаряд: осколков 40 → 24, разброс 0.15 → 0.24. CBC на **каждое** попадание осколка отправляет 20 частиц блока, одно повреждение блока и один звук разрушения, поэтому 40 осколков узким конусом в одну стену давали около 800 частиц и 40 попаданий за 1–2 тика
+- 🔧 Шрапнельный снаряд получил защиту от повторного подрыва: из-за `deflection` 0.30 скользящее попадание даёт рикошет, и раньше каждый рикошет выбрасывал новое полное облако осколков
+- 📝 В подсказке предмета показывается фактический радиус срабатывания
+- 📝 Версия повышена до 2.8fix1
+
 ## v2.8 — 2026-09-28
 
 **English**

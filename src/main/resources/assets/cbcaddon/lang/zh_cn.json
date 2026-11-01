@@ -26,7 +26,7 @@
   "tooltip.cbcaddon.aphe_round": "§6穿甲高爆弹 §7- APHE",
   "tooltip.cbcaddon.sap_round": "§6半穿甲弹 §7- SAP",
   "tooltip.cbcaddon.shrapnel_round": "§6榴霰弹",
-  "tooltip.cbcaddon.shrapnel_info": "§740枚破片，密集散布",
+  "tooltip.cbcaddon.shrapnel_info": "§724枚破片，中密散布",
   "tooltip.cbcaddon.thermite_round": "§6燃烧弹 §7- 撞击点挖掘 + 引燃",
   "tooltip.cbcaddon.multipurpose_round": "§6多用途榴弹 §7- 小型破甲/爆炸",
   "tooltip.cbcaddon.frag_grenade_round": "§6低速破片榴弹 §7- 不可用于高速弹药",
@@ -43,5 +43,6 @@
   "tooltip.cbcaddon.universal_proximity_fuze.hint": "§7按住 [Shift] 查看近炸距离",
   "tooltip.cbcaddon.universal_proximity_fuze.desc": "§6近炸引信 §7- 对 SABLE 结构与飞行中的导弹近炸引爆",
   "tooltip.cbcaddon.universal_proximity_fuze.distance": "§7当前近炸距离: §f%s §7格",
+  "tooltip.cbcaddon.universal_proximity_fuze.radius": "§7实际感应半径: §f%s §7格",
   "tooltip.cbcaddon.universal_proximity_fuze.targets": "§7可感应 SABLE 结构与飞行中的导弹（含火控之眼导弹）"
 }
